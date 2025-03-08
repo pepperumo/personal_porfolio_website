@@ -14,8 +14,8 @@ const Portfolio = () => {
     // Simulated data - this would typically come from an API or CMS
     const projectData = [
       {
-        title: 'MVTEC Anomaly Detection',
-        description: 'A reinforcement learning based system for autonomous drone navigation in complex environments.',
+        title: <a href="https://huggingface.co/spaces/pepperumo/MVTec_Website" target="_blank" rel="noopener noreferrer">MVTEC Anomaly Detection</a>,
+        description: 'An anomaly detection system APP, detecting defects on products.',
         image: `${process.env.PUBLIC_URL}/anomaly_visual_example.png`,
         technologies: ['Python', 'PyTorch', 'Computer Vision', 'Convolutional Neural Networks'],
         github: 'https://github.com/pepperumo/MVTEC-anomaly-detection',
@@ -24,7 +24,7 @@ const Portfolio = () => {
         featured: true
       },
       {
-        title: 'CAD Design Optimization with Genetic Algorithms',
+        title: <a href="https://www.linkedin.com/pulse/optimizing-cad-designs-using-genetic-algorithms-giuseppe-rumore-gpoif/" target="_blank" rel="noopener noreferrer">CAD Design Optimization with Genetic Algorithms</a>,
         description: 'A genetic algorithm-based optimization framework for CAD designs.',
         image: `${process.env.PUBLIC_URL}/Clamp_sizes.png`,
         technologies: ['Python', 'CAD', 'Genetic Algorithms', 'Finite Element Analysis'],
@@ -34,17 +34,17 @@ const Portfolio = () => {
         featured: true
       },
       {
-        title: 'ROS2 Bumperbot',
+        title: <a href="https://www.linkedin.com/pulse/self-driving-ros-2-giuseppe-rumore-l6wzf/" target="_blank" rel="noopener noreferrer">ROS2 Bumperbot</a>,
         description: 'A self-driving robot using ROS2, C++, Python and Gazebo. ',
         image: `${process.env.PUBLIC_URL}/bumperbot.png`,
         technologies: ['ROS2', 'C++', 'Python', 'Gazebo'],
-        github: 'https://github.com/pepperumo/Differential_self_driving_Robot_bumperbotA',
+        github: 'https://github.com/pepperumo/Differential_self_driving_Robot_bumperbot',
         external: 'https://www.linkedin.com/pulse/self-driving-ros-2-giuseppe-rumore-l6wzf/',
         category: 'robotics',
         featured: false
       },
       {
-        title: 'AI-Powered Recommendation APP',
+        title: <a href="https://example.com" target="_blank" rel="noopener noreferrer">AI-Powered Recommendation APP</a>,
         description: 'A recommendation system using collaborative filtering and deep learning techniques.',
         image: `${process.env.PUBLIC_URL}/books.jpg`,
         technologies: ['Python', 'TensorFlow', 'Flask', 'MongoDB'],
