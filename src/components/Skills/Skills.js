@@ -6,7 +6,7 @@ import { FaTools, FaRobot, FaDatabase, FaCode, FaCogs, FaLaptopCode } from 'reac
 const Skills = () => {
   const skillCategories = [
     {
-      title: 'Engineering',
+      title: 'Mechanical Engineering',
       icon: <FaTools />,
       skills: ['CAD Optimization', 'Quality Engineering', 'Finite Element Analysis']
     },
