@@ -324,17 +324,6 @@ const AboutTextContainer = styled.div`
   width: 100%;
 `;
 
-const AboutText = styled.p`
-  margin-bottom: 20px;
-  font-size: 17px;
-  line-height: 1.6;
-  color: var(--text-secondary);
-  
-  &:last-of-type {
-    margin-bottom: 30px;
-  }
-`;
-
 const LanguageSection = styled.div`
   margin-top: 20px;
 `;
