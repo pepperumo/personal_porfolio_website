@@ -121,7 +121,7 @@ const AboutMeContainer = styled.section`
     to right,
     rgba(10, 25, 47, 0.95),
     rgba(10, 25, 47, 0.8)
-  ), url('/background.jpg');
+  ), url('/background.png');
   background-color: var(--background-dark);
   background-size: cover;
   background-position: center;
@@ -218,7 +218,7 @@ const ProfileImageContainer = styled.div`
 const ProfileImage = styled.div`
   width: 100%;
   height: 100%;
-  background-image: url('/profile.jpg');
+  background-image: url('/profile.png');
   background-size: cover;
   background-position: center;
   transition: transform 0.3s ease;
