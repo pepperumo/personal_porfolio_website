@@ -44,7 +44,7 @@ const Portfolio = () => {
         featured: false
       },
       {
-        title: <a href="https://example.com" target="_blank" rel="noopener noreferrer">AI-Powered Recommendation APP</a>,
+        title: 'AI-Powered Recommendation APP',
         description: 'A recommendation system using collaborative filtering and deep learning techniques.',
         image: `${process.env.PUBLIC_URL}/books.jpg`,
         technologies: ['Python', 'TensorFlow', 'Flask', 'MongoDB'],
