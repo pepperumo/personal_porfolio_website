@@ -19,7 +19,7 @@ const Portfolio = () => {
         image: `${process.env.PUBLIC_URL}/anomaly_visual_example.png`,
         technologies: ['Python', 'PyTorch', 'Computer Vision', 'Convolutional Neural Networks'],
         github: 'https://github.com/pepperumo/MVTEC-anomaly-detection',
-        external: 'https://www.linkedin.com/pulse/making-app-find-defects-using-ai-giuseppe-rumore-rkfuf/',
+        external: 'https://huggingface.co/spaces/pepperumo/MVTec_Website',
         category: 'ai',
         featured: true
       },
