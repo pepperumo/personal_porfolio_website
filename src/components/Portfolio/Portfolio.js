@@ -48,8 +48,8 @@ const Portfolio = () => {
         description: 'A recommendation system using collaborative filtering and deep learning techniques.',
         image: `${process.env.PUBLIC_URL}/books.jpg`,
         technologies: ['Python', 'TensorFlow', 'Flask', 'MongoDB'],
-        github: 'https://github.com',
-        external: 'https://example.com',
+        github: 'https://github.com/pepperumo/MLOps_book_recommender_system',
+        external: 'https://huggingface.co/spaces/pepperumo/book_recommender_streamlit',
         category: 'MLOps',
         featured: false
       }
