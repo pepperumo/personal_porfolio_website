@@ -1,328 +1,174 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 const Experience = () => {
-  const [activeTabId, setActiveTabId] = useState(0);
-
   const jobs = [
     {
       company: 'Steltix',
-      position: 'Mechanical Engineer',
-      period: 'Jan 2022 - Present',
-      url: '#',
-      description: [
-        'Developed and implemented AI-driven solutions for mechanical engineering problems',
-        'Optimized CAD designs for improved performance and manufacturability',
-        'Collaborated with cross-functional teams to integrate intelligent systems in mechanical designs',
-        'Applied machine learning techniques to predict mechanical system behaviors'
+      role: 'JDEdwards Consultant',
+      period: '12/2022 – 08/2024',
+      field: 'Enterprise Resource Planning (ERP), Business Management Software',
+      responsibilities: [
+        'Comprehensive Business Management Solutions: Developed and optimized ERP solutions for manufacturing processes',
+        'Integration and Production Planning: Monitored and maintained key systems for Bill of Materials (BOM), Materials Requirements Planning (MRP), Resource Planning (DRP)',
+        'Operational Oversight: Supervised day-to-day operations, including product and materials routing, manufacturing workflows, and cost accounting, to ensure efficiency and accuracy across all tasks'
       ]
     },
     {
       company: 'IMI Climate Control',
-      position: 'Technical Project Manager',
-      period: 'Mar 2020 - Dec 2021',
-      url: '#',
-      description: [
-        'Led technical projects from conception to completion, ensuring timely delivery',
-        'Applied data-driven methodologies to optimize climate control systems',
-        'Collaborated with engineering teams to implement innovative solutions',
-        'Managed project resources and timelines to ensure successful outcomes'
+      role: 'Mechanical Engineer | Data Analyst',
+      period: '04/2017 – 07/2022',
+      field: 'Heating Systems, Hydraulic Systems, Expansion Vessels, Vulcanization Processes',
+      responsibilities: [
+        'Data-Driven Testing and Analysis: Developed and optimized testing platforms, utilizing advanced data analysis techniques, increasing defect detection rates by 30% and reducing testing time by 20% for testing and hydraulic system products',
+        'Production Optimization through Analytics: Conducted data analysis to optimize processes and systems cost-efficiency, leading to a 10% reduction in defects and 15% improvement in product performance',
+        'Predictive Analytics for Problem Solving: Applied statistical modeling and predictive analytics to identify and address design and performance issues while enhancing product reliability',
+        'Product Design: Enhanced the design of existing products to reduce production costs while maintaining quality and performance standards',
+        '3D CAD Product Development: Designed and prototyped various hydraulic connectors for hydraulic and pneumatic components. Designed varying diameter, improving system compatibility and efficiency',
+        'Robotic Automation: Procured and implemented robotic arms that automated assembly line processes, reducing setup time by 40%'
       ]
     },
     {
       company: 'ALTEN GmbH',
-      position: 'Project Engineer',
-      period: 'Oct 2018 - Feb 2020',
-      url: '#',
-      description: [
-        'Developed engineering solutions for automotive clients',
-        'Conducted data analysis to improve product performance',
-        'Collaborated with international teams on complex engineering challenges',
-        'Implemented quality assurance processes to ensure product reliability'
+      role: 'Engineering Consultant (Overhead Systems)',
+      period: '01/2017 – 04/2017',
+      field: 'Automotive Overhead Systems',
+      responsibilities: [
+        'Logistics and Production Support: Helped streamline material flow and day-to-day build schedules, contributing to roughly a 7% reduction in line-stop incidents',
+        'Supplier Collaboration: Acted as a junior point-of-contact between Ford and component suppliers, which trimmed average delivery variance by 4% and taught me the basics of relationship management in a global supply chain'
       ]
     },
     {
       company: 'European Patent Office',
-      position: 'Patent Examiner',
-      period: 'May 2017 - Sep 2018',
-      url: '#',
-      description: [
-        'Examined patent applications in the field of mechanical engineering',
-        'Conducted prior art searches and analyzed technical documentation',
-        'Assessed patent eligibility based on novelty, inventive step, and industrial applicability',
-        'Provided detailed technical opinions on patentability'
-      ]
-    },
-    {
-      company: 'RWTH Aachen University',
-      position: 'Research Assistant',
-      period: 'Sep 2016 - Apr 2017',
-      url: '#',
-      description: [
-        'Conducted research on fluid mechanics and thermal systems',
-        'Developed computational models for fluid dynamics simulations',
-        'Analyzed experimental data and prepared research reports',
-        'Collaborated with academic and industry partners on research projects'
-      ]
-    },
-    {
-      company: 'Siemens Wind Power',
-      position: 'Intern - Mechanical Engineer',
-      period: 'Mar 2016 - Aug 2016',
-      url: '#',
-      description: [
-        'Assisted in the design and optimization of wind turbine components',
-        'Conducted structural analysis using FEM software',
-        'Participated in product development meetings and contributed design ideas',
-        'Collaborated with senior engineers on technical challenges'
-      ]
-    },
-    {
-      company: 'INSA Lyon',
-      position: 'Research Intern',
-      period: 'Jun 2015 - Sep 2015',
-      url: '#',
-      description: [
-        'Participated in research projects focusing on mechanical engineering applications',
-        'Conducted experiments and collected data for analysis',
-        'Developed computational models to simulate mechanical phenomena',
-        'Presented research findings to academic supervisors'
-      ]
-    },
-    {
-      company: 'SKF R&D Centre',
-      position: 'Engineering Intern',
-      period: 'Jan 2015 - May 2015',
-      url: '#',
-      description: [
-        'Supported R&D activities in bearing technology development',
-        'Conducted testing and analysis of bearing performance',
-        'Assisted in the development of improved bearing designs',
-        'Documented testing procedures and results for technical reports'
+      role: 'Contractor',
+      period: '04/2016 – 12/2016',
+      field: 'Patents, Machine Tools, Plastic Welding Procedures',
+      responsibilities: [
+        'Patent Management and Analysis: Managed patents related to machine tools and plastic welding procedures, employing innovative methods and data-driven approach to evaluate evaluation procedures',
+        'Enhanced Technical Understanding: Leveraged analytical methodologies, particularly AI-driven methodologies, to improve technical report assessment, reducing average times by 40% and generating quality output',
+        'Optimized Search Processes: Developed and implemented innovative tools and systematic techniques influenced by AI concepts, reducing patent search time by 20% and cutting average effort by 25%'
       ]
     }
   ];
 
-  return (
-    <ExperienceSection id="experience">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6 }}
-      >
-        <SectionTitle className="numbered-heading">Where I've Worked</SectionTitle>
+  return (    <ExperienceSection id="experience">
+      <div className="section-container">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+        ><SectionTitle className="section-heading">Professional Journey</SectionTitle>
+        <SectionSubtitle className="section-subtitle">
+          A track record of leadership, innovation and driving successful outcomes.
+        </SectionSubtitle>
         
-        <ExperienceContainer>
-          <TabList role="tablist" aria-label="Job tabs">
-            {jobs.map((job, i) => (
-              <TabButton
-                key={i}
-                $isActive={activeTabId === i}
-                onClick={() => setActiveTabId(i)}
-                id={`tab-${i}`}
-                role="tab"
-                aria-selected={activeTabId === i}
-                aria-controls={`panel-${i}`}
-                tabIndex={activeTabId === i ? 0 : -1}
-              >
-                <span>{job.company}</span>
-              </TabButton>
-            ))}
-            <Highlighter $activeTabId={activeTabId} $tabCount={jobs.length} />
-          </TabList>
-
-          <TabPanels>
-            {jobs.map((job, i) => (
-              <TabPanel
-                key={i}
-                $isActive={activeTabId === i}
-                id={`panel-${i}`}
-                role="tabpanel"
-                aria-labelledby={`tab-${i}`}
-                tabIndex={0}
-              >
-                <h3>
-                  <JobTitle>{job.position}</JobTitle>
-                  <JobCompany>
-                    <a href={job.url} target="_blank" rel="noopener noreferrer">
-                      @ {job.company}
-                    </a>
-                  </JobCompany>
-                </h3>
-
-                <JobDuration>{job.period}</JobDuration>
-
-                <JobDescriptionList>
-                  {job.description.map((bullet, j) => (
-                    <JobDescriptionItem key={j}>{bullet}</JobDescriptionItem>
-                  ))}
-                </JobDescriptionList>
-              </TabPanel>
-            ))}
-          </TabPanels>
-        </ExperienceContainer>
-      </motion.div>
+        <JobsContainer>
+          {jobs.map((job, index) => (
+            <JobCard 
+              key={index}
+              as={motion.div}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
+              <CompanyName>{job.company}</CompanyName>
+              <JobRole>{job.role}</JobRole>
+              <JobPeriod>{job.period}</JobPeriod>
+              <JobField>Field: {job.field}</JobField>
+              <ResponsibilitiesList>
+                {job.responsibilities.map((responsibility, idx) => (
+                  <ResponsibilityItem key={idx}>
+                    {responsibility}
+                  </ResponsibilityItem>
+                ))}              </ResponsibilitiesList>
+            </JobCard>
+          ))}
+        </JobsContainer>
+        </motion.div>
+      </div>
     </ExperienceSection>
   );
 };
 
 const ExperienceSection = styled.section`
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 100px 0;
+  /* Using global section styling from GlobalStyles.js */
 `;
 
 const SectionTitle = styled.h2`
-  font-size: 32px;
-  margin-bottom: 40px;
+  font-size: clamp(42px, 6vw, 50px);
+  font-weight: 600;
   color: var(--text-primary);
+  margin: 0 0 15px 0;
 `;
 
-const ExperienceContainer = styled.div`
+const SectionSubtitle = styled.p`
+  /* Now using global style from GlobalStyles.js */
+`;
+
+const JobsContainer = styled.div`
   display: flex;
-  
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
+  flex-direction: column;
+  gap: 40px;
 `;
 
-const TabList = styled.div`
-  position: relative;
-  z-index: 3;
-  width: max-content;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  
-  @media (max-width: 768px) {
-    display: flex;
-    overflow-x: auto;
-    width: 100%;
-    margin-bottom: 30px;
-  }
+const JobCard = styled(motion.div)`
+  background-color: rgba(17, 34, 64, 0.8);
+  border-radius: 10px;
+  padding: 30px;
+  border-left: 3px solid var(--secondary-color);
 `;
 
-const TabButton = styled.button`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 42px;
-  padding: 0 20px 2px;
-  border: none;
-  border-left: 2px solid ${props => (props.$isActive ? 'var(--secondary-color)' : 'var(--background-light)')};
-  background-color: transparent;
-  color: ${props => (props.$isActive ? 'var(--secondary-color)' : 'var(--text-secondary)')};
-  font-family: var(--font-mono);
-  font-size: 13px;
-  text-align: left;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: var(--transition);
-  
-  &:hover,
-  &:focus {
-    background-color: var(--background-light);
-    color: var(--secondary-color);
-  }
-  
-  @media (max-width: 768px) {
-    padding: 0 15px;
-    border-left: 0;
-    border-bottom: 2px solid ${props => (props.$isActive ? 'var(--secondary-color)' : 'var(--background-light)')};
-  }
-`;
-
-const Highlighter = styled.div`
-  position: absolute;
-  top: ${props => props.$activeTabId * 42}px;
-  left: 0;
-  z-index: 10;
-  width: 2px;
-  height: 42px;
-  border-radius: 4px;
-  background: var(--secondary-color);
-  transform: translateY(calc(${props => props.$activeTabId} * 42px));
-  transition: transform 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
-  display: ${props => (props.$activeTabId >= 0 && props.$activeTabId < props.$tabCount ? 'block' : 'none')};
-  
-  @media (max-width: 768px) {
-    top: auto;
-    bottom: 0;
-    width: 100%;
-    max-width: ${props => 100 / props.$tabCount}%;
-    height: 2px;
-    margin-left: ${props => (props.$activeTabId / props.$tabCount) * 100}%;
-    transform: translateX(0);
-  }
-`;
-
-const TabPanels = styled.div`
-  position: relative;
-  width: 100%;
-  margin-left: 20px;
-  
-  @media (max-width: 768px) {
-    margin-left: 0;
-  }
-`;
-
-const TabPanel = styled.div`
-  width: 100%;
-  height: auto;
-  padding: 10px 5px;
-  display: ${props => (props.$isActive ? 'block' : 'none')};
-  
-  h3 {
-    margin-bottom: 5px;
-    font-size: 22px;
-    font-weight: 500;
-    line-height: 1.3;
-  }
-`;
-
-const JobTitle = styled.span`
+const CompanyName = styled.h3`
+  font-size: 24px;
+  font-weight: 600;
   color: var(--text-primary);
+  margin: 0 0 5px 0;
 `;
 
-const JobCompany = styled.span`
+const JobRole = styled.div`
+  font-size: 16px;
   color: var(--secondary-color);
-  
-  a {
-    color: var(--secondary-color);
-    text-decoration: none;
-    
-    &:hover {
-      text-decoration: underline;
-    }
-  }
+  margin-bottom: 5px;
 `;
 
-const JobDuration = styled.p`
-  margin-bottom: 25px;
+const JobPeriod = styled.div`
+  font-size: 14px;
   color: var(--text-secondary);
   font-family: var(--font-mono);
-  font-size: 13px;
+  margin-bottom: 15px;
 `;
 
-const JobDescriptionList = styled.ul`
+const JobField = styled.div`
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  font-style: italic;
+`;
+
+const ResponsibilitiesList = styled.ul`
   padding: 0;
   margin: 0;
   list-style: none;
 `;
 
-const JobDescriptionItem = styled.li`
+const ResponsibilityItem = styled.li`
   position: relative;
-  padding-left: 30px;
-  margin-bottom: 10px;
-  color: var(--text-primary);
-  font-size: 16px;
+  padding-left: 20px;
+  margin-bottom: 15px;
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.5;
   
   &:before {
-    content: '▹';
+    content: '•';
     position: absolute;
     left: 0;
     color: var(--secondary-color);
+  }
+  
+  &:last-child {
+    margin-bottom: 0;
   }
 `;
 

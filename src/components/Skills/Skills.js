@@ -1,223 +1,195 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { FaTools, FaRobot, FaDatabase, FaCode, FaCogs, FaLaptopCode } from 'react-icons/fa';
+import { 
+  FaCode, 
+  FaBrain, 
+  FaDocker, 
+  FaRobot, 
+  FaCube, 
+  FaCogs
+} from 'react-icons/fa';
 
 const Skills = () => {
-  const skillCategories = [
+  const expertiseCategories = [
     {
-      title: 'Mechanical Engineering',
-      icon: <FaTools />,
-      skills: ['CAD Optimization', 'Quality Engineering', 'Finite Element Analysis']
+      icon: <FaCode />,
+      title: "Programming & Data",
+      skills: [
+        "Python (advanced)",
+        "MATLAB",
+        "SQL",
+        "PySpark"
+      ]
     },
     {
-      title: 'Data Science and MLOps',
-      icon: <FaDatabase />,
-      skills: ['Machine Learning', 'Deep Learning', 'Data Analysis', 'Recommender Systems', 'Time-Series Analysis']
+      icon: <FaBrain />,
+      title: "ML / DL Frameworks",
+      skills: [
+        "scikit-learn",
+        "TensorFlow",
+        "Keras",
+        "PyTorch"
+      ]
     },
     {
-      title: 'Robotics',
+      icon: <FaDocker />,
+      title: "DevOps / MLOps",
+      skills: [
+        "Docker",
+        "Kubernetes",
+        "CI/CD",
+        "Git/GitHub"
+      ]
+    },
+    {
       icon: <FaRobot />,
-      skills: ['Autonomous Systems', 'Computer Vision', 'Reinforcement Learning', 'Robotic Process Design']
+      title: "Robotics",
+      skills: [
+        "ROS 2 (Humble)",
+        "Gazebo Fortress"
+      ]
+    },
+    {
+      icon: <FaCube />,
+      title: "Simulation & CAD",
+      skills: [
+        "ANSYS Workbench",
+        "CATIA V5/V6",
+        "SolidWorks",
+        "Autodesk Inventor",
+        "AutoCAD"
+      ]
+    },
+    {
+      icon: <FaCogs />,
+      title: "Other Technical Skills",
+      skills: [
+        "Big-data integration",
+        "Predictive analytics",
+        "Computer vision",
+        "FEM analysis"
+      ]
     }
   ];
 
-  return (
-    <SkillsSection id="skills">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6 }}
-      >
-        <SectionTitle className="numbered-heading">Skills</SectionTitle>
+  return (    <SkillsSection id="skills">
+      <div className="section-container">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+        ><SectionTitle className="section-heading">Skills</SectionTitle>
+        <SectionSubtitle className="section-subtitle">
+          Leveraging deep technical knowledge with strategic vision to deliver exceptional results.
+        </SectionSubtitle>
         
-        <SkillsContainer>
-          {skillCategories.map((category, index) => (
-            <SkillCategory 
+        <ExpertiseGrid>
+          {expertiseCategories.map((category, index) => (
+            <ExpertiseCard 
               key={index}
               as={motion.div}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <CategoryIcon>{category.icon}</CategoryIcon>
-              <CategoryTitle>{category.title}</CategoryTitle>
-              <SkillList>
+              <ExpertiseIcon>{category.icon}</ExpertiseIcon>
+              <ExpertiseTitle>{category.title}</ExpertiseTitle>
+              <SkillsList>
                 {category.skills.map((skill, skillIndex) => (
-                  <SkillItem key={skillIndex}>{skill}</SkillItem>
-                ))}
-              </SkillList>
-            </SkillCategory>
+                  <SkillItem key={skillIndex}>
+                    <SkillBullet>•</SkillBullet>
+                    <SkillText>{skill}</SkillText>
+                  </SkillItem>
+                ))}              </SkillsList>
+            </ExpertiseCard>
           ))}
-        </SkillsContainer>
-
-        <TechnologiesSection>
-          <TechnologiesTitle>Technologies I Work With</TechnologiesTitle>
-          <TechnologiesContainer>
-            <TechnologyCategory>
-              <TechnologyCategoryTitle>
-                <FaCode />
-                <span>Programming</span>
-              </TechnologyCategoryTitle>
-              <TechnologyList>
-                <TechnologyItem>Python (TensorFlow, PyTorch, Scikit-learn and more)</TechnologyItem>
-                <TechnologyItem>C++</TechnologyItem>
-                <TechnologyItem>Matlab</TechnologyItem>
-                <TechnologyItem>Bash/Linux</TechnologyItem>
-              </TechnologyList>
-            </TechnologyCategory>
-
-            <TechnologyCategory>
-              <TechnologyCategoryTitle>
-                <FaCogs />
-                <span>CAD Software</span>
-              </TechnologyCategoryTitle>
-              <TechnologyList>
-                <TechnologyItem>CATIA V5</TechnologyItem>
-                <TechnologyItem>Autodesk Inventor</TechnologyItem>
-                <TechnologyItem>SolidWorks</TechnologyItem>
-              </TechnologyList>
-            </TechnologyCategory>
-
-            <TechnologyCategory>
-              <TechnologyCategoryTitle>
-                <FaLaptopCode />
-                <span>Specialized Tools</span>
-              </TechnologyCategoryTitle>
-              <TechnologyList>
-                <TechnologyItem>ANSYS Workbench</TechnologyItem>
-                <TechnologyItem>ROS2</TechnologyItem>
-                <TechnologyItem>AWS</TechnologyItem>
-                <TechnologyItem>Microsoft Azure</TechnologyItem>
-                <TechnologyItem>Git/Github</TechnologyItem>
-              </TechnologyList>
-            </TechnologyCategory>
-          </TechnologiesContainer>
-        </TechnologiesSection>
-      </motion.div>
+        </ExpertiseGrid>
+        </motion.div>
+      </div>
     </SkillsSection>
   );
 };
 
 const SkillsSection = styled.section`
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 10px 0;
+  /* Using global section styling from GlobalStyles.js */
 `;
 
 const SectionTitle = styled.h2`
-  font-size: 32px;
-  margin-bottom: 40px;
+  font-size: clamp(42px, 6vw, 50px);
+  font-weight: 600;
   color: var(--text-primary);
+  margin: 0 0 15px 0;
 `;
 
-const SkillsContainer = styled.div`
+const SectionSubtitle = styled.p`
+  /* Now using global style from GlobalStyles.js */
+`;
+
+const ExpertiseGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 30px;
-  margin-bottom: 60px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
 `;
 
-const SkillCategory = styled(motion.div)`
-  background-color: var(--background-light);
+const ExpertiseCard = styled(motion.div)`
+  background-color: rgba(17, 34, 64, 0.8);
   border-radius: 10px;
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+  padding: 25px;
   transition: transform 0.3s ease;
   
   &:hover {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
   }
 `;
 
-const CategoryIcon = styled.div`
-  font-size: 40px;
+const ExpertiseIcon = styled.div`
   color: var(--secondary-color);
-  margin-bottom: 20px;
+  font-size: 28px;
+  margin-bottom: 18px;
 `;
 
-const CategoryTitle = styled.h3`
-  font-size: 22px;
+const ExpertiseTitle = styled.h3`
   color: var(--text-primary);
+  font-size: 20px;
   margin-bottom: 20px;
+  font-weight: 500;
 `;
 
-const SkillList = styled.ul`
-  width: 100%;
+const SkillsList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
 `;
 
 const SkillItem = styled.li`
-  color: var(--text-secondary);
-  font-size: 16px;
-  margin-bottom: 10px;
-  position: relative;
-  padding-left: 20px;
-  text-align: left;
-  
-  &:before {
-    content: '▹';
-    position: absolute;
-    left: 0;
-    color: var(--secondary-color);
-  }
-`;
-
-const TechnologiesSection = styled.div`
-  margin-top: 30px;
-`;
-
-const TechnologiesTitle = styled.h3`
-  font-size: 24px;
-  color: var(--text-primary);
-  margin-bottom: 30px;
-  text-align: center;
-`;
-
-const TechnologiesContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 30px;
-`;
-
-const TechnologyCategory = styled.div`
-  background-color: var(--background-light);
-  border-radius: 10px;
-  padding: 25px;
-`;
-
-const TechnologyCategoryTitle = styled.h4`
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 18px;
+  margin-bottom: 12px;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;
+
+const SkillBullet = styled.span`
   color: var(--secondary-color);
-  margin-bottom: 20px;
-  
-  svg {
-    font-size: 20px;
-  }
-`;
-
-const TechnologyList = styled.ul`
-  margin-left: 10px;
-`;
-
-const TechnologyItem = styled.li`
-  color: var(--text-secondary);
+  margin-right: 10px;
   font-size: 16px;
-  margin-bottom: 10px;
-  position: relative;
-  padding-left: 20px;
-  
-  &:before {
-    content: '▹';
-    position: absolute;
-    left: 0;
-    color: var(--secondary-color);
-  }
+`;
+
+const SkillText = styled.span`
+  color: var(--text-secondary);
+  font-size: 15px;
 `;
 
 export default Skills;

@@ -72,7 +72,7 @@ const ContactSection = styled.section`
 
 const SectionTitle = styled.h2`
   margin: 0 0 40px 0;
-  font-size: clamp(26px, 5vw, 32px);
+  font-size: clamp(42px, 6vw, 50px);
   font-weight: 600;
   color: var(--text-primary);
   text-align: center;

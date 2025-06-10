@@ -67,14 +67,14 @@ const Portfolio = () => {
     }
   }, [filter, projects]);
 
-  return (
-    <PortfolioSection id="portfolio">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6 }}
-      >
-        <SectionTitle className="numbered-heading">My Projects</SectionTitle>
+  return (    <PortfolioSection id="portfolio">
+      <div className="section-container">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+        ><SectionTitle className="section-heading">My Projects</SectionTitle>
+        <SectionSubtitle className="section-subtitle">A showcase of my technical projects and professional work.</SectionSubtitle>
         
         <FilterContainer>
           {categories.map((category, index) => (
@@ -97,21 +97,8 @@ const Portfolio = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               $featured={project.featured}
-            >
-              <ProjectImageContainer>
+            >              <ProjectImageContainer>
                 <ProjectImage src={project.image} alt={project.title} />
-                <ProjectLinks>
-                  {project.github && (
-                    <ProjectLink href={project.github} target="_blank" rel="noopener noreferrer">
-                      <FiGithub />
-                    </ProjectLink>
-                  )}
-                  {project.external && (
-                    <ProjectLink href={project.external} target="_blank" rel="noopener noreferrer">
-                      <FiExternalLink />
-                    </ProjectLink>
-                  )}
-                </ProjectLinks>
               </ProjectImageContainer>
               <ProjectContent>
                 <ProjectCategory>{project.category}</ProjectCategory>
@@ -122,6 +109,18 @@ const Portfolio = () => {
                     <ProjectTechItem key={i}>{tech}</ProjectTechItem>
                   ))}
                 </ProjectTechList>
+                <ProjectLinks>
+                  {project.github && (
+                    <ProjectLink href={project.github} target="_blank" rel="noopener noreferrer" title="GitHub Repository">
+                      <FiGithub />
+                    </ProjectLink>
+                  )}
+                  {project.external && (
+                    <ProjectLink href={project.external} target="_blank" rel="noopener noreferrer" title="Live Demo">
+                      <FiExternalLink />
+                    </ProjectLink>
+                  )}
+                </ProjectLinks>
               </ProjectContent>
             </ProjectCard>
           ))}
@@ -130,27 +129,28 @@ const Portfolio = () => {
         <ViewMoreButton 
           href="https://github.com/pepperumo" 
           target="_blank" 
-          rel="noopener noreferrer"
-        >
+          rel="noopener noreferrer"        >
           View More Projects
         </ViewMoreButton>
-      </motion.div>
+        </motion.div>
+      </div>
     </PortfolioSection>
   );
 };
 
 const PortfolioSection = styled.section`
-  padding: 150px 0;
-  
-  @media (max-width: 768px) {
-    padding: 100px 0;
-  }
+  /* Using global section styling from GlobalStyles.js */
 `;
 
 const SectionTitle = styled.h2`
-  font-size: 32px;
-  margin-bottom: 40px;
+  font-size: clamp(42px, 6vw, 50px);
+  font-weight: 600;
   color: var(--text-primary);
+  margin: 0 0 15px 0;
+`;
+
+const SectionSubtitle = styled.p`
+  /* Now using global style from GlobalStyles.js */
 `;
 
 const FilterContainer = styled.div`
@@ -210,12 +210,6 @@ const ProjectImageContainer = styled.div`
   height: 0;
   padding-top: 56.25%; /* 16:9 aspect ratio */
   overflow: hidden;
-  
-  &:hover {
-    & > div {
-      opacity: 1;
-    }
-  }
 `;
 
 const ProjectImage = styled.img`
@@ -225,34 +219,32 @@ const ProjectImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: filter 0.3s ease;
+  transition: transform 0.3s ease;
   
   ${ProjectImageContainer}:hover & {
-    filter: brightness(30%);
+    transform: scale(1.05);
   }
 `;
 
 const ProjectLinks = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  margin-top: 15px;
+  justify-content: flex-end;
 `;
 
 const ProjectLink = styled.a`
-  color: var(--text-primary);
-  font-size: 22px;
+  color: var(--text-secondary);
+  font-size: 20px;
   margin: 0 10px;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, transform 0.2s ease;
   
   &:hover {
     color: var(--secondary-color);
+    transform: translateY(-3px);
+  }
+  
+  &:last-child {
+    margin-right: 0;
   }
 `;
 

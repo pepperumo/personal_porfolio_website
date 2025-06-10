@@ -17,7 +17,15 @@ const ScrollLinkWrapper = ({ className, children, smooth, ...props }) => (
 );
 
 const AboutMe = () => {
-  const languages = ['Italian', 'French', 'English', 'Spanish', 'Portuguese', 'Albanian', 'German'];
+  const languages = [
+    { code: 'IT', name: 'Italian', level: 'Native', progress: 100 },
+    { code: 'AL', name: 'Albanian', level: 'Native', progress: 100 },
+    { code: 'GB', name: 'English', level: 'C1', progress: 90 },
+    { code: 'FR', name: 'French', level: 'C1', progress: 90 },
+    { code: 'ES', name: 'Spanish', level: 'C1', progress: 85 },
+    { code: 'DE', name: 'German', level: 'B2', progress: 75 },
+    { code: 'PT', name: 'Portuguese', level: 'B1', progress: 65 }
+  ];
 
   return (
     <AboutMeContainer id="about-me">
@@ -33,13 +41,12 @@ const AboutMe = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                <Greeting>Hello, my name is</Greeting>
+              >                <Greeting>Hello, my name is</Greeting>
                 <Name>Giuseppe Rumore</Name>
-                <JobTitle>Mechanical Engineer, Data Scientist, Robotics Engineer</JobTitle>
+                <JobTitle>Mechanical Engineer, Data Scientist, Machine Learning Engineer</JobTitle>
                 <SummaryDescription>
-                  Based in Berlin, Germany, I specialize in creating and optimizing solutions at the intersection of 
-                  Mechanical Engineering, Data Science, and Robotics.
+                 Skilled in harnessing data science and machine-learning techniques to transform engineering processes, 
+                 optimise designs and improve overall performance. Extensive background in predictive analytics, AI-powered tools, plus deep hands-on expertise in CAD modelling and robotics to deliver innovative, efficient solutions.
                 </SummaryDescription>
               </motion.div>
 
@@ -61,13 +68,12 @@ const AboutMe = () => {
                   title="GitHub"
                 >
                   <FaGithub />
-                </SocialLink>
-                <EmailLink 
+                </SocialLink>                <EmailLink 
                   href="mailto:giuseppe.rumore91@gmail.com" 
                   aria-label="Email Giuseppe Rumore"
+                  title="Email"
                 >
                   <FaEnvelope />
-                  <EmailText>giuseppe.rumore91@gmail.com</EmailText>
                 </EmailLink>
               </SocialLinksContainer>
               
@@ -87,18 +93,27 @@ const AboutMe = () => {
             </motion.div>
           </IntroSection>
           
-          <AboutContentContainer>
-            <AboutTextContainer>
-              <LanguageSection>
-                <LanguageTitle>Languages I speak:</LanguageTitle>
-                <LanguageList>
-                  {languages.map((language, index) => (
-                    <LanguageItem key={index}>{language}</LanguageItem>
-                  ))}
-                </LanguageList>
-              </LanguageSection>
-            </AboutTextContainer>
-          </AboutContentContainer>
+          <LanguagesSection>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >              <LanguagesSectionTitle>Languages</LanguagesSectionTitle>
+              <LanguagesSubtitle className="section-subtitle">Communicating effectively across borders and cultures.</LanguagesSubtitle>
+              
+              <LanguageCardsContainer>
+                {languages.map((lang, index) => (
+                  <LanguageCard key={index}>
+                    <LanguageCode>{lang.code}</LanguageCode>
+                    <LanguageName>
+                      {lang.name} {lang.level !== 'Native' && `(${lang.level})`}
+                    </LanguageName>
+                    <LanguageProgressBar $progress={lang.progress} />
+                  </LanguageCard>
+                ))}
+              </LanguageCardsContainer>
+            </motion.div>
+          </LanguagesSection>
           
           {/* Integrated Skills Section */}
           <SkillsWrapper>
@@ -117,32 +132,25 @@ const AboutMeContainer = styled.section`
   justify-content: center;
   width: 100%;
   min-height: 100vh;
-  background-image: linear-gradient(
-    to right,
-    rgba(10, 25, 47, 0.95),
-    rgba(10, 25, 47, 0.8)
-  ), url('${process.env.PUBLIC_URL}/background.png');
-  background-color: var(--background-dark);
-  background-size: cover;
-  background-position: center;
+  background-color: transparent;
 `;
 
 const ContentWrapper = styled.div`
   max-width: 1000px;
   width: 100%;
   margin: 0 auto;
-  padding: 80px 50px;
+  padding: 80px 20px;
   
   @media (max-width: 1080px) {
-    padding: 70px 100px;
+    padding: 80px 20px;
   }
   
   @media (max-width: 768px) {
-    padding: 50px 50px;
+    padding: 80px 20px;
   }
   
   @media (max-width: 480px) {
-    padding: 30px 25px;
+    padding: 60px 15px;
   }
 `;
 
@@ -230,7 +238,7 @@ const ProfileImage = styled.div`
 
 const SocialLinksContainer = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 25px; /* Consistent spacing between icons, matching the sidebar */
   align-items: center;
   margin-bottom: 30px;
   
@@ -243,7 +251,7 @@ const SocialLinksContainer = styled.div`
 const SocialLink = styled.a`
   position: relative;
   color: var(--text-secondary);
-  font-size: 24px;
+  font-size: 22px; /* Match icon size with sidebar */
   transition: var(--transition);
   display: flex;
   align-items: center;
@@ -280,11 +288,7 @@ const EmailLink = styled(SocialLink)`
   }
 `;
 
-const EmailText = styled.span`
-  margin-left: 8px;
-  font-family: var(--font-mono);
-  font-size: 14px;
-`;
+// EmailText component removed as we no longer display the email address
 
 const ButtonBase = styled(ScrollLinkWrapper)`
   display: inline-block;
@@ -313,58 +317,91 @@ const ExploreButton = styled(ButtonBase)`
   }
 `;
 
-const AboutContentContainer = styled.div`
+const LanguagesSection = styled.div`
+  margin: 100px 0;
+  width: 100%;
+`;
+
+const LanguagesSectionTitle = styled.h2`
+  font-size: clamp(42px, 6vw, 50px);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 15px 0;
+`;
+
+const LanguagesSubtitle = styled.p`
+  /* Now using global style from GlobalStyles.js */
+`;
+
+const LanguageCardsContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  width: 100%;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+`;
+
+const LanguageCard = styled.div`
+  background-color: rgba(17, 34, 64, 0.8);
+  border-radius: 10px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-`;
-
-const AboutTextContainer = styled.div`
-  width: 100%;
-`;
-
-const LanguageSection = styled.div`
-  margin-top: 20px;
-`;
-
-const LanguageTitle = styled.h3`
-  font-size: 20px;
-  font-weight: 500;
-  color: var(--text-primary);
-  margin-bottom: 15px;
-`;
-
-const LanguageList = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-`;
-
-const LanguageItem = styled.li`
-  position: relative;
-  margin: 0;
-  padding: 8px 15px;
-  background-color: rgba(100, 255, 218, 0.1);
-  color: var(--secondary-color);
-  border-radius: 5px;
-  font-size: 14px;
-  transition: var(--transition);
+  align-items: center;
+  transition: transform 0.3s ease;
   
   &:hover {
-    background-color: rgba(100, 255, 218, 0.2);
-    transform: translateY(-2px);
+    transform: translateY(-5px);
+  }
+`;
+
+const LanguageCode = styled.div`
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+`;
+
+const LanguageName = styled.div`
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 15px;
+  text-align: center;
+`;
+
+const LanguageProgressBar = styled.div`
+  width: 100%;
+  height: 4px;
+  background-color: rgba(100, 255, 218, 0.1);
+  border-radius: 2px;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: ${props => props.$progress}%;
+    background-color: var(--secondary-color);
+    border-radius: 2px;
   }
 `;
 
 // Added wrapper for Skills section
 const SkillsWrapper = styled.div`
-  margin-top: 60px;
+  margin-top: 100px;
   
-  /* Override some of the Skills component styling to fit better in the Home page */
+  /* Cancel out the padding from the nested section-container */
+  .section-container {
+    padding: 0;
+  }
+  
+  /* Apply consistent padding to the section */
   section {
     padding: 0;
   }
