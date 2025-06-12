@@ -1,8 +1,7 @@
-{
-  "name": "personal_porfolio_website",
+{  "name": "personal_porfolio_website",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://pepperumo.github.io/personal_porfolio_website",
+  "homepage": "https://giusepperumore.com",
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
