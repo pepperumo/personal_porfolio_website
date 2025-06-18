@@ -42,9 +42,8 @@ const Portfolio = () => {
         external: 'https://www.linkedin.com/pulse/self-driving-ros-2-giuseppe-rumore-l6wzf/',
         category: 'robotics',
         featured: false
-      },
-      {
-        title: 'AI-Powered Recommendation APP',
+      },      {
+        title: <a href="https://huggingface.co/spaces/pepperumo/book_recommender_streamlit" target="_blank" rel="noopener noreferrer">AI-Powered Recommendation APP</a>,
         description: 'A recommendation system using collaborative filtering and deep learning techniques.',
         image: `${process.env.PUBLIC_URL}/books.jpg`,
         technologies: ['Python', 'TensorFlow', 'Flask', 'MongoDB'],
@@ -267,6 +266,16 @@ const ProjectTitle = styled.h3`
   color: var(--text-primary);
   font-size: 22px;
   margin-bottom: 10px;
+  
+  a {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    
+    &:hover {
+      color: var(--secondary-color);
+    }
+  }
 `;
 
 const ProjectDescription = styled.p`
