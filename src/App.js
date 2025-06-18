@@ -10,11 +10,13 @@ import Education from './components/Education/Education';
 import Portfolio from './components/Portfolio/Portfolio';
 import Contact from './components/Contact/Contact';
 import SocialSidebar from './components/SocialSidebar/SocialSidebar';
+import ThreeBackground from './components/ThreeBackground/ThreeBackground';
 
 function App() {
   return (
     <AppContainer>
       <GlobalStyles />
+      <ThreeBackground />
       <Navbar />
       <SocialSidebar />
       <AboutMe />

@@ -34,63 +34,64 @@ const AboutMe = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
-        >
-          <IntroSection>
-            <NameAndDescriptionContainer>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >                <Greeting>Hello, my name is</Greeting>
-                <Name>Giuseppe Rumore</Name>
-                <JobTitle>Mechanical Engineer, Data Scientist, Machine Learning Engineer</JobTitle>
-                <SummaryDescription>
-                 Skilled in harnessing data science and machine-learning techniques to transform engineering processes, 
-                 optimise designs and improve overall performance. Extensive background in predictive analytics, AI-powered tools, plus deep hands-on expertise in CAD modelling and robotics to deliver innovative, efficient solutions.
-                </SummaryDescription>
-              </motion.div>
+        >          <IntroSection>
+            <IntroContentBox>
+              <NameAndDescriptionContainer>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >                <Greeting>Hello, my name is</Greeting>
+                  <Name>Giuseppe Rumore</Name>
+                  <JobTitle>Mechanical Engineer, Data Scientist, Machine Learning Engineer</JobTitle>
+                  <SummaryDescription>
+                   Skilled in harnessing data science and machine-learning techniques to transform engineering processes, 
+                   optimise designs and improve overall performance. Extensive background in predictive analytics, AI-powered tools, plus deep hands-on expertise in CAD modelling and robotics to deliver innovative, efficient solutions.
+                  </SummaryDescription>
+                </motion.div>
 
-              <SocialLinksContainer>
-                <SocialLink 
-                  href="https://www.linkedin.com/in/giuseppe-rumore-b2599961" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn Profile"
-                  title="LinkedIn"
-                >
-                  <FaLinkedin />
-                </SocialLink>
-                <SocialLink 
-                  href="https://github.com/pepperumo" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  aria-label="GitHub Profile"
-                  title="GitHub"
-                >
-                  <FaGithub />
-                </SocialLink>                <EmailLink 
-                  href="mailto:giuseppe.rumore91@gmail.com" 
-                  aria-label="Email Giuseppe Rumore"
-                  title="Email"
-                >
-                  <FaEnvelope />
-                </EmailLink>
-              </SocialLinksContainer>
+                <SocialLinksContainer>
+                  <SocialLink 
+                    href="https://www.linkedin.com/in/giuseppe-rumore-b2599961" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn Profile"
+                    title="LinkedIn"
+                  >
+                    <FaLinkedin />
+                  </SocialLink>
+                  <SocialLink 
+                    href="https://github.com/pepperumo" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    aria-label="GitHub Profile"
+                    title="GitHub"
+                  >
+                    <FaGithub />
+                  </SocialLink>                <EmailLink 
+                    href="mailto:giuseppe.rumore91@gmail.com" 
+                    aria-label="Email Giuseppe Rumore"
+                    title="Email"
+                  >
+                    <FaEnvelope />
+                  </EmailLink>
+                </SocialLinksContainer>
+                
+                <ExploreButton to="portfolio" smooth={true} duration={500} offset={-70}>
+                  Explore my work
+                </ExploreButton>
+              </NameAndDescriptionContainer>
               
-              <ExploreButton to="portfolio" smooth={true} duration={500} offset={-70}>
-                Explore my work
-              </ExploreButton>
-            </NameAndDescriptionContainer>
-            
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              <ProfileImageContainer>
-                <ProfileImage />
-              </ProfileImageContainer>
-            </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                <ProfileImageContainer>
+                  <ProfileImage />
+                </ProfileImageContainer>
+              </motion.div>
+            </IntroContentBox>
           </IntroSection>
           
           <LanguagesSection>
@@ -157,12 +158,37 @@ const ContentWrapper = styled.div`
 const IntroSection = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: 40px;
   
   @media (max-width: 768px) {
     flex-direction: column-reverse;
     gap: 30px;
+  }
+`;
+
+const IntroContentBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1000px;
+  background: rgba(17, 34, 64, 0.4);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(100, 255, 218, 0.1);
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+    gap: 30px;
+    padding: 30px 20px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 25px 15px;
+    border-radius: 12px;
   }
 `;
 

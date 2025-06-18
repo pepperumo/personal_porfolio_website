@@ -24,14 +24,13 @@ const GlobalStyles = createGlobalStyle`  :root {
 
   html {
     scroll-behavior: smooth;
-  }
-  body {
+  }  body {
     font-family: var(--font-primary);
     background-color: var(--background-dark);
     background-image: linear-gradient(
       to right,
-      rgba(10, 25, 47, 0.95),
-      rgba(10, 25, 47, 0.8)
+      rgba(10, 25, 47, 0.85),
+      rgba(10, 25, 47, 0.75)
     ), url('${process.env.PUBLIC_URL}/background.png');
     background-size: cover;
     background-position: center;
@@ -39,6 +38,7 @@ const GlobalStyles = createGlobalStyle`  :root {
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
+    position: relative;
   }
 
   a {
