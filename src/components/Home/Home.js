@@ -43,10 +43,10 @@ const AboutMe = () => {
                   transition={{ duration: 0.5, delay: 0.2 }}
                 >                <Greeting>Hello, my name is</Greeting>
                   <Name>Giuseppe Rumore</Name>
-                  <JobTitle>Mechanical Engineer, Data Scientist, Machine Learning Engineer</JobTitle>
+                  <JobTitle>Engineering, Data Science, Machine Learning</JobTitle>
                   <SummaryDescription>
                    Skilled in harnessing data science and machine-learning techniques to transform engineering processes, 
-                   optimise designs and improve overall performance. Extensive background in predictive analytics, AI-powered tools, plus deep hands-on expertise in CAD modelling and robotics to deliver innovative, efficient solutions.
+                   optimise designs and improve overall performance. Extensive background in predictive analytics, AI-powered tools, plus deep hands-on expertise in CAD modelling to deliver innovative, efficient solutions.
                   </SummaryDescription>
                 </motion.div>
 

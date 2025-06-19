@@ -46,7 +46,7 @@ const Portfolio = () => {
         title: <a href="https://huggingface.co/spaces/pepperumo/book_recommender_streamlit" target="_blank" rel="noopener noreferrer">AI-Powered Recommendation APP</a>,
         description: 'A recommendation system using collaborative filtering and deep learning techniques.',
         image: `${process.env.PUBLIC_URL}/books.jpg`,
-        technologies: ['Python', 'TensorFlow', 'Flask', 'MongoDB'],
+        technologies: ['Python', 'TensorFlow', 'FastAPI', 'TypeScript', 'Streamlit'],
         github: 'https://github.com/pepperumo/MLOps_book_recommender_system',
         external: 'https://huggingface.co/spaces/pepperumo/book_recommender_streamlit',
         category: 'MLOps',

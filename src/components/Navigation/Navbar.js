@@ -54,9 +54,7 @@ const Navbar = () => {
         </LogoLink>
         <MenuButton onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <FiX /> : <FiMenu />}
-        </MenuButton>
-
-        <NavItems $menuOpen={menuOpen}>
+        </MenuButton>        <NavItems $menuOpen={menuOpen}>
           <NavList>
             {navLinks.map((link, index) => (
               <NavItem key={index}>
@@ -74,6 +72,14 @@ const Navbar = () => {
               </NavItem>
             ))}
           </NavList>
+          <CVDownloadButton 
+            href={`${process.env.PUBLIC_URL}/Giuseppe_Rumore_CV_english.pdf`}
+            target="_blank"
+            rel="noopener noreferrer"
+            download="Giuseppe_Rumore_CV_english.pdf"
+          >
+            Download my CV
+          </CVDownloadButton>
         </NavItems>
       </NavContent>
     </NavContainer>
@@ -198,6 +204,32 @@ const NavMenuLink = styled(ScrollLinkWrapper)`
     display: block;
     padding: 15px 0;
     font-size: 16px;
+  }
+`;
+
+const CVDownloadButton = styled.a`
+  display: inline-block;
+  padding: 12px 24px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: var(--transition);
+  background-color: var(--secondary-color);
+  color: var(--background-dark);
+  border: 1px solid var(--secondary-color);
+  margin-left: 20px;
+  
+  &:hover {
+    background-color: var(--secondary-light);
+    transform: translateY(-3px);
+  }
+  
+  @media (max-width: 768px) {
+    margin: 20px 0 0 0;
+    width: 80%;
   }
 `;
 

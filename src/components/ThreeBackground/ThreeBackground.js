@@ -31,26 +31,27 @@ const ThreeBackground = () => {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 0);
     rendererRef.current = renderer;
-    mount.appendChild(renderer.domElement);    // Central AI Core (glowing sphere)
+    mount.appendChild(renderer.domElement);    // Central AI Core (glowing sphere) - positioned on the left side
     const coreGeometry = new THREE.SphereGeometry(2, 32, 32);
     const coreMaterial = new THREE.MeshBasicMaterial({ 
-      color: 0x00ff88,
+      color: 0x40a070,
       transparent: true,
-      opacity: 0.9
+      opacity: 0.95
     });
     const aiCore = new THREE.Mesh(coreGeometry, coreMaterial);
-    aiCore.position.set(0, 0, 0);
+    aiCore.position.set(-25, 0, 0); // Move to left side
     scene.add(aiCore);
 
     // Create a glowing effect for the core
     const coreGlow = new THREE.Mesh(
       new THREE.SphereGeometry(3, 32, 32),
       new THREE.MeshBasicMaterial({ 
-        color: 0x00ff88,
+        color: 0x40a070,
         transparent: true,
-        opacity: 0.2
+        opacity: 0.15
       })
     );
+    coreGlow.position.set(-25, 0, 0); // Move glow to match core position
     scene.add(coreGlow);
 
     // Neural Network Nodes (smaller spheres around the core)
@@ -63,8 +64,7 @@ const ThreeBackground = () => {
 
     const nodes = [];
     const nodeCount = 80;
-    
-    // Create nodes in layers around the core
+      // Create nodes in layers around the core - positioned on left side
     for (let layer = 1; layer <= 4; layer++) {
       const layerNodeCount = Math.floor(nodeCount / 4);
       const radius = layer * 8 + Math.random() * 4;
@@ -75,7 +75,7 @@ const ThreeBackground = () => {
         
         const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
         node.position.set(
-          radius * Math.sin(phi) * Math.cos(theta),
+          -25 + radius * Math.sin(phi) * Math.cos(theta), // Offset to left side
           radius * Math.sin(phi) * Math.sin(theta),
           radius * Math.cos(phi)
         );
@@ -84,25 +84,24 @@ const ThreeBackground = () => {
         node.userData = {
           originalPosition: node.position.clone(),
           layer: layer,
-          angle: theta
+          angle: theta,
+          centerX: -25 // Store the center X position for orbital motion
         };
         
         nodes.push(node);
         scene.add(node);
       }
-    }    // Neural Network Connections (radiating from core like synapses)
+    }// Neural Network Connections (radiating from core like synapses)
     const connections = [];
     const connectionMaterial = new THREE.LineBasicMaterial({ 
       color: 0x00ff88,
       transparent: true,
       opacity: 0.6
-    });
-
-    // Create connections from AI core to nodes
+    });    // Create connections from AI core to nodes (updated for left-side positioning)
     nodes.forEach((node, index) => {
       if (Math.random() > 0.3) { // Don't connect all nodes
         const geometry = new THREE.BufferGeometry().setFromPoints([
-          new THREE.Vector3(0, 0, 0), // AI core position
+          new THREE.Vector3(-25, 0, 0), // AI core position on left side
           node.position
         ]);
         const line = new THREE.Line(geometry, connectionMaterial);
@@ -307,16 +306,14 @@ const ThreeBackground = () => {
       
       bearingGroup.position.set(x, y, z);
       return bearingGroup;
-    };
-
-    // Add mechanical assemblies to the scene
+    };    // Add mechanical assemblies to the scene - positioned on right side
     const mechanicalParts = [
-      createMechanicalAssembly(-25, 10, -20),
-      createMechanicalAssembly(30, -15, -25),
-      createGear(5, 12, -35, 5, -30),
-      createGear(3, 8, 25, 20, -35),
-      createBearing(-15, -10, -40),
-      createBearing(20, 15, -15)
+      createMechanicalAssembly(35, 10, -20),
+      createMechanicalAssembly(45, -15, -25),
+      createGear(5, 12, 25, 5, -30),
+      createGear(3, 8, 40, 20, -35),
+      createBearing(30, -10, -40),
+      createBearing(50, 15, -15)
     ];
 
     mechanicalParts.forEach(part => {
@@ -328,20 +325,18 @@ const ThreeBackground = () => {
       cadGroup.add(part);
     });
 
-    scene.add(cadGroup);
-
-    // CAD-style technical grid planes
+    scene.add(cadGroup);    // CAD-style technical grid planes - positioned on right side
     const gridHelper1 = new THREE.GridHelper(40, 20, 0x4dabf7, 0x4dabf7);
     gridHelper1.material.transparent = true;
     gridHelper1.material.opacity = 0.2;
-    gridHelper1.position.set(25, -15, 10);
+    gridHelper1.position.set(40, -15, 10);
     gridHelper1.rotation.x = Math.PI / 6;
     scene.add(gridHelper1);
 
     const gridHelper2 = new THREE.GridHelper(30, 15, 0x8892b0, 0x8892b0);
     gridHelper2.material.transparent = true;
     gridHelper2.material.opacity = 0.15;
-    gridHelper2.position.set(-20, 10, -15);
+    gridHelper2.position.set(35, 10, -15);
     gridHelper2.rotation.z = Math.PI / 4;
     scene.add(gridHelper2);
 
@@ -380,11 +375,9 @@ const ThreeBackground = () => {
       color: 0x4dabf7,
       transparent: true,
       opacity: 0.6
-    }));
-
-    axesGroup.add(xAxis, yAxis, zAxis);
-    axesGroup.position.set(-30, -20, -10);
-    scene.add(axesGroup);    // Animation variables
+    }));    axesGroup.add(xAxis, yAxis, zAxis);
+    axesGroup.position.set(30, -20, -10); // Move to right side with CAD elements
+    scene.add(axesGroup);// Animation variables
     let time = 0;
     const aiCoreRef = aiCore;
     const coreGlowRef = coreGlow;// Animation loop
@@ -405,12 +398,11 @@ const ThreeBackground = () => {
       nodes.forEach((node, index) => {
         const userData = node.userData;
         const layer = userData.layer;
-        
-        // Orbital motion around the AI core
+          // Orbital motion around the AI core (left side)
         userData.angle += 0.005 / layer; // Outer layers move slower
         const radius = layer * 8 + Math.sin(time + index * 0.1) * 2;
         
-        node.position.x = radius * Math.cos(userData.angle);
+        node.position.x = userData.centerX + radius * Math.cos(userData.angle); // Use stored center X position
         node.position.z = radius * Math.sin(userData.angle);
         node.position.y = userData.originalPosition.y + Math.sin(time * 2 + index * 0.2) * 1;
         
@@ -423,11 +415,10 @@ const ThreeBackground = () => {
       connections.forEach((connectionData) => {
         const { line, targetNode, nodeA, nodeB } = connectionData;
         const points = line.geometry.attributes.position.array;
-        
-        if (targetNode) {
-          // Connection from core to node
-          points[0] = 0; // Core X
-          points[1] = 0; // Core Y  
+          if (targetNode) {
+          // Connection from core to node (left side)
+          points[0] = -25; // Core X position on left side
+          points[1] = 0; // Core Y
           points[2] = 0; // Core Z
           points[3] = targetNode.position.x;
           points[4] = targetNode.position.y;

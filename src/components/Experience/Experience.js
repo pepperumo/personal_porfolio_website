@@ -6,9 +6,9 @@ const Experience = () => {
   const jobs = [
     {
       company: 'Steltix',
-      role: 'JDEdwards Consultant',
+      role: 'ERP Consultant',
       period: '12/2022 – 08/2024',
-      field: 'Enterprise Resource Planning (ERP), Business Management Software',
+      field: 'Enterprise Resource Planning (ERP), JDEdwards, Business Management Software',
       responsibilities: [
         'Comprehensive Business Management Solutions: Developed and optimized ERP solutions for manufacturing processes',
         'Integration and Production Planning: Monitored and maintained key systems for Bill of Materials (BOM), Materials Requirements Planning (MRP), Resource Planning (DRP)',
@@ -17,7 +17,7 @@ const Experience = () => {
     },
     {
       company: 'IMI Climate Control',
-      role: 'Mechanical Engineer | Data Analyst',
+      role: 'Mechanical Engineer | Data Scientist',
       period: '04/2017 – 07/2022',
       field: 'Heating Systems, Hydraulic Systems, Expansion Vessels, Vulcanization Processes',
       responsibilities: [
