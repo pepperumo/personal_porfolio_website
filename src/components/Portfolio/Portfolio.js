@@ -13,6 +13,15 @@ const Portfolio = () => {
   useEffect(() => {
     // Simulated data - this would typically come from an API or CMS
     const projectData = [
+      {        title: <a href="https://www.linkedin.com/pulse/crypto-foresight-ai-powered-platform-real-time-giuseppe-rumore-e38lf/?trackingId=labKh5L7TbyvzyeYqmp7%2BQ%3D%3D" target="_blank" rel="noopener noreferrer">Crypto Foresight</a>,
+        description: 'AI-powered price forecasting platform for cryptocurrency using advanced machine learning models.',
+        image: `${process.env.PUBLIC_URL}/Forecast.png`,
+        technologies: ['Python', 'Machine Learning', 'React.js', 'Time Series Forecasting', 'Data Visualization'],
+        github: 'https://github.com/pepperumo/crypto-forecasting',
+        external: 'https://www.linkedin.com/pulse/crypto-foresight-ai-powered-platform-real-time-giuseppe-rumore-e38lf/?trackingId=labKh5L7TbyvzyeYqmp7%2BQ%3D%3D',
+        category: 'ai',
+        featured: true
+      },
       {
         title: <a href="https://huggingface.co/spaces/pepperumo/MVTec_Website" target="_blank" rel="noopener noreferrer">MVTEC Anomaly Detection</a>,
         description: 'An anomaly detection system APP, detecting defects on products.',
