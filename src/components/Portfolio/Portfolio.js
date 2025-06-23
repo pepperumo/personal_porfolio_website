@@ -13,14 +13,16 @@ const Portfolio = () => {
   useEffect(() => {
     // Simulated data - this would typically come from an API or CMS
     const projectData = [
-      {        title: <a href="https://www.linkedin.com/pulse/crypto-foresight-ai-powered-platform-real-time-giuseppe-rumore-e38lf/?trackingId=labKh5L7TbyvzyeYqmp7%2BQ%3D%3D" target="_blank" rel="noopener noreferrer">Crypto Foresight</a>,
-        description: 'AI-powered price forecasting platform for cryptocurrency using advanced machine learning models.',
-        image: `${process.env.PUBLIC_URL}/Forecast.png`,
-        technologies: ['Python', 'Machine Learning', 'React.js', 'Time Series Forecasting', 'Data Visualization'],
-        github: 'https://github.com/pepperumo/crypto-forecasting',
-        external: 'https://www.linkedin.com/pulse/crypto-foresight-ai-powered-platform-real-time-giuseppe-rumore-e38lf/?trackingId=labKh5L7TbyvzyeYqmp7%2BQ%3D%3D',
-        category: 'ai',
-        featured: true
+      
+      {
+        title: <a href="https://huggingface.co/spaces/pepperumo/book_recommender_streamlit" target="_blank" rel="noopener noreferrer">AI-Powered Recommendation APP</a>,
+        description: 'A recommendation system using collaborative filtering and deep learning techniques.',
+        image: `${process.env.PUBLIC_URL}/books.jpg`,
+        technologies: ['Python', 'TensorFlow', 'FastAPI', 'TypeScript', 'Streamlit'],
+        github: 'https://github.com/pepperumo/MLOps_book_recommender_system',
+        external: 'https://huggingface.co/spaces/pepperumo/book_recommender_streamlit',
+        category: 'MLOps',
+        featured: false
       },
       {
         title: <a href="https://huggingface.co/spaces/pepperumo/MVTec_Website" target="_blank" rel="noopener noreferrer">MVTEC Anomaly Detection</a>,
@@ -29,6 +31,16 @@ const Portfolio = () => {
         technologies: ['Python', 'PyTorch', 'Computer Vision', 'Convolutional Neural Networks'],
         github: 'https://github.com/pepperumo/MVTEC-anomaly-detection',
         external: 'https://huggingface.co/spaces/pepperumo/MVTec_Website',
+        category: 'ai',
+        featured: true
+      },
+      {
+        title: <a href="https://accidentdetector-0naw.onrender.com/" target="_blank" rel="noopener noreferrer">Automated Vehicle Damage Detection</a>,
+        description: 'An AI-powered system for automated detection and assessment of vehicle damage using computer vision and machine learning techniques.',
+        image: `${process.env.PUBLIC_URL}/car_damage.png`,
+        technologies: ['Python', 'Computer Vision', 'Machine Learning', 'Deep Learning', 'Image Processing'],
+        github: 'https://github.com/pepperumo/automated_vehicle_damage',
+        external: 'https://accidentdetector-0naw.onrender.com/',
         category: 'ai',
         featured: true
       },
@@ -51,16 +63,17 @@ const Portfolio = () => {
         external: 'https://www.linkedin.com/pulse/self-driving-ros-2-giuseppe-rumore-l6wzf/',
         category: 'robotics',
         featured: false
-      },      {
-        title: <a href="https://huggingface.co/spaces/pepperumo/book_recommender_streamlit" target="_blank" rel="noopener noreferrer">AI-Powered Recommendation APP</a>,
-        description: 'A recommendation system using collaborative filtering and deep learning techniques.',
-        image: `${process.env.PUBLIC_URL}/books.jpg`,
-        technologies: ['Python', 'TensorFlow', 'FastAPI', 'TypeScript', 'Streamlit'],
-        github: 'https://github.com/pepperumo/MLOps_book_recommender_system',
-        external: 'https://huggingface.co/spaces/pepperumo/book_recommender_streamlit',
-        category: 'MLOps',
-        featured: false
-      }
+      },  
+      {        title: <a href="https://www.linkedin.com/pulse/crypto-foresight-ai-powered-platform-real-time-giuseppe-rumore-e38lf/?trackingId=labKh5L7TbyvzyeYqmp7%2BQ%3D%3D" target="_blank" rel="noopener noreferrer">Crypto Foresight</a>,
+        description: 'AI-powered price forecasting platform for cryptocurrency using advanced machine learning models.',
+        image: `${process.env.PUBLIC_URL}/Forecast.png`,
+        technologies: ['Python', 'Machine Learning', 'React.js', 'Time Series Forecasting', 'Data Visualization'],
+        github: 'https://github.com/pepperumo/crypto-forecasting',
+        external: 'https://www.linkedin.com/pulse/crypto-foresight-ai-powered-platform-real-time-giuseppe-rumore-e38lf/?trackingId=labKh5L7TbyvzyeYqmp7%2BQ%3D%3D',
+        category: 'ai',
+        featured: true
+      }    
+      
     ];
     
     setProjects(projectData);
@@ -106,7 +119,13 @@ const Portfolio = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               $featured={project.featured}
             >              <ProjectImageContainer>
-                <ProjectImage src={project.image} alt={project.title} />
+                {project.external ? (
+                  <a href={project.external} target="_blank" rel="noopener noreferrer">
+                    <ProjectImage src={project.image} alt={project.title} />
+                  </a>
+                ) : (
+                  <ProjectImage src={project.image} alt={project.title} />
+                )}
               </ProjectImageContainer>
               <ProjectContent>
                 <ProjectCategory>{project.category}</ProjectCategory>
@@ -218,6 +237,15 @@ const ProjectImageContainer = styled.div`
   height: 0;
   padding-top: 56.25%; /* 16:9 aspect ratio */
   overflow: hidden;
+  
+  a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
 `;
 
 const ProjectImage = styled.img`
@@ -228,6 +256,7 @@ const ProjectImage = styled.img`
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
+  cursor: pointer;
   
   ${ProjectImageContainer}:hover & {
     transform: scale(1.05);
