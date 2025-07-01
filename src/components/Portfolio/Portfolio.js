@@ -35,12 +35,12 @@ const Portfolio = () => {
         featured: true
       },
       {
-        title: <a href="https://automated-vehicle-damage-400484112127.europe-west1.run.app/" target="_blank" rel="noopener noreferrer">Automated Vehicle Damage Detection</a>,
+        title: <a href="https://www.linkedin.com/pulse/car-damage-detection-using-ai-giuseppe-rumore-9ld7f/?trackingId=8UVElv3GQwez%2Bi4IDUYQQQ%3D%3D" target="_blank" rel="noopener noreferrer">Automated Vehicle Damage Detection</a>,
         description: 'An AI-powered system for automated detection and assessment of vehicle damage using computer vision and machine learning techniques.',
         image: `${process.env.PUBLIC_URL}/car_damage.png`,
         technologies: ['Python', 'Computer Vision', 'Machine Learning', 'Deep Learning', 'Image Processing'],
         github: 'https://github.com/pepperumo/automated_vehicle_damage',
-        external: 'https://automated-vehicle-damage-400484112127.europe-west1.run.app/',
+        external: 'https://www.linkedin.com/pulse/car-damage-detection-using-ai-giuseppe-rumore-9ld7f/?trackingId=8UVElv3GQwez%2Bi4IDUYQQQ%3D%3D',
         category: 'ai',
         featured: true
       },
