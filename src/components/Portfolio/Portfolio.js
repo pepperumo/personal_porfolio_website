@@ -167,6 +167,19 @@ const Portfolio = () => {
 
 const PortfolioSection = styled.section`
   /* Using global section styling from GlobalStyles.js */
+  padding-top: 20px !important;
+  
+  @media (max-width: 1080px) {
+    padding-top: 15px !important;
+  }
+  
+  @media (max-width: 768px) {
+    padding-top: 10px !important;
+  }
+  
+  @media (max-width: 480px) {
+    padding-top: 10px !important;
+  }
 `;
 
 const SectionTitle = styled.h2`

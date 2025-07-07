@@ -32,10 +32,11 @@ const Navbar = () => {
     };
   }, []);  const navLinks = [
     { name: 'About Me', to: 'about-me' },
+    { name: 'My Projects', to: 'portfolio' },
+    { name: 'Languages', to: 'languages' },
     { name: 'Skills', to: 'skills' },
     { name: 'Experience', to: 'experience' },
     { name: 'Education', to: 'education' },
-    { name: 'Portfolio', to: 'portfolio' },
     { name: 'Contact', to: 'contact' }
   ];
 

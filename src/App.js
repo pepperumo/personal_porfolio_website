@@ -8,6 +8,8 @@ import AboutMe from './components/Home/Home';
 import Experience from './components/Experience/Experience';
 import Education from './components/Education/Education';
 import Portfolio from './components/Portfolio/Portfolio';
+import Languages from './components/Languages/Languages';
+import Skills from './components/Skills/Skills';
 import Contact from './components/Contact/Contact';
 import SocialSidebar from './components/SocialSidebar/SocialSidebar';
 import ThreeBackground from './components/ThreeBackground/ThreeBackground';
@@ -20,9 +22,11 @@ function App() {
       <Navbar />
       <SocialSidebar />
       <AboutMe />
+      <Portfolio />
+      <Languages />
+      <Skills />
       <Experience />
       <Education />
-      <Portfolio />
       <Contact />
     </AppContainer>
   );
