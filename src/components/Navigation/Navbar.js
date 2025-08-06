@@ -74,10 +74,9 @@ const Navbar = () => {
             ))}
           </NavList>
           <CVDownloadButton 
-            href={`${process.env.PUBLIC_URL}/Giuseppe_Rumore_CV_english.pdf`}
+            href="https://drive.google.com/uc?export=download&id=1nM33QMzi06gAu9-_kgkDN-ZPgqZOZIvV"
             target="_blank"
             rel="noopener noreferrer"
-            download="Giuseppe_Rumore_CV_english.pdf"
           >
             Download my CV
           </CVDownloadButton>
