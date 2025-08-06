@@ -21,13 +21,13 @@ const Contact = () => {
           
           <ContactLinksContainer>
             <ContactItem 
-              href="mailto:giuseppe.rumore91@gmail.com"
+              href="mailto:pepperumo@gmail.com"
               aria-label="Email Giuseppe Rumore"
             >
               <ContactItemIcon>
                 <FaEnvelope />
               </ContactItemIcon>
-              <ContactItemText>giuseppe.rumore91@gmail.com</ContactItemText>
+              <ContactItemText>pepperumo@gmail.com</ContactItemText>
             </ContactItem>
             
             <ContactItem 

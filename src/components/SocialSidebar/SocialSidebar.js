@@ -35,7 +35,7 @@ const SocialSidebar = () => {
         </SocialIconItem>
         <SocialIconItem>
           <SocialLink 
-            href="mailto:giuseppe.rumore91@gmail.com" 
+            href="mailto:pepperumo@gmail.com" 
             aria-label="Email Giuseppe Rumore"
             title="Email"
           >

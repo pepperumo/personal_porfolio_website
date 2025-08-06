@@ -58,7 +58,7 @@ const AboutMe = () => {
                   >
                     <FaGithub />
                   </SocialLink>                <EmailLink 
-                    href="mailto:giuseppe.rumore91@gmail.com" 
+                    href="mailto:pepperumo@gmail.com" 
                     aria-label="Email Giuseppe Rumore"
                     title="Email"
                   >
