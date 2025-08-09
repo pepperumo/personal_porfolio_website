@@ -66,9 +66,18 @@ const AboutMe = () => {
                   </EmailLink>
                 </SocialLinksContainer>
                 
-                <ExploreButton to="portfolio" smooth={true} duration={500} offset={-70}>
-                  Explore my work
-                </ExploreButton>
+                <ButtonContainer>
+                  <ExploreButton to="portfolio" smooth={true} duration={500} offset={-70}>
+                    Explore my work
+                  </ExploreButton>
+                  <CVDownloadButton 
+                    href="https://drive.google.com/uc?export=download&id=1nM33QMzi06gAu9-_kgkDN-ZPgqZOZIvV"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Download my CV
+                  </CVDownloadButton>
+                </ButtonContainer>
               </NameAndDescriptionContainer>
               
               <motion.div
@@ -294,6 +303,16 @@ const ButtonBase = styled(ScrollLinkWrapper)`
   }
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 20px;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    width: 100%;
+  }
+`;
+
 const ExploreButton = styled(ButtonBase)`
   background-color: var(--secondary-color);
   color: var(--background-dark);
@@ -302,6 +321,30 @@ const ExploreButton = styled(ButtonBase)`
   &:hover {
     background-color: var(--secondary-light);
     transform: translateY(-3px);
+  }
+`;
+
+const CVDownloadButton = styled.a`
+  display: inline-block;
+  padding: 12px 24px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: var(--transition);
+  background-color: transparent;
+  color: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
+  
+  &:hover {
+    background-color: rgba(100, 255, 218, 0.1);
+    transform: translateY(-3px);
+  }
+  
+  @media (max-width: 768px) {
+    width: 100%;
   }
 `;
 
