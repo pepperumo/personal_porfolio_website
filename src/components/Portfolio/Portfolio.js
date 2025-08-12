@@ -13,16 +13,15 @@ const Portfolio = () => {
   useEffect(() => {
     // Simulated data - this would typically come from an API or CMS
     const projectData = [
-      
       {
-        title: <a href="https://huggingface.co/spaces/pepperumo/book_recommender_streamlit" target="_blank" rel="noopener noreferrer">AI-Powered Recommendation APP</a>,
-        description: 'A recommendation system using collaborative filtering and deep learning techniques.',
-        image: `${process.env.PUBLIC_URL}/books.jpg`,
-        technologies: ['Python', 'TensorFlow', 'FastAPI', 'TypeScript', 'Streamlit'],
-        github: 'https://github.com/pepperumo/MLOps_book_recommender_system',
-        external: 'https://huggingface.co/spaces/pepperumo/book_recommender_streamlit',
-        category: 'MLOps',
-        featured: false
+        title: <a href="https://www.linkedin.com/pulse/agentic-rag-actually-answers-your-question-why-i-built-rumore-nycre/" target="_blank" rel="noopener noreferrer">Agentic RAG on n8n</a>,
+        description: 'Agentic RAG that routes each question to the right capability (semantic search, full-document retrieval, or SQL over structured data)coordinated by n8n for higher answer quality and transparency.',
+        image: `${process.env.PUBLIC_URL}/n8n.png`,
+        technologies: ['n8n', 'RAG', 'Agents', 'Semantic Search', 'SQL', 'Retrieval'],
+        github: 'https://github.com/pepperumo/n8n_worflows',
+        external: 'https://www.linkedin.com/pulse/agentic-rag-actually-answers-your-question-why-i-built-rumore-nycre/',
+        category: 'ai',
+        featured: true
       },
       {
         title: <a href="https://huggingface.co/spaces/pepperumo/MVTec_Website" target="_blank" rel="noopener noreferrer">MVTEC Anomaly Detection</a>,
@@ -45,6 +44,25 @@ const Portfolio = () => {
         featured: true
       },
       {
+        title: <a href="https://huggingface.co/spaces/pepperumo/book_recommender_streamlit" target="_blank" rel="noopener noreferrer">AI-Powered Recommendation APP</a>,
+        description: 'A recommendation system using collaborative filtering and deep learning techniques.',
+        image: `${process.env.PUBLIC_URL}/books.jpg`,
+        technologies: ['Python', 'TensorFlow', 'FastAPI', 'TypeScript', 'Streamlit'],
+        github: 'https://github.com/pepperumo/MLOps_book_recommender_system',
+        external: 'https://huggingface.co/spaces/pepperumo/book_recommender_streamlit',
+        category: 'MLOps',
+        featured: false
+      },
+      {        title: <a href="https://www.linkedin.com/pulse/crypto-foresight-ai-powered-platform-real-time-giuseppe-rumore-e38lf/?trackingId=labKh5L7TbyvzyeYqmp7%2BQ%3D%3D" target="_blank" rel="noopener noreferrer">Crypto Foresight</a>,
+        description: 'AI-powered price forecasting platform for cryptocurrency using advanced machine learning models.',
+        image: `${process.env.PUBLIC_URL}/Forecast.png`,
+        technologies: ['Python', 'Machine Learning', 'React.js', 'Time Series Forecasting', 'Data Visualization'],
+        github: 'https://github.com/pepperumo/crypto-forecasting',
+        external: 'https://www.linkedin.com/pulse/crypto-foresight-ai-powered-platform-real-time-giuseppe-rumore-e38lf/?trackingId=labKh5L7TbyvzyeYqmp7%2BQ%3D%3D',
+        category: 'ai',
+        featured: true
+      },
+      {
         title: <a href="https://www.linkedin.com/pulse/optimizing-cad-designs-using-genetic-algorithms-giuseppe-rumore-gpoif/" target="_blank" rel="noopener noreferrer">CAD Design Optimization with Genetic Algorithms</a>,
         description: 'A genetic algorithm-based optimization framework for CAD designs.',
         image: `${process.env.PUBLIC_URL}/Clamp_sizes.png`,
@@ -63,16 +81,7 @@ const Portfolio = () => {
         external: 'https://www.linkedin.com/pulse/self-driving-ros-2-giuseppe-rumore-l6wzf/',
         category: 'robotics',
         featured: false
-      },  
-      {        title: <a href="https://www.linkedin.com/pulse/crypto-foresight-ai-powered-platform-real-time-giuseppe-rumore-e38lf/?trackingId=labKh5L7TbyvzyeYqmp7%2BQ%3D%3D" target="_blank" rel="noopener noreferrer">Crypto Foresight</a>,
-        description: 'AI-powered price forecasting platform for cryptocurrency using advanced machine learning models.',
-        image: `${process.env.PUBLIC_URL}/Forecast.png`,
-        technologies: ['Python', 'Machine Learning', 'React.js', 'Time Series Forecasting', 'Data Visualization'],
-        github: 'https://github.com/pepperumo/crypto-forecasting',
-        external: 'https://www.linkedin.com/pulse/crypto-foresight-ai-powered-platform-real-time-giuseppe-rumore-e38lf/?trackingId=labKh5L7TbyvzyeYqmp7%2BQ%3D%3D',
-        category: 'ai',
-        featured: true
-      }    
+      }
       
     ];
     

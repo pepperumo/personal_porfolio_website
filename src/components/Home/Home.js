@@ -71,7 +71,7 @@ const AboutMe = () => {
                     Explore my work
                   </ExploreButton>
                   <CVDownloadButton 
-                    href="https://drive.google.com/uc?export=download&id=1nM33QMzi06gAu9-_kgkDN-ZPgqZOZIvV"
+                    href="https://docs.google.com/document/d/1A2brfk20TdLxM2QA9SRxPVp2Qa2_1sAK375zaYkm6eo/export?format=pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
