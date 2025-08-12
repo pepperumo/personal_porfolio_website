@@ -152,7 +152,7 @@ const NavItems = styled.div`
     width: 80%;
     max-width: 300px;
     height: 100vh;
-    padding: 100px 0;
+    padding: 80px 0 20px 0;
     background-color: var(--background-light);
     flex-direction: column;
     justify-content: flex-start;
@@ -178,7 +178,7 @@ const NavItem = styled.li`
   margin: 0 15px;
   
   @media (max-width: 768px) {
-    margin: 10px 0;
+    margin: 5px 0;
     text-align: center;
     width: 100%;
   }
@@ -203,7 +203,7 @@ const NavMenuLink = styled(ScrollLinkWrapper)`
   
   @media (max-width: 768px) {
     display: block;
-    padding: 15px 0;
+    padding: 10px 0;
     font-size: 16px;
   }
 `;
@@ -229,7 +229,7 @@ const CVDownloadButton = styled.a`
   }
   
   @media (max-width: 768px) {
-    margin: 20px 0 0 0;
+    margin: 15px 0 0 0;
     width: 80%;
   }
 `;
