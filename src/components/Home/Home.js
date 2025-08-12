@@ -71,9 +71,10 @@ const AboutMe = () => {
                     Explore my work
                   </ExploreButton>
                   <CVDownloadButton 
-                    href="https://docs.google.com/document/d/1A2brfk20TdLxM2QA9SRxPVp2Qa2_1sAK375zaYkm6eo/export?format=pdf"
+                    href="https://docs.google.com/document/d/1A2brfk20TdLxM2QA9SRxPVp2Qa2_1sAK375zaYkm6eo/export?format=pdf&attachment=true"
                     target="_blank"
                     rel="noopener noreferrer"
+                    download="Giuseppe_Rumore_CV.pdf"
                   >
                     Download my CV
                   </CVDownloadButton>
