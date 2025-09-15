@@ -74,7 +74,7 @@ const ChatPanel = ({ onClose }) => {
     <PanelContainer role="dialog" aria-modal="true" aria-label="Chat with PeppeGPT">
       <PanelHeader>
         <HeaderTitle>
-          <ChatIcon>🤖</ChatIcon>
+          <ProfileImage src={`${process.env.PUBLIC_URL}/profile.png`} alt="Giuseppe" />
           PeppeGPT
           {!isConnected && <OfflineIndicator title="Offline">⚠️</OfflineIndicator>}
         </HeaderTitle>
@@ -88,25 +88,12 @@ const ChatPanel = ({ onClose }) => {
           <MessageBubble key={message.id} role={message.role}>
             <MessageContent $isError={message.isError}>
               {message.content}
-              {message.sources && message.sources.length > 0 && (
-                <SourcesContainer>
-                  <SourcesLabel>Sources:</SourcesLabel>
-                  {message.sources.map((source, index) => (
-                    <SourceBadge key={index} type={source.type}>
-                      {source.title}
-                    </SourceBadge>
-                  ))}
-                </SourcesContainer>
-              )}
             </MessageContent>
             <MessageTime>
               {new Date(message.timestamp).toLocaleTimeString([], {
                 hour: '2-digit',
                 minute: '2-digit'
               })}
-              {message.confidence && (
-                <ConfidenceScore>{Math.round(message.confidence * 100)}%</ConfidenceScore>
-              )}
             </MessageTime>
           </MessageBubble>
         ))}
@@ -114,11 +101,9 @@ const ChatPanel = ({ onClose }) => {
         {isLoading && (
           <MessageBubble role="assistant">
             <TypingIndicator>
-              <TypingDot delay="0s" />
-              <TypingDot delay="0.2s" />
-              <TypingDot delay="0.4s" />
+              <CircularSpinner />
             </TypingIndicator>
-            <div style={{ fontSize: '0.8em', color: '#666', marginTop: '8px', fontStyle: 'italic' }}>
+            <div style={{ fontSize: '0.8em', color: 'var(--tertiary-color)', marginTop: '8px', fontStyle: 'italic' }}>
               Processing your question... (typically 10-15 seconds)
             </div>
           </MessageBubble>
@@ -190,7 +175,7 @@ const ChatPanel = ({ onClose }) => {
             disabled={!currentMessage.trim() || isLoading || !isConnected}
             title={!isConnected ? "Currently offline" : "Send message"}
           >
-            {isLoading ? '⏳' : '📤'}
+            <SendIcon>→</SendIcon>
           </SendButton>
         </InputForm>
         {currentMessage.length > 700 && (
@@ -210,14 +195,15 @@ const PanelContainer = styled.div`
   right: 24px;
   width: 420px;
   height: 550px;
-  background: white;
+  background: var(--background-light);
+  border: 1px solid rgba(100, 255, 218, 0.2);
   border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   z-index: 999;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-primary);
 
   @media (max-width: 768px) {
     bottom: 80px;
@@ -234,8 +220,9 @@ const PanelHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 16px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--background-dark);
+  border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+  color: var(--text-primary);
 `;
 
 const HeaderTitle = styled.h3`
@@ -245,10 +232,16 @@ const HeaderTitle = styled.h3`
   display: flex;
   align-items: center;
   gap: 8px;
+  color: var(--secondary-color);
 `;
 
-const ChatIcon = styled.span`
-  font-size: 18px;
+const ProfileImage = styled.img`
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--secondary-color);
+  box-shadow: 0 0 4px rgba(100, 255, 218, 0.3);
 `;
 
 const OfflineIndicator = styled.span`
@@ -259,7 +252,7 @@ const OfflineIndicator = styled.span`
 const CloseButton = styled.button`
   background: none;
   border: none;
-  color: white;
+  color: var(--text-secondary);
   font-size: 24px;
   cursor: pointer;
   padding: 0;
@@ -269,10 +262,11 @@ const CloseButton = styled.button`
   align-items: center;
   justify-content: center;
   border-radius: 4px;
-  transition: background-color 0.2s;
+  transition: var(--transition);
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(100, 255, 218, 0.1);
+    color: var(--secondary-color);
   }
 `;
 
@@ -283,6 +277,25 @@ const MessagesContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  background: var(--background-light);
+  
+  /* Custom scrollbar */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: var(--background-dark);
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--tertiary-color);
+    border-radius: 3px;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+  }
 `;
 
 const MessageBubble = styled.div`
@@ -293,9 +306,6 @@ const MessageBubble = styled.div`
 `;
 
 const MessageContent = styled.div`
-  background: ${props => props.theme?.role === 'user' ? '#667eea' : props.$isError ? '#fee' : '#f1f3f5'};
-  color: ${props => props.theme?.role === 'user' ? 'white' : props.$isError ? '#c82333' : '#333'};
-  border: ${props => props.$isError ? '1px solid #f5c6cb' : 'none'};
   padding: 8px 12px;
   border-radius: 16px;
   border-bottom-${props => props.theme?.role === 'user' ? 'right' : 'left'}-radius: 4px;
@@ -306,95 +316,62 @@ const MessageContent = styled.div`
   font-size: 14px;
   
   ${MessageBubble}[role="user"] & {
-    background: #667eea;
-    color: white;
+    background: var(--secondary-color);
+    color: var(--background-dark);
   }
   
   ${MessageBubble}[role="assistant"] & {
-    background: ${props => props.$isError ? '#fee' : '#f1f3f5'};
-    color: ${props => props.$isError ? '#c82333' : '#333'};
-    border: ${props => props.$isError ? '1px solid #f5c6cb' : 'none'};
+    background: ${props => props.$isError ? 'rgba(220, 53, 69, 0.1)' : 'var(--background-dark)'};
+    color: ${props => props.$isError ? '#dc3545' : 'var(--text-secondary)'};
+    border: ${props => props.$isError ? '1px solid rgba(220, 53, 69, 0.3)' : '1px solid rgba(100, 255, 218, 0.2)'};
   }
-`;
-
-const SourcesContainer = styled.div`
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-`;
-
-const SourcesLabel = styled.div`
-  font-size: 11px;
-  font-weight: 600;
-  margin-bottom: 4px;
-  opacity: 0.7;
-`;
-
-const SourceBadge = styled.span`
-  display: inline-block;
-  background: rgba(0, 0, 0, 0.1);
-  padding: 2px 6px;
-  border-radius: 8px;
-  font-size: 10px;
-  margin-right: 4px;
-  margin-bottom: 2px;
 `;
 
 const MessageTime = styled.span`
   font-size: 11px;
-  color: #999;
+  color: var(--tertiary-color);
   margin: 0 8px;
   display: flex;
   align-items: center;
   gap: 8px;
 `;
 
-const ConfidenceScore = styled.span`
-  background: rgba(0, 0, 0, 0.1);
-  padding: 1px 4px;
-  border-radius: 4px;
-  font-size: 10px;
-`;
-
 const TypingIndicator = styled.div`
   display: flex;
-  gap: 4px;
-  padding: 8px 12px;
-  background: #f1f3f5;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background: var(--background-dark);
+  border: 1px solid rgba(100, 255, 218, 0.2);
   border-radius: 16px;
   border-bottom-left-radius: 4px;
+  min-width: 60px;
 `;
 
-const TypingDot = styled.div`
-  width: 6px;
-  height: 6px;
-  background: #999;
+const CircularSpinner = styled.div`
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(100, 255, 218, 0.2);
+  border-top: 2px solid var(--secondary-color);
   border-radius: 50%;
-  animation: typing 1.4s infinite ease-in-out;
-  animation-delay: ${props => props.delay};
-
-  @keyframes typing {
-    0%, 80%, 100% {
-      transform: scale(0.8);
-      opacity: 0.5;
-    }
-    40% {
-      transform: scale(1);
-      opacity: 1;
-    }
+  animation: spin 1s linear infinite;
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 `;
 
 const ErrorContainer = styled.div`
-  background: #fee;
-  border: 1px solid #f5c6cb;
+  background: rgba(220, 53, 69, 0.1);
+  border: 1px solid rgba(220, 53, 69, 0.3);
   border-radius: 8px;
   padding: 12px;
   margin: 8px 0;
 `;
 
 const ErrorMessage = styled.div`
-  color: #721c24;
+  color: #dc3545;
   font-size: 14px;
   margin-bottom: 8px;
 `;
@@ -415,14 +392,14 @@ const RetryButton = styled.button`
 
 const SuggestionsContainer = styled.div`
   padding: 8px 16px;
-  border-top: 1px solid #e9ecef;
-  background: #f8f9fa;
+  border-top: 1px solid rgba(100, 255, 218, 0.2);
+  background: var(--background-dark);
 `;
 
 const SuggestionsTitle = styled.div`
   font-size: 10px;
   font-weight: 500;
-  color: #666;
+  color: var(--tertiary-color);
   margin-bottom: 6px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -435,31 +412,34 @@ const CategoryContainer = styled.div`
 const CategoryTitle = styled.div`
   font-size: 9px;
   font-weight: 600;
-  color: #888;
+  color: var(--text-secondary);
   margin-bottom: 3px;
   text-transform: uppercase;
 `;
 
 const SuggestionButton = styled.button`
-  background: white;
-  border: 1px solid #ddd;
+  background: transparent;
+  border: 1px solid var(--tertiary-color);
   border-radius: 10px;
   padding: 3px 6px;
   font-size: 10px;
   margin: 1px 3px 1px 0;
   cursor: pointer;
-  color: #667eea;
+  color: var(--secondary-color);
   line-height: 1.2;
+  transition: var(--transition);
   
   &:hover {
-    background: #f0f2ff;
-    border-color: #667eea;
+    background: rgba(100, 255, 218, 0.1);
+    border-color: var(--secondary-color);
+    color: var(--text-primary);
   }
 `;
 
 const InputContainer = styled.div`
   padding: 16px;
-  border-top: 1px solid #e9ecef;
+  border-top: 1px solid rgba(100, 255, 218, 0.2);
+  background: var(--background-dark);
 `;
 
 const InputForm = styled.form`
@@ -470,49 +450,74 @@ const InputForm = styled.form`
 
 const MessageInput = styled.textarea`
   flex: 1;
-  border: 1px solid #ddd;
+  border: 1px solid var(--tertiary-color);
   border-radius: 20px;
   padding: 8px 12px;
   font-size: 14px;
-  font-family: inherit;
+  font-family: var(--font-primary);
   resize: none;
   min-height: 20px;
   max-height: 60px;
   line-height: 1.4;
   outline: none;
+  background: var(--background-light);
+  color: var(--text-primary);
+  transition: var(--transition);
+
+  &::placeholder {
+    color: var(--tertiary-color);
+  }
 
   &:focus {
-    border-color: #667eea;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 1px rgba(100, 255, 218, 0.2);
   }
 
   &:disabled {
-    background: #f8f9fa;
+    background: var(--background-dark);
     cursor: not-allowed;
+    opacity: 0.6;
   }
 `;
 
 const SendButton = styled.button`
-  background: ${props => props.disabled ? '#ccc' : '#667eea'};
+  background: ${props => props.disabled ? 'var(--tertiary-color)' : 'var(--secondary-color)'};
   border: none;
-  border-radius: 50%;
-  width: 36px;
+  border-radius: 6px;
+  width: 40px;
   height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
-  font-size: 16px;
-  transition: all 0.2s;
+  transition: var(--transition);
+  color: ${props => props.disabled ? 'rgba(10, 25, 47, 0.6)' : 'var(--background-dark)'};
+  font-weight: bold;
+  opacity: ${props => props.disabled ? 0.6 : 1};
 
   &:hover:not(:disabled) {
-    background: #5a6fd8;
-    transform: scale(1.05);
+    background: var(--secondary-light);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(100, 255, 218, 0.3);
   }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+`;
+
+const SendIcon = styled.span`
+  font-size: 18px;
+  font-weight: bold;
+  transform: rotate(-45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const CharacterCount = styled.div`
   font-size: 11px;
-  color: ${props => props.$warning ? '#dc3545' : '#999'};
+  color: ${props => props.$warning ? '#dc3545' : 'var(--tertiary-color)'};
   text-align: right;
   margin-top: 4px;
 `;
