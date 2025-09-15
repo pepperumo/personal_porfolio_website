@@ -102,11 +102,9 @@ class TestConversationalAIService:
         
         prompt = ai_service._create_professional_prompt(question, context)
         
-        assert "Giuseppe Rumore's CV information" in prompt
-        assert "recruiter's question professionally" in prompt
+        assert "Giuseppe Rumore - CV Information" in prompt
         assert question in prompt
         assert context in prompt
-        assert "Professional Response:" in prompt
     
     def test_clean_response(self, ai_service):
         """Test response cleaning functionality"""

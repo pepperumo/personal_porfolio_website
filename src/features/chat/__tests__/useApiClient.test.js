@@ -14,6 +14,8 @@ jest.mock('../services/chatService', () => ({
 describe('useApiClient', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    // Re-setup the getStatus mock after clearing
+    chatService.getStatus.mockReturnValue({ isHealthy: true });
   });
 
   test('initializes with default state', () => {
@@ -226,8 +228,11 @@ describe('useApiClient', () => {
       isLoading: false,
       error: null,
       isConnected: true,
-      sessionId: expect.any(String),
-      serviceStatus: { isHealthy: true }
+      sessionId: expect.any(String)
     });
+
+    // Check that serviceStatus exists and has the expected shape
+    expect(status.serviceStatus).toBeDefined();
+    expect(status.serviceStatus).toEqual({ isHealthy: true });
   });
 });
