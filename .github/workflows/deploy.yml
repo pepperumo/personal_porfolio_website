@@ -155,7 +155,7 @@ jobs:
         # Get credentials from environment
         token = os.environ.get('HF_TOKEN')
         username = os.environ.get('HF_USERNAME', 'pepperumo')
-        repo_id = f'{username}/peppegpt-backend'
+        repo_id = f'{username}/peppegpt'
         
         if token:
             api = HfApi()
@@ -202,18 +202,18 @@ jobs:
       run: |
         echo "🔍 Validating backend deployment..."
         username="${HF_USERNAME:-pepperumo}"
-        backend_url="https://${username}-peppegpt-backend.hf.space"
+        backend_url="https://huggingface.co/spaces/${username}/peppegpt"
         
         # Wait for HF Spaces to start up
         sleep 60
         
-        # Check health endpoint
-        curl -f "${backend_url}/health" || echo "⚠ Backend health check failed"
-        curl -f "${backend_url}/api/v1/status" || echo "⚠ Backend status check failed"
+        # Check health endpoint (HF Spaces may have different URL structure)
+        curl -f "https://${username}-peppegpt.hf.space/health" || echo "⚠ Backend health check failed"
+        curl -f "https://${username}-peppegpt.hf.space/" || echo "⚠ Backend root endpoint check failed"
         
     - name: Deployment Summary
       run: |
         echo "🎉 Deployment Summary:"
         echo "Frontend: https://pepperumo.github.io/personal_porfolio_website/"
-        echo "Backend: https://${HF_USERNAME:-pepperumo}-peppegpt-backend.hf.space"
+        echo "Backend: https://huggingface.co/spaces/${HF_USERNAME:-pepperumo}/peppegpt"
         echo "Version: ${{ github.sha }}"
