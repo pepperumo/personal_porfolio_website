@@ -1,240 +1,298 @@
 """
-Gradio wrapper for Hugging Face Spaces deployment.
+Gradio wrapper for Giuseppe Rumore's Portfolio Chat.
 
-This file provides a Gradio interface that wraps the FastAPI backend
-for deployment on Hugging Face Spaces platform.
+This file provides a Gradio interface that can run alongside or connect to 
+the existing FastAPI backend for deployment and integration with giusepperumore.com.
 """
 
 import gradio as gr
 import json
 import requests
 from datetime import datetime
-from typing import Dict, Any
+from typing import Dict, Any, List, Tuple
 import uvicorn
 import threading
 import time
+import subprocess
+import sys
+import os
+from apscheduler.schedulers.background import BackgroundScheduler
 
-# Import the FastAPI app
-from app import app
+# Configuration
+BACKEND_URL = "http://localhost:7860"  # Your existing backend
+GRADIO_PORT = 7861  # Different port to avoid conflicts
 
-class GradioAPIWrapper:
-    """Wrapper to run FastAPI alongside Gradio interface"""
+class BackendManager:
+    """Manages connection to the existing FastAPI backend"""
     
     def __init__(self):
-        self.fastapi_port = 8000
-        self.fastapi_host = "127.0.0.1"
-        self.base_url = f"http://{self.fastapi_host}:{self.fastapi_port}"
-        self.server_thread = None
+        self.base_url = BACKEND_URL
+        self.is_available = False
+        self.check_backend_health()
         
-    def start_fastapi_server(self):
-        """Start FastAPI server in background thread"""
-        def run_server():
-            uvicorn.run(app, host=self.fastapi_host, port=self.fastapi_port, log_level="info")
-        
-        self.server_thread = threading.Thread(target=run_server, daemon=True)
-        self.server_thread.start()
-        
-        # Wait for server to start
-        for _ in range(30):  # 30 second timeout
+    def check_backend_health(self):
+        """Check if the backend is available and responding"""
+        try:
+            # Try the health endpoint first
+            response = requests.get(f"{self.base_url}/health", timeout=2)
+            self.is_available = response.status_code == 200
+        except:
             try:
-                response = requests.get(f"{self.base_url}/health", timeout=1)
-                if response.status_code == 200:
-                    break
+                # If health endpoint doesn't exist, try a simple GET
+                response = requests.get(self.base_url, timeout=2)
+                self.is_available = response.status_code in [200, 404]  # 404 is fine, means server is running
             except:
-                time.sleep(1)
+                self.is_available = False
+        
+        return self.is_available
+    
+    def get_status(self):
+        """Get backend status information"""
+        if self.check_backend_health():
+            return {
+                "status": "🟢 Connected",
+                "backend_url": self.base_url,
+                "timestamp": datetime.now().isoformat(),
+                "message": "Backend is running and responsive"
+            }
+        else:
+            return {
+                "status": "🔴 Disconnected", 
+                "backend_url": self.base_url,
+                "timestamp": datetime.now().isoformat(),
+                "message": "Backend is not responding. Please ensure it's running on port 7860."
+            }
                 
-    def chat_interface(self, message: str, history: list) -> str:
-        """Handle chat messages through FastAPI backend"""
+    def chat_with_backend(self, message: str) -> str:
+        """Send message to the actual FastAPI backend"""
+        print(f"📤 Sending to backend: {message}")  # Debug log
+        
+        if not message.strip():
+            return "Please ask me something about Giuseppe's experience!"
+            
+        if not self.check_backend_health():
+            return "⚠️ Backend is not available. Please ensure the FastAPI server is running on localhost:7860."
+            
         try:
             response = requests.post(
-                f"{self.base_url}/api/v1/chat/message",
+                f"{self.base_url}/chat",
                 json={"message": message},
-                timeout=30
+                timeout=30,
+                headers={"Content-Type": "application/json"}
             )
+            
+            print(f"📥 Backend status: {response.status_code}")  # Debug log
             
             if response.status_code == 200:
                 data = response.json()
-                bot_response = data.get("response", "Sorry, I couldn't process that.")
-                confidence = data.get("confidence", 0.0)
-                source = data.get("source", "unknown")
+                print(f"📋 Backend data: {data.get('status', 'unknown')}")  # Debug log
                 
-                # Add confidence and source info if it's a fallback
-                if data.get("fallback", False):
-                    bot_response += f"\n\n*[Fallback mode - AI services temporarily unavailable]*"
-                
-                return bot_response
+                if data["status"] == "success":
+                    return data["response"]
+                else:
+                    return f"Sorry, I encountered an error: {data.get('error', 'Unknown error')}"
             else:
-                return "Sorry, I'm experiencing technical difficulties. Please try again later."
+                return f"Sorry, the backend returned an error (status {response.status_code}). Please try again."
                 
+        except requests.exceptions.Timeout:
+            return "Sorry, the request timed out. Please try asking again."
+        except requests.exceptions.ConnectionError:
+            return "Sorry, I can't connect to the backend right now. Please ensure it's running on localhost:7860."
         except Exception as e:
-            return f"Error: Unable to connect to backend service. ({str(e)})"
+            error_msg = f"Sorry, I encountered an unexpected error: {str(e)}"
+            print(f"❌ Exception: {error_msg}")  # Debug log
+            return error_msg
+
+def chat_interface_handler(message: str, history) -> str:
+    """Handler for ChatInterface - connects to backend"""
+    print(f"🔄 Received message: {message}")  # Debug log
     
-    def search_interface(self, query: str) -> str:
-        """Handle search queries through FastAPI backend"""
-        try:
-            response = requests.get(
-                f"{self.base_url}/api/v1/search",
-                params={"query": query} if query else {},
-                timeout=30
-            )
-            
-            if response.status_code == 200:
-                data = response.json()
-                results = data.get("results", [])
-                
-                if not results:
-                    return "No results found for your query."
-                
-                formatted_results = []
-                for i, result in enumerate(results, 1):
-                    title = result.get("title", "Untitled")
-                    content = result.get("content", "No content available")
-                    relevance = result.get("relevance", 0.0)
-                    
-                    formatted_results.append(
-                        f"**{i}. {title}** (Relevance: {relevance:.1%})\n{content}\n"
-                    )
-                
-                return "\n".join(formatted_results)
-            else:
-                return "Sorry, search is temporarily unavailable."
-                
-        except Exception as e:
-            return f"Search error: {str(e)}"
+    try:
+        backend = BackendManager()
+        response = backend.chat_with_backend(message)
+        print(f"✅ Backend response: {response[:100]}...")  # Debug log
+        return response
+    except Exception as e:
+        error_msg = f"Error in chat handler: {str(e)}"
+        print(f"❌ {error_msg}")  # Debug log
+        return error_msg
 
 def create_gradio_interface():
     """Create and configure the Gradio interface"""
     
-    # Initialize the API wrapper
-    wrapper = GradioAPIWrapper()
-    wrapper.start_fastapi_server()
+    # Initialize the backend manager
+    backend_manager = BackendManager()
+
+    # Custom CSS for professional styling with proper text visibility
+    css = """
+    #chatbot {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 15px;
+        border: none;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
     
-    # Create the Gradio interface with tabs
+    .message.user {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        color: white !important;
+        border-radius: 18px 18px 5px 18px;
+    }
+    
+    .message.bot {
+        background: #ffffff !important;
+        color: #000000 !important;
+        border-radius: 18px 18px 18px 5px;
+        border-left: 4px solid #667eea;
+    }
+    
+    /* Ensure all bot message text is visible */
+    .message.bot p, .message.bot div, .message.bot span {
+        color: #000000 !important;
+    }
+    
+    /* Additional visibility fixes */
+    .chatbot .message.bot {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+    }
+    
+    .chatbot .message.bot * {
+        color: #000000 !important;
+    }
+    }
+    
+    .gradio-container {
+        max-width: 900px !important;
+        margin: 0 auto;
+    }
+    """
+    
+    # Simple chat function for direct use
+    def chat_fn(message, history):
+        """Simple chat function that works with Gradio 5.45"""
+        print(f"🔄 Chat function called with: {message}")
+        try:
+            response = backend_manager.chat_with_backend(message)
+            print(f"✅ Response generated: {response[:50]}...")
+            return response
+        except Exception as e:
+            error_msg = f"Error: {str(e)}"
+            print(f"❌ Chat function error: {error_msg}")
+            return error_msg
+    
+    # Create the main interface using Blocks for more control
     with gr.Blocks(
-        title="PeppeGPT - Giuseppe Rumore's AI Assistant",
-        theme=gr.themes.Soft(),
-        css="""
-        .gradio-container {
-            max-width: 800px !important;
-        }
-        .chat-message {
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 10px;
-        }
-        """
+        title="Chat with Giuseppe Rumore - AI Assistant",
+        theme=gr.themes.Soft(
+            primary_hue="blue",
+            secondary_hue="blue",
+            neutral_hue="slate"
+        ),
+        css=css
     ) as interface:
         
-        gr.Markdown("""
-        # 🤖 PeppeGPT - Giuseppe Rumore's AI Assistant
-        
-        Welcome to my AI-powered portfolio assistant! You can:
-        - **Chat** with me about my experience, skills, and projects
-        - **Search** through my portfolio content
-        
-        *This is the backend API service for [giusepperumore.com](https://pepperumo.github.io/personal_porfolio_website/)*
+        # Header
+        gr.HTML("""
+        <div style="text-align: center; color: #333; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin-bottom: 20px;">
+            <h1>💬 Chat with Giuseppe Rumore</h1>
+            <p>Ask me anything about Giuseppe's professional experience, skills, and background!</p>
+            <p style="font-size: 12px; color: #666;">🔗 Integrate this chat into your website: <code>https://your-gradio-url.com</code></p>
+        </div>
         """)
         
-        with gr.Tabs():
-            # Chat Tab
-            with gr.TabItem("💬 Chat"):
-                gr.Markdown("Ask me anything about Giuseppe's background, skills, or projects!")
-                
-                chatbot = gr.Chatbot(
-                    label="Chat with PeppeGPT",
-                    height=400,
-                    bubble_full_width=False
-                )
-                
-                with gr.Row():
-                    msg_input = gr.Textbox(
-                        placeholder="Ask me about Giuseppe's experience, skills, or projects...",
-                        label="Your message",
-                        lines=2,
-                        scale=4
-                    )
-                    send_btn = gr.Button("Send", variant="primary", scale=1)
-                
-                def respond(message, history):
-                    if not message.strip():
-                        return history, ""
-                    
-                    # Get bot response
-                    bot_response = wrapper.chat_interface(message, history)
-                    
-                    # Update history
-                    history.append((message, bot_response))
-                    return history, ""
-                
-                send_btn.click(respond, [msg_input, chatbot], [chatbot, msg_input])
-                msg_input.submit(respond, [msg_input, chatbot], [chatbot, msg_input])
+        # Use the simpler ChatInterface with minimal parameters
+        chat_interface = gr.ChatInterface(
+            fn=chat_fn,
+            examples=[
+                "What is Giuseppe's experience with Python?",
+                "Tell me about Giuseppe's machine learning background",
+                "What technologies does Giuseppe work with?",
+                "What languages does Giuseppe speak?",
+                "What is Giuseppe's educational background?",
+                "Tell me about Giuseppe's engineering experience",
+                "What projects has Giuseppe worked on?"
+            ]
+        )        # Status and information section
+        with gr.Accordion("📊 Backend Status & Info", open=False):
+            status_display = gr.JSON(label="Backend Status")
+            refresh_status_btn = gr.Button("Refresh Status", variant="secondary", size="sm")
             
-            # Search Tab
-            with gr.TabItem("🔍 Search"):
-                gr.Markdown("Search through Giuseppe's portfolio content and projects.")
-                
-                with gr.Row():
-                    search_input = gr.Textbox(
-                        placeholder="Search for skills, projects, experience...",
-                        label="Search Query",
-                        scale=4
-                    )
-                    search_btn = gr.Button("Search", variant="primary", scale=1)
-                
-                search_output = gr.Markdown(
-                    label="Search Results",
-                    value="Enter a search query to find relevant content from Giuseppe's portfolio."
-                )
-                
-                def perform_search(query):
-                    if not query.strip():
-                        return "Please enter a search query."
-                    return wrapper.search_interface(query)
-                
-                search_btn.click(perform_search, search_input, search_output)
-                search_input.submit(perform_search, search_input, search_output)
+            def get_current_status():
+                return backend_manager.get_status()
             
-            # API Status Tab
-            with gr.TabItem("📊 Status"):
-                gr.Markdown("Backend API status and information.")
-                
-                status_output = gr.JSON(label="API Status")
-                refresh_btn = gr.Button("Refresh Status", variant="secondary")
-                
-                def get_status():
-                    try:
-                        response = requests.get(f"{wrapper.base_url}/health", timeout=5)
-                        if response.status_code == 200:
-                            return response.json()
-                        else:
-                            return {"error": f"HTTP {response.status_code}"}
-                    except Exception as e:
-                        return {"error": str(e)}
-                
-                refresh_btn.click(get_status, outputs=status_output)
-                
-                # Load initial status
-                interface.load(get_status, outputs=status_output)
+            refresh_status_btn.click(get_current_status, outputs=status_display)
+            interface.load(get_current_status, outputs=status_display)
         
-        gr.Markdown("""
-        ---
-        **About this service:**
-        - Backend API for Giuseppe Rumore's portfolio website
-        - Deployed on Hugging Face Spaces
-        - Source code: [GitHub Repository](https://github.com/pepperumo/personal_porfolio_website)
+        # Footer with integration info
+        gr.HTML("""
+        <div style="text-align: center; margin-top: 20px; color: #666; font-size: 12px; border-top: 1px solid #eee; padding-top: 15px;">
+            <p><strong>For giusepperumore.com integration:</strong></p>
+            <p>📎 <strong>Embed Code:</strong> <code>&lt;iframe src="https://your-gradio-url.com" width="100%" height="600px"&gt;&lt;/iframe&gt;</code></p>
+            <p>🔗 <strong>API Endpoint:</strong> <code>POST /chat</code> with JSON payload <code>{"message": "your question"}</code></p>
+            <p>💻 <strong>Source:</strong> <a href="https://github.com/pepperumo/personal_porfolio_website" target="_blank">GitHub Repository</a></p>
+        </div>
         """)
     
     return interface
 
-if __name__ == "__main__":
-    # Create and launch the Gradio interface
-    demo = create_gradio_interface()
-    demo.launch(
-        server_name="0.0.0.0",
-        server_port=7860,
-        show_error=True,
-        share=False
-    )
+def setup_health_monitoring():
+    """Setup periodic health checks for the backend"""
+    def health_check():
+        backend = BackendManager()
+        if not backend.check_backend_health():
+            print(f"⚠️ Backend health check failed at {datetime.now()}")
+        else:
+            print(f"✅ Backend healthy at {datetime.now()}")
+    
+    # Note: APScheduler is optional - only use if installed
+    try:
+        scheduler = BackgroundScheduler()
+        scheduler.add_job(
+            func=health_check,
+            trigger="interval",
+            seconds=60  # Check every minute
+        )
+        scheduler.start()
+        return scheduler
+    except ImportError:
+        print("APScheduler not available - skipping health monitoring")
+        return None
 
-# For Hugging Face Spaces deployment, expose the demo globally
-demo = create_gradio_interface()
+if __name__ == "__main__":
+    print("🌟 Starting Giuseppe Rumore's Portfolio Chat Interface")
+    print(f"📡 Connecting to backend at {BACKEND_URL}")
+    
+    # Check if backend is available
+    backend = BackendManager()
+    if backend.check_backend_health():
+        print("✅ Backend is available")
+    else:
+        print("⚠️ Backend is not responding. Please ensure it's running on localhost:7860")
+        print("   You can start it with: python app.py")
+    
+    # Setup health monitoring if possible
+    scheduler = setup_health_monitoring()
+    
+    # Create and launch the Gradio interface
+    print(f"🎨 Creating Gradio interface on port {GRADIO_PORT}")
+    demo = create_gradio_interface()
+    
+    try:
+        print(f"🚀 Launching Gradio app at http://localhost:{GRADIO_PORT}")
+        print("🌐 Use share=True to get a public URL for giusepperumore.com integration")
+        
+        demo.launch(
+            server_name="0.0.0.0",
+            server_port=GRADIO_PORT,
+            show_error=True,
+            share=True,  # Creates public URL for integration
+            inbrowser=True,
+            quiet=False
+        )
+        
+    except KeyboardInterrupt:
+        print("\n🛑 Shutting down...")
+    finally:
+        if scheduler:
+            scheduler.shutdown()
+        print("✅ Cleanup complete")

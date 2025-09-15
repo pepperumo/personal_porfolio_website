@@ -193,7 +193,7 @@ class SemanticSearchService:
                 "source": "structured_content"
             })
     
-    def search(self, query: str, max_results: int = 5, min_confidence: float = 0.3):
+    def search(self, query: str, max_results: int = 5, min_confidence: float = 0.25):
         """Perform semantic search on CV content"""
         if not self.is_initialized or not self.embedding_model:
             raise ValueError("Semantic search service not initialized")
@@ -231,18 +231,44 @@ class SemanticSearchService:
         # Company name mappings based on CV content
         company_mappings = {
             "alten": "ALTEN GmbH Engineering Consultant Cologne Ford suppliers automotive component",
-            "imi": "IMI Climate Control Mechanical Engineer Pune India components HVAC",
+            "imi": "IMI Climate Control Mechanical Engineer Basel Switzerland components HVAC",
             "steltix": "Steltix ERP Consultant Berlin Germany software integration implementation",
-            "siemens": "Siemens Building Technologies KNX BACnet automation building systems",
-            "avl": "AVL powertrain testing automotive engineering simulation",
-            "unimore": "University of Modena thesis research academic studies",
-            "pune": "Pune India engineering mechanical HVAC climate control"
+            "european patent office": "European Patent Office Munich patent management analysis machine tools plastic welding"
+        }
+        
+        # Skill category mappings - generic terms that should find relevant content
+        skill_mappings = {
+            "computer vision": "image processing visual recognition computer vision object detection",
+            "machine learning": "ML artificial intelligence data science predictive analytics",
+            "deep learning": "neural networks AI machine learning data science",
+            "programming": "coding development software programming languages",
+            "frameworks": "tools libraries frameworks software development",
+            "languages": "programming languages coding development"
+        }
+        
+        # Spoken language context mappings
+        language_mappings = {
+            "spoken languages": "native speaker fluent advanced proficiency language skills",
+            "languages speaks": "native speaker fluent advanced proficiency language skills",
+            "what languages": "native speaker fluent advanced proficiency language skills"
         }
         
         query_lower = query.lower()
         expanded_parts = [query]
         
-        # Add expansions for any mentioned companies or locations
+        # Add language context if this is about spoken languages
+        for phrase, expansion in language_mappings.items():
+            if phrase in query_lower:
+                expanded_parts.append(expansion)
+                break  # Only apply one language mapping
+        
+        # Add skill expansions if no language context was added
+        if len(expanded_parts) == 1:  # No language mapping was added
+            for keyword, expansion in skill_mappings.items():
+                if keyword in query_lower:
+                    expanded_parts.append(expansion)
+        
+        # Add company expansions
         for keyword, expansion in company_mappings.items():
             if keyword in query_lower:
                 expanded_parts.append(expansion)
@@ -334,8 +360,26 @@ class ConversationalAIService:
         """Extract factual information directly from context without AI generation"""
         question_lower = question.lower()
         
-        # Programming languages question
-        if any(keyword in question_lower for keyword in ['programming languages', 'programming language', 'languages']):
+        # Spoken languages question (prioritize this over programming languages)
+        if any(keyword in question_lower for keyword in ['what languages', 'languages speak', 'spoken languages', 'languages does']):
+            # Look for language proficiency info
+            for chunk in context_chunks:
+                if 'language_' in chunk['section']:
+                    languages = []
+                    for lang_chunk in context_chunks:
+                        if 'language_' in lang_chunk['section']:
+                            languages.append(lang_chunk['content'])
+                    if languages:
+                        lang_text = ', '.join([lang.replace('Language: ', '') for lang in languages])
+                        return {
+                            "text": f"Giuseppe speaks: {lang_text}",
+                            "confidence": 0.95,
+                            "sources": [chunk["section"] for chunk in context_chunks if 'language_' in chunk['section']],
+                            "response_type": "high_confidence"
+                        }
+        
+        # Programming languages question (only if not about spoken languages)
+        elif any(keyword in question_lower for keyword in ['programming languages', 'programming language', 'coding languages']):
             for line in context.split('\n'):
                 if 'programming:' in line.lower():
                     prog_info = line.split(':', 1)[1].strip()
@@ -346,6 +390,11 @@ class ConversationalAIService:
                             "sources": [chunk["section"] for chunk in context_chunks[:3]],
                             "response_type": "high_confidence"
                         }
+        
+        # Computer vision / technical skills questions - let semantic search find relevant content
+        elif any(keyword in question_lower for keyword in ['computer vision', 'object detection', 'image processing', 'machine learning', 'deep learning']):
+            # Don't try to extract facts - let OpenAI generate detailed response from found context
+            return None
         
         # Skills question
         elif 'skills' in question_lower:
@@ -389,34 +438,52 @@ class ConversationalAIService:
         """Generate response using OpenAI API"""
         try:
             # Create professional prompt for OpenAI
-            system_prompt = """You are a professional assistant helping recruiters learn about Giuseppe Rumore's background. 
+            system_prompt = """You are Giuseppe Rumore's professional AI assistant, helping recruiters and potential employers understand his capabilities and expertise.
+
+Your role:
+- Present Giuseppe's qualifications in the most compelling and professional way
+- Focus on his strengths, achievements, and what he CAN do for potential employers
+- Highlight relevant experience, skills, and projects that match the inquiry
+- Be enthusiastic about his capabilities while staying factual
+- Use a confident, positive tone that positions Giuseppe as a strong candidate
+
+Response guidelines:
+- Lead with Giuseppe's strengths and relevant experience
+- Use specific examples from his CV to demonstrate capabilities
+- Quantify achievements when available (percentages, improvements, results)
+- Frame information positively - focus on what he brings to the table
+- Use professional, confident language that showcases his value proposition
+- Keep responses concise but comprehensive (under 200 words)
+- Structure information clearly with bullet points for easy scanning
+- Always conclude with Giuseppe's potential value or next steps for the recruiter
+
+Avoid:
+- Mentioning what's NOT in the CV or what he lacks
+- Negative framing or limitations
+- Uncertain language ("might", "possibly", "not sure")
+- Technical jargon without context for business value
+- Inventing details not supported by CV content"""
             
-Rules:
-- Provide concise, accurate answers based on the CV information provided
-- Use bullet points or line breaks for better readability when listing multiple items
-- Keep responses under 150 words
-- Be friendly and professional
-- Format key information with line breaks for clarity
-- If the specific information isn't available, provide relevant general information about Giuseppe and suggest related topics"""
-            
-            # Always provide comprehensive context - expand the fallback information
+            # Always provide comprehensive context - focus on capabilities and achievements
             if not context_text or context_text.strip() == "":
-                context_text = """Giuseppe Rumore is a Data Scientist and ML Engineer with multiple years of experience in developing and optimizing models for industrial applications. 
+                context_text = """Giuseppe Rumore is an accomplished Data Scientist and ML Engineer with extensive experience in developing and optimizing models for industrial applications. 
                 
-Key Background:
-• Expertise: Machine Learning, Deep Learning, Data Analytics
-• Programming: Python, TensorFlow, PyTorch
-• Education: MSc Mechanical Engineering with Major in R&D, INSA Lyon
-• Experience: IMI Climate Control, Steltix, ALTEN GmbH
-• Projects: Mobile Nacelle Design for Water Turbines, Various ML/AI implementations
-• Focus: Industrial applications, operational efficiency, data-driven strategies"""
+Key Strengths & Capabilities:
+• Expertise: Machine Learning, Deep Learning, Data Analytics with proven industrial applications
+• Technical Proficiency: Python, TensorFlow, PyTorch with hands-on project experience
+• Educational Foundation: MSc Mechanical Engineering with R&D specialization from INSA Lyon
+• Industry Experience: Led data-driven improvements at IMI Climate Control (30% defect detection improvement, 20% testing time reduction)
+• Project Portfolio: Advanced ML implementations including computer vision, NLP, and automation
+• Multilingual: 6 languages including native Italian/Albanian, C1 English/Spanish/French, B2 German
+• Current Focus: Advancing Data Science and MLOps expertise at Université Paris 1 Panthéon-Sorbonne
+• Location: Based in Berlin, Germany with European work authorization"""
             
-            user_prompt = f"""CV Information:
+            user_prompt = f"""Giuseppe's Professional Background:
 {context_text}
 
-Question: {user_question}
+Recruiter Question: {user_question}
 
-Please answer based on the CV information above. If the specific information isn't available, provide relevant general information about Giuseppe and suggest what other topics I can help with regarding his background."""
+Please provide a compelling response that showcases Giuseppe's relevant capabilities and experience. Focus on what he brings to the table and how his background aligns with what the recruiter is looking for. Present him as a strong candidate while being factual and specific."""
             
             response = self.openai_client.chat.completions.create(
                 model=self.settings.openai_model,
@@ -662,9 +729,9 @@ async def lifespan(app: FastAPI):
             embedding_model = None
             semantic_search_service = None
         
-        # Load conversational AI model
-        if TRANSFORMERS_AVAILABLE:
-            conversational_ai_service = ConversationalAIService(settings.hf_chat_model_name)
+        # Load conversational AI model (OpenAI-based)
+        if TRANSFORMERS_AVAILABLE or OPENAI_AVAILABLE:
+            conversational_ai_service = ConversationalAIService("openai")  # Model name not used when using OpenAI
             conversational_ai_service.load_model()
             print(f"Conversational AI service initialized")
         else:

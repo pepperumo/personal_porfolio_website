@@ -27,19 +27,15 @@ class Settings(BaseSettings):
     rate_limit_requests: int = Field(default=100, env="RATE_LIMIT_REQUESTS")
     rate_limit_window: int = Field(default=3600, env="RATE_LIMIT_WINDOW")  # 1 hour
     
-    # Hugging Face Configuration
-    hf_model_name: str = Field(default="all-MiniLM-L6-v2", env="HF_MODEL_NAME")
-    hf_chat_model_name: str = Field(default="gpt2", env="HF_CHAT_MODEL_NAME")
+    # Hugging Face Configuration (Embedding Model Only)
+    hf_model_name: str = Field(default="intfloat/e5-large-v2", env="HF_MODEL_NAME")
     hf_cache_dir: str = Field(default="/tmp/hf_cache", env="HF_CACHE_DIR")
-    max_chat_response_tokens: int = Field(default=100, env="MAX_CHAT_RESPONSE_TOKENS")
-    chat_temperature: float = Field(default=0.7, env="CHAT_TEMPERATURE")
     
-    # OpenAI API Configuration
+    # OpenAI API Configuration (Primary Text Generation)
     openai_api_key: str = Field(default="", env="OPENAI_API_KEY")
     openai_model: str = Field(default="gpt-5-nano", env="OPENAI_MODEL")  # OpenAI GPT-5 Nano (verified Sept 2025)
-    use_openai: bool = Field(default=False, env="USE_OPENAI")  # Flag to switch to OpenAI
+    use_openai: bool = Field(default=True, env="USE_OPENAI")  # Primary text generation model
     openai_max_tokens: int = Field(default=150, env="OPENAI_MAX_TOKENS")
-    openai_temperature: float = Field(default=0.3, env="OPENAI_TEMPERATURE")
     
     # Feature Flags
     enable_fallback_responder: bool = Field(default=True, env="ENABLE_FALLBACK_RESPONDER")
