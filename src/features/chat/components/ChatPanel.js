@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { useChat } from '../context/ChatContext';
 
@@ -12,12 +12,15 @@ const ChatPanel = ({ onClose }) => {
     error,
     isConnected,
     clearError,
-    getSuggestions
+    getSuggestions,
+    addMessage
   } = useChat();
   
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
-  const [suggestions] = useState(getSuggestions());
+  
+  // Use useMemo to recalculate suggestions when messages change
+  const suggestions = useMemo(() => getSuggestions(), [getSuggestions]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -46,10 +49,29 @@ const ChatPanel = ({ onClose }) => {
     }
   };
 
-  const handleSuggestionClick = (question) => {
-    updateCurrentMessage(question);
-    if (inputRef.current) {
-      inputRef.current.focus();
+  const handleSuggestionClick = (questionObj) => {
+    // For suggestion objects with pre-answered responses, add both question and answer directly
+    if (typeof questionObj === 'object' && questionObj.question && questionObj.answer) {
+      // Add the user question
+      addMessage({
+        role: 'user',
+        content: questionObj.question
+      });
+      
+      // Add the pre-answered response with a slight delay for natural flow
+      setTimeout(() => {
+        addMessage({
+          role: 'assistant',
+          content: questionObj.answer
+        });
+      }, 300);
+    } else {
+      // Fallback for old format
+      const questionText = typeof questionObj === 'string' ? questionObj : questionObj.question;
+      updateCurrentMessage(questionText);
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
     }
   };
 
@@ -115,21 +137,15 @@ const ChatPanel = ({ onClose }) => {
             {error.action === 'retry' && (
               <RetryButton onClick={handleRetry}>Try Again</RetryButton>
             )}
-            {error.action === 'show_suggestions' && messages.length <= 1 && (
+            {error.action === 'show_suggestions' && (
               <SuggestionsContainer>
-                <SuggestionsTitle>Try asking about:</SuggestionsTitle>
-                {suggestions.slice(0, 2).map((category) => (
-                  <CategoryContainer key={category.category}>
-                    <CategoryTitle>{category.category}</CategoryTitle>
-                    {category.questions.map((question, index) => (
-                      <SuggestionButton
-                        key={index}
-                        onClick={() => handleSuggestionClick(question)}
-                      >
-                        {question}
-                      </SuggestionButton>
-                    ))}
-                  </CategoryContainer>
+                {suggestions.map((suggestion, index) => (
+                  <SuggestionButton
+                    key={index}
+                    onClick={() => handleSuggestionClick(suggestion)}
+                  >
+                    {suggestion.question}
+                  </SuggestionButton>
                 ))}
               </SuggestionsContainer>
             )}
@@ -139,21 +155,15 @@ const ChatPanel = ({ onClose }) => {
         <div ref={messagesEndRef} />
       </MessagesContainer>
 
-      {messages.length <= 1 && !error && (
+      {!error && (
         <SuggestionsContainer>
-          <SuggestionsTitle>Try asking about:</SuggestionsTitle>
-          {suggestions.slice(0, 1).map((category) => (
-            <CategoryContainer key={category.category}>
-              <CategoryTitle>{category.category}</CategoryTitle>
-              {category.questions.slice(0, 2).map((question, index) => (
-                <SuggestionButton
-                  key={index}
-                  onClick={() => handleSuggestionClick(question)}
-                >
-                  {question}
-                </SuggestionButton>
-              ))}
-            </CategoryContainer>
+          {suggestions.map((suggestion, index) => (
+            <SuggestionButton
+              key={index}
+              onClick={() => handleSuggestionClick(suggestion)}
+            >
+              {suggestion.question}
+            </SuggestionButton>
           ))}
         </SuggestionsContainer>
       )}
@@ -394,28 +404,12 @@ const SuggestionsContainer = styled.div`
   padding: 8px 16px;
   border-top: 1px solid rgba(100, 255, 218, 0.2);
   background: var(--background-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 `;
 
-const SuggestionsTitle = styled.div`
-  font-size: 10px;
-  font-weight: 500;
-  color: var(--tertiary-color);
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-`;
 
-const CategoryContainer = styled.div`
-  margin-bottom: 6px;
-`;
-
-const CategoryTitle = styled.div`
-  font-size: 9px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  margin-bottom: 3px;
-  text-transform: uppercase;
-`;
 
 const SuggestionButton = styled.button`
   background: transparent;
@@ -423,11 +417,14 @@ const SuggestionButton = styled.button`
   border-radius: 10px;
   padding: 3px 6px;
   font-size: 10px;
-  margin: 1px 3px 1px 0;
+  margin: 1px 0;
   cursor: pointer;
   color: var(--secondary-color);
   line-height: 1.2;
   transition: var(--transition);
+  text-align: left;
+  display: block;
+  width: 100%;
   
   &:hover {
     background: rgba(100, 255, 218, 0.1);
