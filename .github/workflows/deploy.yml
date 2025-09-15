@@ -126,26 +126,10 @@ jobs:
         
     - name: Install HF Hub
       run: pip install huggingface_hub
-      
-    - name: Prepare HF Spaces files
-      run: |
-        # Create Hugging Face Spaces configuration
-        echo "title: PeppeGPT Backend" > hf/README.md
-        echo "emoji: 🤖" >> hf/README.md
-        echo "colorFrom: blue" >> hf/README.md
-        echo "colorTo: purple" >> hf/README.md
-        echo "sdk: gradio" >> hf/README.md
-        echo "app_file: app.py" >> hf/README.md
-        echo "pinned: false" >> hf/README.md
-        echo "" >> hf/README.md
-        echo "# PeppeGPT Backend API" >> hf/README.md
-        echo "" >> hf/README.md
-        echo "FastAPI backend for Giuseppe Rumore's portfolio website with AI chat capabilities." >> hf/README.md
         
     - name: Deploy to Hugging Face Spaces
       env:
         HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        HF_USERNAME: ${{ secrets.HF_USERNAME }}
       run: |
         cd hf
         python -c "
