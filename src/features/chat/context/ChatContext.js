@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback, useMemo } from 'react';
 import { useApiClient } from '../hooks/useApiClient';
 
 // Fallback UUID generator for test environments
@@ -225,8 +225,8 @@ export const ChatProvider = ({ children }) => {
    * Get suggested conversation starters with pre-answered responses
    * @returns {Array} Array of suggestion objects
    */
-  // All available questions pool
-  const allQuestions = [
+  // All available questions pool - memoized to prevent recreation on every render
+  const allQuestions = useMemo(() => [
     // Initial questions set
     {
       question: "What is Giuseppe's educational background?",
@@ -266,7 +266,7 @@ export const ChatProvider = ({ children }) => {
       question: "What types of data science problems does Giuseppe solve?",
       answer: "Giuseppe tackles diverse data science challenges:\n\n• Time Series Forecasting: Cryptocurrency prediction using Prophet\n• Recommendation Systems: Collaborative filtering algorithms\n• Anomaly Detection: Quality control in manufacturing\n• Natural Language Processing: RAG systems and intelligent routing\n• Predictive Analytics: Ensemble methods with scikit-learn\n• Computer Vision: Object detection and image classification tasks"
     }
-  ];
+  ], []);
 
   const getSuggestions = useCallback(() => {
     const messageCount = messages.length;

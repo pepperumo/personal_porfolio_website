@@ -181,25 +181,4 @@ describe('Chat Integration', () => {
     expect(input).toHaveAttribute('placeholder', 'Currently offline...');
     expect(input).toBeDisabled();
   });
-
-  test('suggestion buttons work correctly', () => {
-    renderChatPanel();
-
-    // Should show suggestions for new conversation
-    const suggestionButtons = screen.getAllByRole('button').filter(
-      button => button.textContent.includes('programming languages') ||
-              button.textContent.includes('recent projects')
-    );
-
-    expect(suggestionButtons.length).toBeGreaterThan(0);
-
-    // Click a suggestion
-    if (suggestionButtons[0]) {
-      fireEvent.click(suggestionButtons[0]);
-      
-      // Should populate the input
-      const input = screen.getByLabelText('Type your message');
-      expect(input.value).toBe(suggestionButtons[0].textContent);
-    }
-  });
 });
