@@ -147,7 +147,7 @@ jobs:
         HF_TOKEN: ${{ secrets.HF_TOKEN }}
         HF_USERNAME: ${{ secrets.HF_USERNAME }}
       run: |
-        cd backend
+        cd hf
         python -c "
         import os
         from huggingface_hub import HfApi, Repository
