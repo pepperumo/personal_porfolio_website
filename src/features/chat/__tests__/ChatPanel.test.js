@@ -42,7 +42,7 @@ describe('ChatPanel', () => {
     );
     
     const input = screen.getByLabelText('Type your message');
-    const sendButton = screen.getByRole('button', { name: '📤' });
+    const sendButton = screen.getByTitle('Send message');
     
     // Type a message
     fireEvent.change(input, { target: { value: 'What are your skills?' } });
@@ -86,7 +86,7 @@ describe('ChatPanel', () => {
       </TestWrapper>
     );
     
-    const sendButton = screen.getByRole('button', { name: '📤' });
+    const sendButton = screen.getByTitle('Send message');
     
     // Try to send empty message
     fireEvent.click(sendButton);
@@ -181,7 +181,7 @@ describe('ChatPanel', () => {
     );
     
     const input = screen.getByLabelText('Type your message');
-    const sendButton = screen.getByRole('button', { name: '📤' });
+    const sendButton = screen.getByTitle('Send message');
     
     fireEvent.change(input, { target: { value: 'Test message' } });
     fireEvent.keyPress(input, { key: 'Enter', code: 'Enter', charCode: 13 });

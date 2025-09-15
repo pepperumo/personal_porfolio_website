@@ -76,8 +76,10 @@ describe('ChatLauncher', () => {
       expect(screen.getByTestId('chat-panel')).toBeInTheDocument();
     });
     
-    // Button icon should change to close icon
-    expect(button).toHaveTextContent('✕');
+    // Button icon should change to close icon (check for close icon SVG)
+    expect(button.querySelector('svg')).toBeInTheDocument();
+    // Check that it's the close icon by looking for the X path
+    expect(button.querySelector('path[d*="18 6L6 18"]')).toBeInTheDocument();
   });
 
   test('closes chat panel when close button is clicked', async () => {
@@ -102,8 +104,10 @@ describe('ChatLauncher', () => {
       expect(screen.queryByTestId('chat-panel')).not.toBeInTheDocument();
     });
     
-    // Launcher button should show chat icon again
-    expect(launcherButton).toHaveTextContent('💬');
+    // Launcher button should show chat icon again (check for chat icon SVG)
+    expect(launcherButton.querySelector('svg')).toBeInTheDocument();
+    // Check that it's the chat icon by looking for the chat bubble path
+    expect(launcherButton.querySelector('path[d*="12 2C6.48 2"]')).toBeInTheDocument();
   });
 
   test('shows loading fallback while ChatPanel is loading', async () => {
@@ -130,7 +134,9 @@ describe('ChatLauncher', () => {
     fireEvent.click(button);
     
     await waitFor(() => {
-      expect(button).toHaveTextContent('✕');
+      // Check for close icon SVG
+      expect(button.querySelector('svg')).toBeInTheDocument();
+      expect(button.querySelector('path[d*="18 6L6 18"]')).toBeInTheDocument();
     });
   });
 });
@@ -143,7 +149,7 @@ describe('ProminentChatButton', () => {
     const button = screen.getByTestId('prominent-chat-button');
     expect(button).toBeInTheDocument();
     expect(button).toHaveAttribute('aria-label', 'Open chat with PeppeGPT');
-    expect(button).toHaveTextContent('💬');
+    expect(button.querySelector('svg')).toBeInTheDocument(); // Check for SVG icon instead of emoji
     expect(button).toHaveTextContent('PeppeGPT');
   });
 
