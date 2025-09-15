@@ -1,0 +1,216 @@
+{
+  "contact": {
+    "name": "Giuseppe Rumore",
+    "title": "Data Scientist and ML Engineer with multiple years of experience in developing and optimizing models for industrial applications. Expertise encompasses machine learning, deep learning, and data analytics, leveraging robust skills in Python and advanced tools such as TensorFlow and PyTorch. A strong foundation in mechanical engineering complements the ability to design and optimize complex systems, ensuring seamless integration of innovative solutions. Proven track record in enhancing operational efficiency and product reliability through data-driven strategies and advanced analytics. Committed to driving technological advancements and efficiency in engineering and manufacturing environments.",
+    "email": "",
+    "phone": "",
+    "location": "Dolgenseestraße 9c, Berlin, 10319, Germany",
+    "links": "Github|LinkedIn|Porfolio"
+  },
+  "profile": "Data Scientist and ML Engineer with multiple years of experience in developing and optimizing models for industrial applications. Expertise encompasses machine learning, deep learning, and data analytics, leveraging robust skills in Python and advanced tools such as TensorFlow and PyTorch. A strong foundation in mechanical engineering complements the ability to design and optimize complex systems, ensuring seamless integration of innovative solutions. Proven track record in enhancing operational efficiency and product reliability through data-driven strategies and advanced analytics. Committed to driving technological advancements and efficiency in engineering and manufacturing environments.",
+  "experience": [
+    {
+      "title": "ERP Consultant",
+      "company": "Steltix",
+      "location": "Berlin",
+      "period": "DECEMBER 2022 — JULY 2024",
+      "responsibilities": [
+        "Comprehensive Business Management Solutions: Developed and optimized ERP solutions for manufacturing processes, leading to a 20% increase in operational efficiency."
+      ]
+    },
+    {
+      "title": "Materials  and  Production  Planning:  Monitored  and  maintained  key  systems  for  Bill  of  Materials  (BOM)",
+      "company": "Materials  Requirements Planning (MRP)",
+      "location": "Demand Resource Planning (DRP)",
+      "responsibilities": [
+        "Operational Oversight: Supervised day-to-day operations, including product and materials routing, manufacturing workflows, and cost accounting, to ensure efficiency and accuracy across all processes.",
+        "Data Engineering and Integration: Mapped and integrated data from various datasets using SQL, ensuring data consistency and accessibility for analytical purposes."
+      ]
+    },
+    {
+      "title": "Mechanical Engineer | Data Scientist",
+      "company": "IMI Climate Control",
+      "location": "Basel",
+      "period": "SEPTEMBER 2017 — JULY 2022",
+      "responsibilities": [
+        "Data-Driven Testing and Analysis: Designed and developed testing platforms utilizing advanced data analysis techniques, increasing defect detection rates by 30% and reducing testing time by 20% for heating and hydronic system products.",
+        "Product Optimization through Analytics: Conducted in-depth data analysis to uncover patterns and insights, leading to a 10% reduction in production costs and a 10% improvement in product efficiency.",
+        "Predictive Analytics for Problem Solving: Applied statistical modeling and predictive analytics to identify and address design and performance issues, ensuring proactive solutions and enhancing product reliability through data-driven strategies.",
+        "Product Design: Enhanced the design of existing products to reduce production costs while maintaining quality; developed CAD prototypes and conducted comprehensive FEM testing for new product lines.",
+        "3D CAD Hydraulic Components: Designed precise 3D CAD models for hydraulic connectors to seamlessly integrate valves of varying diameters, improving system compatibility and efficiency.",
+        "Robotic Automation: Procured and implemented robotic arms to automate assembly line processes, reducing setup time by 20%."
+      ]
+    },
+    {
+      "title": "Engineering Consultant",
+      "company": "ALTEN GmbH",
+      "location": "Cologne",
+      "period": "JANUARY 2017 — AUGUST 2017",
+      "responsibilities": [
+        "Logistics and Production Support: Helped streamline material flow and day-to-day build schedules, contributing to roughly a 7% reduction in line-stop incidents while learning core plant-floor routines.",
+        "3D  Design  Validation:  Assisted  senior  engineers  in  checking  CAD  models  against  spec;  early  feedback  raised  first-pass  design acceptance by about 9%, giving me my first hands-on taste of design quality gates.",
+        "Supplier  Collaboration:  Acted  as  a  junior  point-of-contact  between  Ford  and  component  suppliers,  which  trimmed  average delivery variance by 6% and taught me the basics of relationship management in a global supply chain."
+      ]
+    },
+    {
+      "title": "Contractor",
+      "company": "European Patent Office",
+      "location": "Munich",
+      "period": "JUNE 2016 — DECEMBER 2016",
+      "responsibilities": [
+        "Patent  Management  and  Analysis:  Managed  patents  related  to  machine  tools  and  plastic  welding  procedures,  employing structured methods to enhance evaluation processes.",
+        "Enhanced  Technical  Understanding:  Leveraged  analytical  approaches  to  improve  technical  patent  assessments,  increasing evaluation speed by 40% and accuracy by 25%.",
+        "Optimized  Search  Processes:  Developed  and  implemented  innovative  tools  and  systematic  techniques  influenced  by  AI concepts, reducing patent search time by 20% and cutting manual effort by 35%."
+      ]
+    },
+    {
+      "title": "Contractor",
+      "company": "European Patent Office",
+      "location": "Munich",
+      "period": "JUNE 2016 — DECEMBER 2016",
+      "responsibilities": [
+        "Patent  Management  and  Analysis:  Managed  patents  related  to  machine  tools  and  plastic  welding  procedures,  employing structured methods to enhance evaluation processes.",
+        "Enhanced  Technical  Understanding:  Leveraged  analytical  approaches  to  improve  technical  patent  assessments,  increasing evaluation speed by 40% and accuracy by 25%.",
+        "Optimized  Search  Processes:  Developed  and  implemented  innovative  tools  and  systematic  techniques  influenced  by  AI concepts, reducing patent search time by 20% and cutting manual effort by 35%."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "year": "2025",
+      "description": "Anomaly detection app",
+      "title": "AI-driven vehicle damage detection using YOLOv8 to pinpoint 8 damage types (doors, headlights, bumpers, dents, etc.) in images & video. Flask + React/TypeScript web app automates inspections and slashes claim processing from days to minutes."
+    },
+    {
+      "year": "2024",
+      "description": "Book Recommender App - Streamlit",
+      "title": "In modern manufacturing, ensuring product quality is critical. AI-driven anomaly detection transforms quality control by identifying defects faster and more accurately than human inspectors. This project leverages MVTec Anomaly Detection dataset to automate defect detection across various objects and textures."
+    },
+    {
+      "year": "2025",
+      "description": "Agentic RAG on n8n.io",
+      "title": "Open-source Book Recommender that acts like a personal librarian. It learns from the books you rate, finds readers with similar tastes, and surfaces titles you’re likely to love. Built with collaborative filtering, FastAPI, Airflow pipelines and DVC-tracked data/models, the system refreshes weekly and delivers real-time suggestions in <30 ms. Fully containerised and documented so anyone can run, fork or extend the stack"
+    },
+    {
+      "year": "2025",
+      "description": "Genetics algorithm Optimization for CAD model",
+      "title": "Built an agentic RAG that routes each question to the right capability (semantic search, full-document retrieval, or SQL over structured data)coordinated by n8n for higher answer quality and transparency.Created an advanced RAG system, orchestrated by n8n, that intelligently routes user queries to the best information retrieval method (semantic search, full-document retrieval, or SQL queries). This ensures precise, relevant, and transparent answers from various data sources, significantly enhancing user experience."
+    },
+    {
+      "year": "2024",
+      "description": "Time Series Cryptocurrency Forecasting",
+      "title": "Leveraging genetic algorithms (GAs) and AI to optimize CAD designs, integrating FreeCAD and Python for automated generative design workflows. Focus on improving structural efficiency while minimizing material usage, making advanced optimization techniques more accessible and cost-effective."
+    },
+    {
+      "year": "2024",
+      "description": "",
+      "title": "AI-driven crypto forecasting dashboard delivering real-time price feeds and 30-day forecasts with confidence intervals. Built with Prophet & scikit-learn ensembles on a FastAPI + WebSockets backend and a responsive React/TypeScript + Tailwind CSS frontend for transparent, live volatility insights."
+    },
+    {
+      "year": "2024",
+      "description": "",
+      "title": "AI-driven crypto forecasting dashboard delivering real-time price feeds and 30-day forecasts with confidence intervals. Built with Prophet & scikit-learn ensembles on a FastAPI + WebSockets backend and a responsive React/TypeScript + Tailwind CSS frontend for transparent, live volatility insights."
+    }
+  ],
+  "education": [
+    {
+      "degree": "Data Science and MLOps",
+      "institution": "Université Paris 1 Panthéon-Sorbonne , Paris",
+      "period": "SEPTEMBER 2024 — JUNE 2025",
+      "details": [
+        "Engaged in comprehensive training covering advanced programming, data visualization, machine learning, deep learning, and big data technologies. The curriculum includes:",
+        "Data Visualization: Matplotlib, Seaborn.",
+        "Machine Learning: Classification, regression, clustering with scikit-learn.",
+        "Advanced Machine Learning: Time series, text mining, dimensionality reduction, recommender systems, Computer Vision.",
+        "Big Data/Database: SQL, databases.",
+        "Deep Learning: Neural networks, CNNs, RNNs with Keras, TensorFlow, and PyTorch.",
+        "MLOps & Cloud Deployment: CI/CD pipelines, Docker, Kubernetes, Model Deployment, Monitoring & Scaling ML Models.",
+        "n8n Automation & Orchestration: Workflow Pipelines, Data Integration, API Connections, Task Scheduling, Process Automation, and Monitoring."
+      ]
+    },
+    {
+      "degree": "Master of Science: Mechanical Engineering with Major in R&D",
+      "institution": "INSA Lyon - Institut National Des Sciences Appliquées De Lyon, Lyon",
+      "period": "SEPTEMBER 2010 — NOVEMBER 2015",
+      "details": [
+        "Research Project:",
+        "Mobile Nacelle Design for Water Turbines – Developed a versatile nacelle design using CATIA V5 and ANSYS Workbench, ensuring structural integrity and adaptability to generate electricity or pump water for underprivileged regions.",
+        "Collision Analysis of Cranial Structures – Enhanced understanding of stress distribution and improved 3D skull models through precise simulations ANSYS and CAD modeling, supporting biomechanical research and safety assessments.",
+        "Study Abroad:",
+        "Erasmus Semester at RWTH Aachen University – Completed lectures on Internal Combustion Engines and Vehicle Acoustics."
+      ]
+    },
+    {
+      "degree": "Master Thesis: “Investigation of the Effects of Contoured Pistons in Common Rail Pumps”. Optimized piston designs for enhanced performance and reduced tribological losses through advanced Elastohydrodynamic (EHD) simulations in ANSYS. Achieved improved lubrication",
+      "institution": "contact behavior, durability, and overall efficiency in common rail pump systems.",
+      "details": []
+    },
+    {
+      "degree": "Master Thesis: “Investigation of the Effects of Contoured Pistons in Common Rail Pumps”. Optimized piston designs for enhanced performance and reduced tribological losses through advanced Elastohydrodynamic (EHD) simulations in ANSYS. Achieved improved lubrication",
+      "institution": "contact behavior, durability, and overall efficiency in common rail pump systems.",
+      "details": []
+    }
+  ],
+  "skills": {
+    "programming": [
+      "Python",
+      "SQL",
+      "Git/Github"
+    ],
+    "technical": [
+      "Computer Vision",
+      "Linux",
+      "Docker",
+      "MLOps"
+    ],
+    "tools": [
+      "PyTorch",
+      "TensorFlow",
+      "Ansys Workbench",
+      "Catia V5/V6",
+      "Solidworks"
+    ],
+    "frameworks": []
+  },
+  "languages": [
+    {
+      "language": "Italian",
+      "proficiency": "Native Speaker"
+    },
+    {
+      "language": "Albanian",
+      "proficiency": "Native Speaker"
+    },
+    {
+      "language": "English",
+      "proficiency": "Advanced (C1 Certified: IELTS, TOEIC)"
+    },
+    {
+      "language": "German",
+      "proficiency": "Fluent (B2 Certified: TELC)"
+    },
+    {
+      "language": "Spanish",
+      "proficiency": "Advanced (C1 Certified: DELE)"
+    },
+    {
+      "language": "French",
+      "proficiency": "Advanced (C1 Certified: TCF)"
+    }
+  ],
+  "certificates": [
+    "MLOps and Datascience certificates from Datascientest.com",
+    "AWS Cloud Practitioner Essentials",
+    "Microsoft Azure Fundamentals",
+    "Stanford University: Machine Learning Specialization",
+    "Google: Advanced Data Analytics Specialization",
+    "IBM: Databases and SQL for Data Science with Python (with Honors)",
+    "CATIA - CAD 2D/3D and Ansys WorkBench FEM Finite Element Methods",
+    "Udemy: Robotics Operating System ROS2 Odometry and Control"
+  ],
+  "metadata": {
+    "extraction_date": "2025-09-13",
+    "source": "Giuseppe_Rumore_CV.txt",
+    "version": "1.0"
+  }
+}

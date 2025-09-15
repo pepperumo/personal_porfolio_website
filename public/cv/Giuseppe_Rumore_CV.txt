@@ -1,0 +1,129 @@
+
+
+
+Giuseppe Rumore
+Data Scientist/ Machine Learning Engineer/ Mechanical Engineer 
+Links: Github|LinkedIn|Porfolio 
+Details: Dolgenseestraße 9c, Berlin, 10319, Germany
+Tel: +39 3203049526, pepperumo@gmail.com
+
+Profile
+Data Scientist and ML Engineer with multiple years of experience in developing and optimizing models for industrial applications. Expertise encompasses machine learning, deep learning, and data analytics, leveraging robust skills in Python and advanced tools such as TensorFlow and PyTorch. A strong foundation in mechanical engineering complements the ability to design and optimize complex systems, ensuring seamless integration of innovative solutions. Proven track record in enhancing operational efficiency and product reliability through data-driven strategies and advanced analytics. Committed to driving technological advancements and efficiency in engineering and manufacturing environments. 
+Professional Experience
+ERP Consultant, Steltix, Berlin
+DECEMBER 2022 — JULY 2024
+Comprehensive Business Management Solutions: Developed and optimized ERP solutions for manufacturing processes, leading to a 20% increase in operational efficiency. 
+Materials  and  Production  Planning:  Monitored  and  maintained  key  systems  for  Bill  of  Materials  (BOM),  Materials  Requirements Planning (MRP), Demand Resource Planning (DRP), and Capacity Planning, ensuring alignment with production goals. 
+Operational Oversight: Supervised day-to-day operations, including product and materials routing, manufacturing workflows, and cost accounting, to ensure efficiency and accuracy across all processes. 
+Data Engineering and Integration: Mapped and integrated data from various datasets using SQL, ensuring data consistency and accessibility for analytical purposes.
+Mechanical Engineer | Data Scientist, IMI Climate Control, Basel
+SEPTEMBER 2017 — JULY 2022
+Data-Driven Testing and Analysis: Designed and developed testing platforms utilizing advanced data analysis techniques, increasing defect detection rates by 30% and reducing testing time by 20% for heating and hydronic system products. 
+Product Optimization through Analytics: Conducted in-depth data analysis to uncover patterns and insights, leading to a 10% reduction in production costs and a 10% improvement in product efficiency. 
+Predictive Analytics for Problem Solving: Applied statistical modeling and predictive analytics to identify and address design and performance issues, ensuring proactive solutions and enhancing product reliability through data-driven strategies. 
+Product Design: Enhanced the design of existing products to reduce production costs while maintaining quality; developed CAD prototypes and conducted comprehensive FEM testing for new product lines. 
+3D CAD Hydraulic Components: Designed precise 3D CAD models for hydraulic connectors to seamlessly integrate valves of varying diameters, improving system compatibility and efficiency. 
+Robotic Automation: Procured and implemented robotic arms to automate assembly line processes, reducing setup time by 20%. 
+
+
+
+Engineering Consultant, ALTEN GmbH, Cologne
+JANUARY 2017 — AUGUST 2017
+Logistics and Production Support: Helped streamline material flow and day-to-day build schedules, contributing to roughly a 7% reduction in line-stop incidents while learning core plant-floor routines. 
+3D  Design  Validation:  Assisted  senior  engineers  in  checking  CAD  models  against  spec;  early  feedback  raised  first-pass  design acceptance by about 9%, giving me my first hands-on taste of design quality gates. 
+Supplier  Collaboration:  Acted  as  a  junior  point-of-contact  between  Ford  and  component  suppliers,  which  trimmed  average delivery variance by 6% and taught me the basics of relationship management in a global supply chain. 
+Contractor, European Patent Office, Munich
+JUNE 2016 — DECEMBER 2016
+Patent  Management  and  Analysis:  Managed  patents  related  to  machine  tools  and  plastic  welding  procedures,  employing structured methods to enhance evaluation processes. 
+Enhanced  Technical  Understanding:  Leveraged  analytical  approaches  to  improve  technical  patent  assessments,  increasing evaluation speed by 40% and accuracy by 25%. 
+Optimized  Search  Processes:  Developed  and  implemented  innovative  tools  and  systematic  techniques  influenced  by  AI concepts, reducing patent search time by 20% and cutting manual effort by 35%. 
+Data Science and Machine Learning Projects
+AI Vehicle Damage Detection System
+2025
+AI-driven vehicle damage detection using YOLOv8 to pinpoint 8 damage types (doors, headlights, bumpers, dents, etc.) in images & video. Flask + React/TypeScript web app automates inspections and slashes claim processing from days to minutes. 
+Anomaly detection app
+2024
+In modern manufacturing, ensuring product quality is critical. AI-driven anomaly detection transforms quality control by identifying defects faster and more accurately than human inspectors. This project leverages MVTec Anomaly Detection dataset to automate defect detection across various objects and textures. 
+Book Recommender App - Streamlit
+2025
+Open-source Book Recommender that acts like a personal librarian. It learns from the books you rate, finds readers with similar tastes, and surfaces titles you’re likely to love. Built with collaborative filtering, FastAPI, Airflow pipelines and DVC-tracked data/models, the system refreshes weekly and delivers real-time suggestions in <30 ms. Fully containerised and documented so anyone can run, fork or extend the stack 
+Agentic RAG on n8n.io
+2025
+Built an agentic RAG that routes each question to the right capability (semantic search, full-document retrieval, or SQL over structured data)coordinated by n8n for higher answer quality and transparency.Created an advanced RAG system, orchestrated by n8n, that intelligently routes user queries to the best information retrieval method (semantic search, full-document retrieval, or SQL queries). This ensures precise, relevant, and transparent answers from various data sources, significantly enhancing user experience.
+Genetics algorithm Optimization for CAD model
+2024
+Leveraging genetic algorithms (GAs) and AI to optimize CAD designs, integrating FreeCAD and Python for automated generative design workflows. Focus on improving structural efficiency while minimizing material usage, making advanced optimization techniques more accessible and cost-effective. 
+Time Series Cryptocurrency Forecasting
+2024
+AI-driven crypto forecasting dashboard delivering real-time price feeds and 30-day forecasts with confidence intervals. Built with Prophet & scikit-learn ensembles on a FastAPI + WebSockets backend and a responsive React/TypeScript + Tailwind CSS frontend for transparent, live volatility insights. 
+Education
+Data Science and MLOps, Université Paris 1 Panthéon-Sorbonne , Paris
+SEPTEMBER 2024 — JUNE 2025
+Engaged in comprehensive training covering advanced programming, data visualization, machine learning, deep learning, and big data technologies. The curriculum includes: 
+Data Visualization: Matplotlib, Seaborn. 
+Machine Learning: Classification, regression, clustering with scikit-learn. 
+Advanced Machine Learning: Time series, text mining, dimensionality reduction, recommender systems, Computer Vision. 
+Big Data/Database: SQL, databases. 
+Deep Learning: Neural networks, CNNs, RNNs with Keras, TensorFlow, and PyTorch. 
+MLOps & Cloud Deployment: CI/CD pipelines, Docker, Kubernetes, Model Deployment, Monitoring & Scaling ML Models. 
+n8n Automation & Orchestration: Workflow Pipelines, Data Integration, API Connections, Task Scheduling, Process Automation, and Monitoring.
+Master of Science: Mechanical Engineering with Major in R&D, INSA Lyon - Institut National Des Sciences Appliquées De Lyon, Lyon
+SEPTEMBER 2010 — NOVEMBER 2015
+Research Project: 
+Mobile Nacelle Design for Water Turbines – Developed a versatile nacelle design using CATIA V5 and ANSYS Workbench, ensuring structural integrity and adaptability to generate electricity or pump water for underprivileged regions. 
+Collision Analysis of Cranial Structures – Enhanced understanding of stress distribution and improved 3D skull models through precise simulations ANSYS and CAD modeling, supporting biomechanical research and safety assessments. 
+Study Abroad: 
+Erasmus Semester at RWTH Aachen University – Completed lectures on Internal Combustion Engines and Vehicle Acoustics. 
+Master Thesis: “Investigation of the Effects of Contoured Pistons in Common Rail Pumps”. Optimized piston designs for enhanced performance and reduced tribological losses through advanced Elastohydrodynamic (EHD) simulations in ANSYS. Achieved improved lubrication, contact behavior, durability, and overall efficiency in common rail pump systems. 
+Languages
+Italian, Albanian: Native Speaker
+English: Advanced (C1 Certified: IELTS, TOEIC)
+German: Fluent (B2 Certified: TELC)
+Spanish: Advanced (C1 Certified: DELE)
+French: Advanced (C1 Certified: TCF)
+Portuguese
+
+Certificates
+MLOps and Datascience certificates from Datascientest.com 
+AWS Cloud Practitioner Essentials
+Microsoft Azure Fundamentals
+Stanford University: Machine Learning Specialization
+Google: Advanced Data Analytics Specialization 
+IBM: Databases and SQL for Data Science with Python (with Honors)
+CATIA - CAD 2D/3D and Ansys WorkBench FEM Finite Element Methods
+Udemy: Robotics Operating System ROS2 Odometry and Control
+
+Skills
+Python
+Computer Vision
+SQL
+Git/Github
+Linux
+Docker
+MLOps
+PyTorch
+TensorFlow
+Ansys Workbench
+Catia V5/V6 
+Solidworks
+
+
+
+
+Extra-curricular activities
+Websites Developer
+2025
+LimitedArt: Exclusive Photography Marketplace 
+Engineered a full‑stack platform with React, TypeScript, Node.js (Express) and Tailwind CSS to connect renowned photographers with collectors through limited‑edition photo drops. 
+Implemented JWT based authentication and role‑based access control, plus Stripe‑powered payments for secure transactions. 
+Built an admin dashboard for creators to upload collections, track sales and analyze user engagement via real‑time analytics. 
+
+BodySharing: Underground Event Coordination Platform 
+Developed an invitation - only events app using React, TypeScript, Node.js (Koa) and Tailwind CSS to help likeminded communities organize secret gatherings. 
+Engineered real time chat with Socket.io, geolocation based event discovery and end‑to‑end encrypted RSVP workflows. 
+Designed interactive event pages with calendar integration and map visualizations (Leaflet.js), plus automated email invites via Resend. 
+Created moderation tools and privacy safeguards to ensure a trusted, member only experience. 
+
+
+
+

@@ -1,0 +1,71 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Model cache
+/tmp/hf_cache/
+models/
+*.pt
+*.pth
+*.onnx
+
+# Logs
+*.log
+logs/
+
+# Data files (keep structured versions for deployment)
+# data/cv_raw.txt
+# But keep the processed JSON files
+
+# Local development files
+.env.local
+.env.development
+test_*.py
+scratch_*.py
+
+# Hugging Face specific
+.huggingface/

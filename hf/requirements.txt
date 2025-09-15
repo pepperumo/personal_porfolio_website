@@ -1,0 +1,31 @@
+# Personal Portfolio Website Backend Requirements - HF Spaces Deployment
+# Updated with verified compatible versions for Python 3.9 (HF Spaces Docker)
+
+# Core web framework
+fastapi==0.115.13          # Latest stable version with excellent compatibility
+uvicorn[standard]==0.32.1  # Updated for FastAPI 0.115.13 compatibility
+
+# AI/ML libraries - Compatible versions verified from documentation
+sentence-transformers==3.3.1  # Latest version with improved huggingface_hub compatibility
+torch==2.5.1                  # Latest stable PyTorch compatible with sentence-transformers
+transformers==4.47.1          # Latest version compatible with sentence-transformers 3.3.1
+huggingface_hub==0.26.5       # Latest version compatible with sentence-transformers 3.3.1
+
+# OpenAI integration
+openai==1.57.2               # Latest version with GPT models support
+
+# Data processing
+numpy==1.26.4               # Latest version compatible with Python 3.9
+pandas==2.2.3               # Latest stable version
+scikit-learn==1.4.2         # Stable version with excellent Python 3.9 support
+
+# Configuration and environment
+python-dotenv==1.0.1        # Latest version
+pydantic==2.10.3            # Latest version with FastAPI compatibility
+pydantic-settings==2.7.0    # Latest version compatible with Pydantic 2.10.3
+
+# HTTP requests
+requests==2.32.3            # Latest secure version
+
+# System monitoring
+psutil==6.1.1               # Latest version
