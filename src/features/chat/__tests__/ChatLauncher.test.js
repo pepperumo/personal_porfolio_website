@@ -60,7 +60,7 @@ describe('ChatLauncher', () => {
     expect(button).toHaveAttribute('title', 'Ask me anything about my experience!');
   });
 
-  test('toggles chat panel visibility when button is clicked', async () => {
+  test('hides launcher button when chat is open', async () => {
     renderWithProvider(<TestChatApp />);
     
     const button = screen.getByRole('button', { name: /open chat with peppegpt/i });
@@ -76,13 +76,13 @@ describe('ChatLauncher', () => {
       expect(screen.getByTestId('chat-panel')).toBeInTheDocument();
     });
     
-    // Button icon should change to close icon (check for close icon SVG)
-    expect(button.querySelector('svg')).toBeInTheDocument();
-    // Check that it's the close icon by looking for the X path
-    expect(button.querySelector('path[d*="18 6L6 18"]')).toBeInTheDocument();
+    // Launcher button should be hidden when chat is open
+    await waitFor(() => {
+      expect(screen.queryByRole('button', { name: /open chat with peppegpt/i })).not.toBeInTheDocument();
+    });
   });
 
-  test('closes chat panel when close button is clicked', async () => {
+  test('shows launcher button again when chat is closed', async () => {
     renderWithProvider(<TestChatApp />);
     
     const launcherButton = screen.getByRole('button', { name: /open chat with peppegpt/i });
@@ -95,6 +95,11 @@ describe('ChatLauncher', () => {
       expect(screen.getByTestId('chat-panel')).toBeInTheDocument();
     });
     
+    // Launcher button should be hidden
+    await waitFor(() => {
+      expect(screen.queryByRole('button', { name: /open chat with peppegpt/i })).not.toBeInTheDocument();
+    });
+    
     // Click close button in chat panel
     const closeButton = screen.getByText('Close Chat');
     fireEvent.click(closeButton);
@@ -104,10 +109,14 @@ describe('ChatLauncher', () => {
       expect(screen.queryByTestId('chat-panel')).not.toBeInTheDocument();
     });
     
-    // Launcher button should show chat icon again (check for chat icon SVG)
-    expect(launcherButton.querySelector('svg')).toBeInTheDocument();
-    // Check that it's the chat icon by looking for the chat bubble path
-    expect(launcherButton.querySelector('path[d*="12 2C6.48 2"]')).toBeInTheDocument();
+    // Launcher button should show again with chat icon
+    await waitFor(() => {
+      const button = screen.getByRole('button', { name: /open chat with peppegpt/i });
+      expect(button).toBeInTheDocument();
+      expect(button.querySelector('svg')).toBeInTheDocument();
+      // Check that it's the chat icon by looking for the chat bubble path
+      expect(button.querySelector('path[d*="12 2C6.48 2"]')).toBeInTheDocument();
+    });
   });
 
   test('shows loading fallback while ChatPanel is loading', async () => {
@@ -125,7 +134,7 @@ describe('ChatLauncher', () => {
     });
   });
 
-  test('button changes style when chat is open', async () => {
+  test('launcher button is hidden when chat is open', async () => {
     renderWithProvider(<TestChatApp />);
     
     const button = screen.getByRole('button', { name: /open chat with peppegpt/i });
@@ -134,9 +143,10 @@ describe('ChatLauncher', () => {
     fireEvent.click(button);
     
     await waitFor(() => {
-      // Check for close icon SVG
-      expect(button.querySelector('svg')).toBeInTheDocument();
-      expect(button.querySelector('path[d*="18 6L6 18"]')).toBeInTheDocument();
+      // Launcher button should be hidden when chat is open
+      expect(screen.queryByRole('button', { name: /open chat with peppegpt/i })).not.toBeInTheDocument();
+      // Chat panel should be visible
+      expect(screen.getByTestId('chat-panel')).toBeInTheDocument();
     });
   });
 });

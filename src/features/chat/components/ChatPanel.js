@@ -201,10 +201,10 @@ const ChatPanel = ({ onClose }) => {
 // Styled components with enhanced error handling UI
 const PanelContainer = styled.div`
   position: fixed;
-  bottom: 90px;
+  bottom: 24px;
   right: 24px;
-  width: 420px;
-  height: 550px;
+  width: 480px;
+  height: 650px;
   background: var(--background-light);
   border: 1px solid rgba(100, 255, 218, 0.2);
   border-radius: 12px;
@@ -216,12 +216,12 @@ const PanelContainer = styled.div`
   font-family: var(--font-primary);
 
   @media (max-width: 768px) {
-    bottom: 80px;
+    bottom: 16px;
     right: 16px;
     left: 16px;
     width: auto;
-    height: 65vh;
-    max-height: 600px;
+    height: 75vh;
+    max-height: 700px;
   }
 `;
 
