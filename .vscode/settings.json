@@ -1,13 +1,25 @@
 {
-  "chat.agent.enabled": true,
-  "chat.agent.maxRequests": 15,
-  "github.copilot.chat.agent.runTasks": true,
-  "chat.mcp.discovery.enabled": {
-    "claude-desktop": true,
-    "windsurf": true,
-    "cursor-global": true,
-    "cursor-workspace": true
-  },
-  "github.copilot.chat.agent.autoFix": true,
-  "chat.tools.autoApprove": false
+    "chat.agent.enabled": true,
+    "chat.agent.maxRequests": 15,
+    "github.copilot.chat.agent.runTasks": true,
+    "chat.mcp.discovery.enabled": {
+        "claude-desktop": false,
+        "windsurf": false,
+        "cursor-global": false,
+        "cursor-workspace": false
+    },
+    "github.copilot.chat.agent.autoFix": true,
+    "chat.tools.autoApprove": false,
+    "github.copilot.chat.codeGeneration.useInstructionFiles": true,
+    "chat.promptFilesRecommendations": {
+        "speckit.constitution": true,
+        "speckit.specify": true,
+        "speckit.plan": true,
+        "speckit.tasks": true,
+        "speckit.implement": true
+    },
+    "chat.tools.terminal.autoApprove": {
+        ".specify/scripts/bash/": true,
+        ".specify/scripts/powershell/": true
+    }
 }
