@@ -519,7 +519,7 @@
       ]
     }
   },
-  "qa_signoff": null,
+  "qa_signoff": {"status": "approved", "timestamp": "2025-12-27T07:35:00Z", "qa_session": 2, "verified_by": "qa_agent"},
   "created_at": "2025-12-27T07:45:00Z",
   "planner_notes": {
     "deletion_order_critical": "Directory deletions MUST complete before file modifications to prevent import resolution errors during editing",
@@ -527,5 +527,26 @@
     "env_var_cleanup": "REACT_APP_CHAT_ENABLED checks exist in both App.js and Home.js - both must be removed",
     "cicd_dependencies": "deploy-frontend and validate-deployment jobs have backend dependencies that must be updated"
   },
-  "last_updated": "2025-12-27T06:56:20.652006+00:00"
+  "last_updated": "2025-12-27T06:56:20.652006+00:00",
+  "qa_iteration_history": [
+    {
+      "iteration": 1,
+      "status": "error",
+      "timestamp": "2025-12-27T07:00:37.912209+00:00",
+      "issues": [
+        {
+          "title": "QA error",
+          "description": "QA agent did not update implementation_plan.json"
+        }
+      ]
+    }
+  ],
+  "qa_stats": {
+    "total_iterations": 1,
+    "last_iteration": 1,
+    "last_status": "error",
+    "issues_by_type": {
+      "unknown": 1
+    }
+  }
 }
