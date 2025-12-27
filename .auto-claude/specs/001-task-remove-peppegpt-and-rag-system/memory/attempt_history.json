@@ -59,11 +59,35 @@
         }
       ],
       "status": "completed"
+    },
+    "subtask-3-1": {
+      "attempts": [
+        {
+          "session": 6,
+          "timestamp": "2025-12-27T07:48:59.159532",
+          "approach": "Implemented: Remove ChatPanel mock and all chat-related test cases from App.integration.test.js: Remove ChatPanel",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "subtask-4-1": {
+      "attempts": [
+        {
+          "session": 7,
+          "timestamp": "2025-12-27T07:49:50.795763",
+          "approach": "Implemented: Remove backend-related fields from version.json: backend_version, deployment_target.backend, urls.ba",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
     }
   },
   "stuck_subtasks": [],
   "metadata": {
     "created_at": "2025-12-27T07:43:37.301006",
-    "last_updated": "2025-12-27T07:47:56.256066"
+    "last_updated": "2025-12-27T07:49:50.795770"
   }
 }
