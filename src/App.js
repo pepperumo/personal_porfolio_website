@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import GlobalStyles from './styles/GlobalStyles';
 
@@ -14,68 +14,21 @@ import Contact from './components/Contact/Contact';
 import SocialSidebar from './components/SocialSidebar/SocialSidebar';
 import ThreeBackground from './components/ThreeBackground/ThreeBackground';
 
-// Chat Feature
-import { ErrorBoundary, ChatProvider, useChat } from './features/chat';
-
-// Lazy load chat components for performance
-const ChatLauncher = React.lazy(() => 
-  import('./features/chat').then(module => ({
-    default: module.ChatLauncher
-  }))
-);
-
-const ChatPanel = React.lazy(() => 
-  import('./features/chat').then(module => ({
-    default: module.ChatPanel
-  }))
-);
-
-// Chat panel component that renders when chat is open
-const ChatDisplay = () => {
-  const { isChatOpen, closeChat } = useChat();
-
-  if (!isChatOpen) return null;
-
-  return (
-    <Suspense fallback={<div>Loading chat...</div>}>
-      <ChatPanel onClose={closeChat} />
-    </Suspense>
-  );
-};
-
 function App() {
-  // Feature flag for chat widget (can be controlled via env var later)
-  const isChatEnabled = process.env.REACT_APP_CHAT_ENABLED !== 'false';
-
   return (
-    <ChatProvider>
-      <AppContainer>
-        <GlobalStyles />
-        <ThreeBackground />
-        <Navbar />
-        <SocialSidebar />
-        <AboutMe />
-        <Portfolio />
-        <Languages />
-        <Skills />
-        <Experience />
-        <Education />
-        <Contact />
-        
-        {/* Conditionally render chat widget */}
-        {isChatEnabled && (
-          <ErrorBoundary fallback={<div />}>
-            {/* Corner chat launcher button only */}
-            <Suspense fallback={<div>Loading chat...</div>}>
-              <ChatLauncher />
-            </Suspense>
-            
-            {/* Shared chat panel */}
-            <ChatDisplay />
-          </ErrorBoundary>
-        )}
-      </AppContainer>
-    </ChatProvider>
+    <AppContainer>
+      <GlobalStyles />
+      <ThreeBackground />
+      <Navbar />
+      <SocialSidebar />
+      <AboutMe />
+      <Portfolio />
+      <Languages />
+      <Skills />
+      <Experience />
+      <Education />
+      <Contact />
+    </AppContainer>
   );
 }
 

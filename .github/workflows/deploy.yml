@@ -19,32 +19,31 @@ concurrency:
 
 env:
   NODE_VERSION: '18'
-  PYTHON_VERSION: '3.11'
 
 jobs:
   # Frontend testing and building
   frontend-test:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-      
+
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
-        
+
     - name: Install dependencies
       run: npm ci
-      
+
     - name: Run tests
       run: npm test -- --coverage --watchAll=false
-      
+
     - name: Build frontend
       run: npm run build
-      
+
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -52,152 +51,48 @@ jobs:
         path: ./build
         retention-days: 1
 
-  # Backend testing
-  backend-test:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      
-    - name: Setup Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-        
-    - name: Install dependencies
-      run: |
-        cd backend
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        
-    - name: Run backend tests
-      run: |
-        cd backend
-        python -m pytest tests/ -v --cov=. --cov-report=term-missing
-        
-    - name: Validate backend configuration
-      run: |
-        cd backend
-        python -c "from config import get_settings; print('✓ Configuration loaded successfully')"
-
   # Deploy to GitHub Pages
   deploy-frontend:
-    needs: [frontend-test, backend-test]
+    needs: [frontend-test]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    
+
     steps:
     - name: Download build artifacts
       uses: actions/download-artifact@v4
       with:
         name: frontend-build
         path: ./build
-        
+
     - name: Setup Pages
       uses: actions/configure-pages@v4
-      
+
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
         path: ./build
-        
+
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
 
-  # Deploy to Hugging Face Spaces
-  deploy-backend:
-    needs: [frontend-test, backend-test]
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      
-    - name: Setup Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-        
-    - name: Install HF Hub
-      run: pip install huggingface_hub
-        
-    - name: Deploy to Hugging Face Spaces
-      env:
-        HF_TOKEN: ${{ secrets.HF_TOKEN }}
-      run: |
-        cd hf
-        python -c "
-        import os
-        from huggingface_hub import HfApi, Repository
-        
-        # Get credentials from environment
-        token = os.environ.get('HF_TOKEN')
-        username = 'pepperumo'
-        repo_id = f'{username}/peppegpt'
-        
-        if token:
-            api = HfApi()
-            try:
-                # Create or update the Space
-                api.create_repo(
-                    repo_id=repo_id,
-                    token=token,
-                    repo_type='space',
-                    space_sdk='gradio',
-                    exist_ok=True
-                )
-                
-                # Upload files to the Space
-                api.upload_folder(
-                    folder_path='.',
-                    repo_id=repo_id,
-                    token=token,
-                    repo_type='space'
-                )
-                print(f'✓ Successfully deployed to https://huggingface.co/spaces/{repo_id}')
-            except Exception as e:
-                print(f'⚠ HF Spaces deployment failed: {e}')
-                print('Continuing with fallback deployment...')
-        else:
-            print('⚠ HF_TOKEN not set, skipping Hugging Face deployment')
-        "
-
   # Validation tests after deployment
   validate-deployment:
-    needs: [deploy-frontend, deploy-backend]
+    needs: [deploy-frontend]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-    
+
     steps:
     - name: Validate frontend deployment
       run: |
         echo "🔍 Validating frontend deployment..."
         curl -I https://pepperumo.github.io/personal_porfolio_website/ || echo "⚠ Frontend validation failed"
-        
-    - name: Validate backend deployment
-      env:
-        HF_USERNAME: ${{ secrets.HF_USERNAME }}
-      run: |
-        echo "🔍 Validating backend deployment..."
-        username="pepperumo"
-        backend_url="https://huggingface.co/spaces/pepperumo/peppegpt"
-        
-        # Wait for HF Spaces to start up
-        sleep 60
-        
-        # Check health endpoint (HF Spaces may have different URL structure)
-        curl -f "https://pepperumo-peppegpt.hf.space/health" || echo "⚠ Backend health check failed"
-        curl -f "https://pepperumo-peppegpt.hf.space/" || echo "⚠ Backend root endpoint check failed"
-        
+
     - name: Deployment Summary
       run: |
         echo "🎉 Deployment Summary:"
         echo "Frontend: https://pepperumo.github.io/personal_porfolio_website/"
-        echo "Backend: https://huggingface.co/spaces/pepperumo/peppegpt"
         echo "Version: ${{ github.sha }}"

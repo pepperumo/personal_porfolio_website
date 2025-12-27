@@ -1,0 +1,380 @@
+{
+  "project_root": "/Users/giusepperumore/Documents/GitHub/personal_porfolio_website",
+  "project_type": "monorepo",
+  "services": {
+    "backend": {
+      "name": "backend",
+      "path": "/Users/giusepperumore/Documents/GitHub/personal_porfolio_website/backend",
+      "language": "Python",
+      "framework": "FastAPI",
+      "type": "backend",
+      "package_manager": "pip",
+      "default_port": 8000,
+      "key_directories": {
+        "tests": {
+          "path": "tests",
+          "purpose": "Tests"
+        }
+      },
+      "entry_point": "app.py",
+      "dependencies": [
+        "fastapi",
+        "uvicorn",
+        "sentence-transformers",
+        "torch",
+        "transformers",
+        "openai",
+        "numpy",
+        "pandas",
+        "python-dotenv",
+        "pydantic",
+        "pydantic-settings",
+        "requests",
+        "psutil",
+        "gradio",
+        "apscheduler",
+        "pytest",
+        "pytest-asyncio",
+        "pytest-cov"
+      ],
+      "test_directory": "tests",
+      "dockerfile": "Dockerfile",
+      "environment": {
+        "variables": {
+          "API_TITLE": {
+            "value": null,
+            "source": ".env.example",
+            "type": "string",
+            "sensitive": false,
+            "required": true
+          },
+          "API_VERSION": {
+            "value": null,
+            "source": ".env.example",
+            "type": "string",
+            "sensitive": false,
+            "required": true
+          },
+          "API_DESCRIPTION": {
+            "value": null,
+            "source": ".env.example",
+            "type": "string",
+            "sensitive": false,
+            "required": true
+          },
+          "PORT": {
+            "value": null,
+            "source": ".env.example",
+            "type": "string",
+            "sensitive": false,
+            "required": true
+          },
+          "HOST": {
+            "value": null,
+            "source": ".env.example",
+            "type": "string",
+            "sensitive": false,
+            "required": true
+          },
+          "ALLOWED_ORIGINS": {
+            "value": null,
+            "source": ".env.example",
+            "type": "string",
+            "sensitive": false,
+            "required": true
+          },
+          "ALLOW_CREDENTIALS": {
+            "value": null,
+            "source": ".env.example",
+            "type": "string",
+            "sensitive": true,
+            "required": true
+          },
+          "RATE_LIMIT_REQUESTS": {
+            "value": null,
+            "source": ".env.example",
+            "type": "string",
+            "sensitive": false,
+            "required": true
+          },
+          "RATE_LIMIT_WINDOW": {
+            "value": null,
+            "source": ".env.example",
+            "type": "string",
+            "sensitive": false,
+            "required": true
+          },
+          "HF_MODEL_NAME": {
+            "value": null,
+            "source": ".env.example",
+            "type": "string",
+            "sensitive": false,
+            "required": true
+          },
+          "HF_CACHE_DIR": {
+            "value": null,
+            "source": ".env.example",
+            "type": "string",
+            "sensitive": false,
+            "required": true
+          },
+          "OPENAI_API_KEY": {
+            "value": null,
+            "source": ".env.example",
+            "type": "string",
+            "sensitive": true,
+            "required": true
+          },
+          "OPENAI_MODEL": {
+            "value": null,
+            "source": ".env.example",
+            "type": "string",
+            "sensitive": false,
+            "required": true
+          },
+          "USE_OPENAI": {
+            "value": null,
+            "source": ".env.example",
+            "type": "string",
+            "sensitive": false,
+            "required": true
+          },
+          "OPENAI_MAX_TOKENS": {
+            "value": null,
+            "source": ".env.example",
+            "type": "string",
+            "sensitive": true,
+            "required": true
+          },
+          "OPENAI_TEMPERATURE": {
+            "value": null,
+            "source": ".env.example",
+            "type": "string",
+            "sensitive": false,
+            "required": true
+          },
+          "ENABLE_FALLBACK_RESPONDER": {
+            "value": null,
+            "source": ".env.example",
+            "type": "string",
+            "sensitive": false,
+            "required": true
+          },
+          "DEBUG_MODE": {
+            "value": null,
+            "source": ".env.example",
+            "type": "string",
+            "sensitive": false,
+            "required": true
+          },
+          "ENVIRONMENT": {
+            "value": null,
+            "source": ".env.example",
+            "type": "string",
+            "sensitive": false,
+            "required": true
+          }
+        },
+        "required_count": 19,
+        "optional_count": 0,
+        "detected_count": 19
+      },
+      "api": {
+        "routes": [
+          {
+            "path": "/health",
+            "methods": [
+              "GET"
+            ],
+            "file": "app.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/",
+            "methods": [
+              "GET"
+            ],
+            "file": "app.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/config",
+            "methods": [
+              "GET"
+            ],
+            "file": "app.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/cv-content",
+            "methods": [
+              "GET"
+            ],
+            "file": "app.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/extract-cv",
+            "methods": [
+              "POST"
+            ],
+            "file": "app.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/semantic-search",
+            "methods": [
+              "POST"
+            ],
+            "file": "app.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/chat",
+            "methods": [
+              "POST"
+            ],
+            "file": "app.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/chat/message",
+            "methods": [
+              "POST"
+            ],
+            "file": "fallback.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/search",
+            "methods": [
+              "GET"
+            ],
+            "file": "fallback.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/status",
+            "methods": [
+              "GET"
+            ],
+            "file": "fallback.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          }
+        ],
+        "total_routes": 10,
+        "methods": [
+          "POST",
+          "GET"
+        ],
+        "protected_routes": []
+      },
+      "api_documentation": {
+        "type": "openapi",
+        "auto_generated": true,
+        "docs_url": "/docs",
+        "redoc_url": "/redoc",
+        "openapi_url": "/openapi.json"
+      },
+      "monitoring": {
+        "health_checks": [
+          "/health"
+        ]
+      }
+    },
+    "hf": {
+      "name": "hf",
+      "path": "/Users/giusepperumore/Documents/GitHub/personal_porfolio_website/hf",
+      "language": "Python",
+      "framework": "FastAPI",
+      "type": "backend",
+      "package_manager": "pip",
+      "default_port": 7860,
+      "entry_point": "app.py",
+      "dependencies": [
+        "fastapi",
+        "uvicorn",
+        "sentence-transformers",
+        "torch",
+        "transformers",
+        "huggingface_hub",
+        "openai",
+        "numpy",
+        "pandas",
+        "scikit-learn",
+        "python-dotenv",
+        "pydantic",
+        "pydantic-settings",
+        "requests",
+        "psutil"
+      ],
+      "dockerfile": "Dockerfile",
+      "api": {
+        "routes": [
+          {
+            "path": "/health",
+            "methods": [
+              "GET"
+            ],
+            "file": "app.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/",
+            "methods": [
+              "GET"
+            ],
+            "file": "app.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/api/chat",
+            "methods": [
+              "POST"
+            ],
+            "file": "app.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          }
+        ],
+        "total_routes": 3,
+        "methods": [
+          "POST",
+          "GET"
+        ],
+        "protected_routes": []
+      },
+      "api_documentation": {
+        "type": "openapi",
+        "auto_generated": true,
+        "docs_url": "/docs",
+        "redoc_url": "/redoc",
+        "openapi_url": "/openapi.json"
+      },
+      "monitoring": {
+        "health_checks": [
+          "/health"
+        ]
+      }
+    }
+  },
+  "infrastructure": {
+    "ci": "GitHub Actions",
+    "ci_workflows": [
+      "deploy.yml"
+    ]
+  },
+  "conventions": {}
+}
