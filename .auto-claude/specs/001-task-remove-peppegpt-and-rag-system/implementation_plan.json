@@ -1,0 +1,458 @@
+{
+  "feature": "Remove PeppeGPT Chat and RAG System",
+  "workflow_type": "feature",
+  "workflow_rationale": "Systematic feature removal requiring coordinated changes across frontend, backend directories, CI/CD pipeline, and configuration files. Follows feature workflow pattern to ensure no orphaned references remain.",
+  "phases": [
+    {
+      "id": "phase-1-delete-directories",
+      "name": "Delete Chat and Backend Directories",
+      "type": "implementation",
+      "description": "Delete entire directories containing chat feature and backend code to prevent import resolution issues during subsequent edits",
+      "depends_on": [],
+      "parallel_safe": false,
+      "subtasks": [
+        {
+          "id": "subtask-1-1",
+          "description": "Delete src/features/chat/ directory containing all chat components, context, hooks, services, utils, and tests",
+          "service": "frontend",
+          "files_to_modify": [],
+          "files_to_delete": ["src/features/chat/"],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "command",
+            "command": "test ! -d src/features/chat && echo 'OK'",
+            "expected": "OK"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "subtask-1-2",
+          "description": "Delete backend/ directory containing local FastAPI development server",
+          "service": "backend",
+          "files_to_modify": [],
+          "files_to_delete": ["backend/"],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "command",
+            "command": "test ! -d backend && echo 'OK'",
+            "expected": "OK"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "subtask-1-3",
+          "description": "Delete hf/ directory containing Hugging Face Spaces backend",
+          "service": "backend",
+          "files_to_modify": [],
+          "files_to_delete": ["hf/"],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "command",
+            "command": "test ! -d hf && echo 'OK'",
+            "expected": "OK"
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": "phase-2-frontend-cleanup",
+      "name": "Clean Frontend Files",
+      "type": "implementation",
+      "description": "Remove all chat imports, components, and logic from App.js and Home.js",
+      "depends_on": ["phase-1-delete-directories"],
+      "parallel_safe": true,
+      "subtasks": [
+        {
+          "id": "subtask-2-1",
+          "description": "Remove all chat imports and components from App.js: Remove imports (ErrorBoundary, ChatProvider, useChat, lazy ChatLauncher/ChatPanel), remove ChatDisplay component, remove ChatProvider wrapper, remove isChatEnabled logic and conditional rendering",
+          "service": "frontend",
+          "files_to_modify": ["src/App.js"],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "command",
+            "command": "grep -c 'features/chat\\|ChatProvider\\|ChatLauncher\\|ChatPanel\\|isChatEnabled\\|ChatDisplay' src/App.js || echo '0'",
+            "expected": "0"
+          },
+          "status": "pending",
+          "implementation_notes": {
+            "imports_to_remove": [
+              "import { ErrorBoundary, ChatProvider, useChat } from './features/chat'",
+              "const ChatLauncher = React.lazy(...)",
+              "const ChatPanel = React.lazy(...)"
+            ],
+            "components_to_remove": [
+              "ChatDisplay component (lines 34-44)",
+              "ChatProvider wrapper around AppContainer",
+              "isChatEnabled conditional block (lines 66-76)"
+            ],
+            "lines_to_modify": "17-31 (imports), 34-44 (ChatDisplay), 48 (isChatEnabled), 51+78 (ChatProvider), 66-76 (conditional render)"
+          }
+        },
+        {
+          "id": "subtask-2-2",
+          "description": "Remove chat imports and ProminentChatButton from Home.js: Remove ProminentChatButton and useChat imports, remove toggleChat hook usage, remove isChatEnabled logic, remove ProminentChatButton component from JSX",
+          "service": "frontend",
+          "files_to_modify": ["src/components/Home/Home.js"],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "command",
+            "command": "grep -c 'features/chat\\|ProminentChatButton\\|useChat\\|toggleChat\\|isChatEnabled' src/components/Home/Home.js || echo '0'",
+            "expected": "0"
+          },
+          "status": "pending",
+          "implementation_notes": {
+            "imports_to_remove": [
+              "import { ProminentChatButton, useChat } from '../../features/chat' (line 6)"
+            ],
+            "code_to_remove": [
+              "const { toggleChat } = useChat() (line 20)",
+              "const isChatEnabled = process.env.REACT_APP_CHAT_ENABLED !== 'false' (line 21)",
+              "{isChatEnabled && <ProminentChatButton onClick={toggleChat} />} (line 77)"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "phase-3-test-cleanup",
+      "name": "Clean Test Files",
+      "type": "implementation",
+      "description": "Remove chat-related tests and mocks from integration test file",
+      "depends_on": ["phase-2-frontend-cleanup"],
+      "parallel_safe": true,
+      "subtasks": [
+        {
+          "id": "subtask-3-1",
+          "description": "Remove ChatPanel mock and all chat-related test cases from App.integration.test.js: Remove ChatPanel mock (lines 14-23), remove/update test cases that reference chat components",
+          "service": "frontend",
+          "files_to_modify": ["src/App.integration.test.js"],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "command",
+            "command": "grep -c 'ChatPanel\\|chat-panel\\|prominent-chat-button\\|PeppeGPT\\|Chat Widget' src/App.integration.test.js || echo '0'",
+            "expected": "0"
+          },
+          "status": "pending",
+          "implementation_notes": {
+            "mocks_to_remove": [
+              "jest.mock('./features/chat/components/ChatPanel', ...) (lines 14-23)"
+            ],
+            "tests_to_update": [
+              "Test 'renders main portfolio components without chat when disabled' - remove chat assertions",
+              "Test 'renders chat widget when enabled' - DELETE this test",
+              "Test 'chat widget does not interfere with portfolio navigation' - DELETE or simplify",
+              "Test 'error boundary isolates chat widget errors' - DELETE or rename",
+              "Test 'chat widget opens and closes properly' - DELETE this test"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "phase-4-config-cleanup",
+      "name": "Clean Configuration Files",
+      "type": "implementation",
+      "description": "Update version.json to remove backend references",
+      "depends_on": ["phase-2-frontend-cleanup"],
+      "parallel_safe": true,
+      "subtasks": [
+        {
+          "id": "subtask-4-1",
+          "description": "Remove backend-related fields from version.json: backend_version, deployment_target.backend, urls.backend",
+          "service": "frontend",
+          "files_to_modify": ["version.json"],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "command",
+            "command": "grep -c 'backend' version.json || echo '0'",
+            "expected": "0"
+          },
+          "status": "pending",
+          "implementation_notes": {
+            "fields_to_remove": [
+              "backend_version (line 4)",
+              "deployment_target.backend (line 9)",
+              "urls.backend (line 13)"
+            ],
+            "target_structure": {
+              "version": "dev",
+              "frontend_version": "0.1.0",
+              "commit_hash": "unknown",
+              "build_timestamp": "...",
+              "deployment_target": {
+                "frontend": "GitHub Pages"
+              },
+              "urls": {
+                "frontend": "https://pepperumo.github.io/personal_porfolio_website/"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "phase-5-cicd-cleanup",
+      "name": "Clean CI/CD Pipeline",
+      "type": "implementation",
+      "description": "Remove backend-related jobs from GitHub Actions workflow",
+      "depends_on": ["phase-1-delete-directories"],
+      "parallel_safe": true,
+      "subtasks": [
+        {
+          "id": "subtask-5-1",
+          "description": "Remove backend-test job, deploy-backend job, and backend validation from deploy.yml: Remove backend-test job (lines 56-82), remove deploy-backend job (lines 113-169), update deploy-frontend needs to remove backend-test, update validate-deployment to remove deploy-backend dependency and backend validation steps",
+          "service": "ci/cd",
+          "files_to_modify": [".github/workflows/deploy.yml"],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "command",
+            "command": "grep -c 'backend-test\\|deploy-backend\\|hf.space\\|Hugging Face' .github/workflows/deploy.yml || echo '0'",
+            "expected": "0"
+          },
+          "status": "pending",
+          "implementation_notes": {
+            "jobs_to_remove": [
+              "backend-test job (lines 56-82)",
+              "deploy-backend job (lines 113-169)"
+            ],
+            "dependencies_to_update": [
+              "deploy-frontend.needs: change from [frontend-test, backend-test] to [frontend-test]",
+              "validate-deployment.needs: change from [deploy-frontend, deploy-backend] to [deploy-frontend]"
+            ],
+            "steps_to_remove": [
+              "Validate backend deployment step (lines 183-196)",
+              "Backend URL in Deployment Summary (line 202)"
+            ],
+            "env_to_keep": [
+              "NODE_VERSION: '18'"
+            ],
+            "env_to_remove": [
+              "PYTHON_VERSION: '3.11' (if no longer needed)"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "phase-6-verification",
+      "name": "Build and Test Verification",
+      "type": "integration",
+      "description": "Verify all changes by running build and tests to catch any remaining issues",
+      "depends_on": ["phase-2-frontend-cleanup", "phase-3-test-cleanup", "phase-4-config-cleanup", "phase-5-cicd-cleanup"],
+      "parallel_safe": false,
+      "subtasks": [
+        {
+          "id": "subtask-6-1",
+          "description": "Run npm build to verify no broken imports and successful production build",
+          "all_services": false,
+          "service": "frontend",
+          "files_to_modify": [],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "command",
+            "command": "npm run build",
+            "expected": "Compiled successfully"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "subtask-6-2",
+          "description": "Run npm test to verify all remaining tests pass",
+          "all_services": false,
+          "service": "frontend",
+          "files_to_modify": [],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "command",
+            "command": "npm test -- --watchAll=false",
+            "expected": "All tests pass"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "subtask-6-3",
+          "description": "Verify no remaining chat references in codebase",
+          "all_services": false,
+          "service": "frontend",
+          "files_to_modify": [],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "command",
+            "command": "grep -r 'features/chat\\|REACT_APP_CHAT' src/ || echo 'No chat references found'",
+            "expected": "No chat references found"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "subtask-6-4",
+          "description": "Validate CI/CD workflow YAML syntax",
+          "all_services": false,
+          "service": "ci/cd",
+          "files_to_modify": [],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "command",
+            "command": "python3 -c \"import yaml; yaml.safe_load(open('.github/workflows/deploy.yml'))\" && echo 'YAML valid'",
+            "expected": "YAML valid"
+          },
+          "status": "pending"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total_phases": 6,
+    "total_subtasks": 12,
+    "services_involved": ["frontend", "backend", "ci/cd"],
+    "parallelism": {
+      "max_parallel_phases": 3,
+      "parallel_groups": [
+        {
+          "phases": ["phase-2-frontend-cleanup", "phase-5-cicd-cleanup"],
+          "reason": "Both depend only on phase-1, different file sets"
+        },
+        {
+          "phases": ["phase-3-test-cleanup", "phase-4-config-cleanup"],
+          "reason": "Both depend on phase-2, different file sets"
+        }
+      ],
+      "recommended_workers": 1,
+      "speedup_estimate": "1.3x faster than sequential with 2 workers, but sequential recommended for simplicity"
+    },
+    "startup_command": "source auto-claude/.venv/bin/activate && python auto-claude/run.py --spec 001 --parallel 1",
+    "critical_path": [
+      "phase-1-delete-directories",
+      "phase-2-frontend-cleanup",
+      "phase-3-test-cleanup",
+      "phase-6-verification"
+    ]
+  },
+  "verification_strategy": {
+    "risk_level": "medium",
+    "skip_validation": false,
+    "test_creation_phase": "not_applicable",
+    "test_types_required": ["unit", "integration"],
+    "security_scanning_required": false,
+    "staging_deployment_required": false,
+    "acceptance_criteria": [
+      "All three directories deleted (src/features/chat/, backend/, hf/)",
+      "App.js and Home.js render without chat components",
+      "No broken imports detected during build",
+      "All remaining tests pass",
+      "CI/CD workflow is valid YAML",
+      "No chat references remain in src/ directory"
+    ],
+    "verification_steps": [
+      {
+        "name": "Build Verification",
+        "command": "npm run build",
+        "expected_outcome": "Build completes without errors",
+        "type": "build",
+        "required": true,
+        "blocking": true
+      },
+      {
+        "name": "Unit Tests",
+        "command": "npm test -- --watchAll=false",
+        "expected_outcome": "All tests pass",
+        "type": "test",
+        "required": true,
+        "blocking": true
+      },
+      {
+        "name": "Import Cleanup Check",
+        "command": "grep -r 'features/chat' src/ || echo 'OK'",
+        "expected_outcome": "No chat imports found",
+        "type": "lint",
+        "required": true,
+        "blocking": true
+      },
+      {
+        "name": "YAML Validation",
+        "command": "python3 -c \"import yaml; yaml.safe_load(open('.github/workflows/deploy.yml'))\"",
+        "expected_outcome": "Valid YAML",
+        "type": "lint",
+        "required": true,
+        "blocking": true
+      }
+    ],
+    "reasoning": "Medium risk removal task. Primary risks are dangling imports and broken tests. Build and test verification will catch any missed references. No security scanning needed as we're removing code, not adding."
+  },
+  "qa_acceptance": {
+    "unit_tests": {
+      "required": true,
+      "commands": ["npm test -- --watchAll=false"],
+      "minimum_coverage": null
+    },
+    "integration_tests": {
+      "required": true,
+      "commands": ["npm run build"],
+      "services_to_test": ["frontend"]
+    },
+    "e2e_tests": {
+      "required": false,
+      "commands": [],
+      "flows": []
+    },
+    "browser_verification": {
+      "required": true,
+      "pages": [
+        {
+          "url": "http://localhost:3000",
+          "checks": [
+            "App renders without errors",
+            "No chat launcher button in corner",
+            "No ProminentChatButton in hero section",
+            "All portfolio sections render correctly",
+            "No console errors related to chat components"
+          ]
+        }
+      ]
+    },
+    "database_verification": {
+      "required": false,
+      "checks": []
+    },
+    "static_analysis": {
+      "required": true,
+      "checks": [
+        {
+          "name": "No chat imports",
+          "command": "grep -r 'features/chat' src/",
+          "expected": "No results"
+        },
+        {
+          "name": "No chat env vars",
+          "command": "grep -r 'REACT_APP_CHAT' src/",
+          "expected": "No results"
+        },
+        {
+          "name": "CI/CD YAML valid",
+          "command": "python3 -c \"import yaml; yaml.safe_load(open('.github/workflows/deploy.yml'))\"",
+          "expected": "No errors"
+        }
+      ]
+    }
+  },
+  "qa_signoff": null,
+  "created_at": "2025-12-27T07:45:00Z",
+  "planner_notes": {
+    "deletion_order_critical": "Directory deletions MUST complete before file modifications to prevent import resolution errors during editing",
+    "all_or_nothing": "Chat removal must be complete - partial removal will cause build failures",
+    "env_var_cleanup": "REACT_APP_CHAT_ENABLED checks exist in both App.js and Home.js - both must be removed",
+    "cicd_dependencies": "deploy-frontend and validate-deployment jobs have backend dependencies that must be updated"
+  }
+}

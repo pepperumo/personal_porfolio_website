@@ -1,0 +1,81 @@
+{
+  "complexity": "standard",
+  "workflow_type": "feature",
+  "confidence": 0.88,
+  "reasoning": "This is a well-scoped removal task with explicit file lists and clear acceptance criteria. While it touches 20+ files across frontend, backend directories, CI/CD, and documentation, the changes are straightforward deletions and cleanup - no new integrations, infrastructure additions, or unfamiliar technologies require research. The task is systematic cleanup rather than complex feature addition.",
+
+  "analysis": {
+    "scope": {
+      "estimated_files": 25,
+      "estimated_services": 2,
+      "is_cross_cutting": true,
+      "notes": "Removes 3 directories (src/features/chat with 18 files, backend/, hf/), modifies 5 core files (App.js, Home.js, test file, version.json, deploy.yml), and updates multiple documentation files. Cross-cutting in that it affects frontend, CI/CD pipeline, and docs."
+    },
+    "integrations": {
+      "external_services": [],
+      "new_dependencies": [],
+      "research_needed": false,
+      "notes": "No new integrations - this task REMOVES existing integrations (HuggingFace Spaces, OpenAI RAG). No research needed as we're deleting, not adding."
+    },
+    "infrastructure": {
+      "docker_changes": false,
+      "database_changes": false,
+      "config_changes": true,
+      "notes": "CI/CD workflow (deploy.yml) needs modification to remove HF Spaces deployment jobs. Environment variables (REACT_APP_PEPPEGPT_API, REACT_APP_CHAT_ENABLED) need removal. No Docker or database changes - those systems are being deleted entirely."
+    },
+    "knowledge": {
+      "patterns_exist": true,
+      "research_required": false,
+      "unfamiliar_tech": [],
+      "notes": "All code being removed exists in codebase. No new patterns needed - just systematic deletion following React/JavaScript conventions. Clear instructions on what to remove from each file."
+    },
+    "risk": {
+      "level": "medium",
+      "concerns": [
+        "Dangling imports after directory deletions",
+        "Hidden dependencies in other components",
+        "Test failures from missing mocked components",
+        "CI/CD pipeline breaking if workflow not updated correctly",
+        "Build failures from unresolved imports"
+      ],
+      "notes": "Primary risk is incomplete cleanup causing broken imports or test failures. Mitigation: systematic deletion order (directories first, then file modifications), followed by build and test verification."
+    }
+  },
+
+  "recommended_phases": [
+    "discovery",
+    "requirements",
+    "context",
+    "spec_writing",
+    "planning",
+    "validation"
+  ],
+
+  "flags": {
+    "needs_research": false,
+    "needs_self_critique": false,
+    "needs_infrastructure_setup": false
+  },
+
+  "validation_recommendations": {
+    "risk_level": "medium",
+    "skip_validation": false,
+    "minimal_mode": false,
+    "test_types_required": ["unit", "integration"],
+    "security_scan_required": false,
+    "staging_deployment_required": false,
+    "reasoning": "Removal of significant functionality requires unit tests to verify no broken imports and integration tests to confirm App.js and Home.js render correctly. No security scan needed as we're removing code, not adding. No staging deployment required as remaining app is frontend-only with no new external dependencies."
+  },
+
+  "implementation_order_recommendations": [
+    "1. Delete directories first (src/features/chat/, backend/, hf/) to avoid import resolution issues",
+    "2. Modify core frontend files (App.js, Home.js) to remove all chat imports and components",
+    "3. Update test file (App.integration.test.js) to remove ChatPanel mocking",
+    "4. Update configuration (version.json) to remove backend URL",
+    "5. Update CI/CD pipeline (deploy.yml) to remove backend/HF deployment jobs",
+    "6. Run tests and build to verify no breakage",
+    "7. Update/remove documentation files last"
+  ],
+
+  "created_at": "2025-01-08T10:30:00Z"
+}
