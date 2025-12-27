@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { Link as ScrollLink } from 'react-scroll';
 import { FaEnvelope, FaLinkedin, FaGithub } from 'react-icons/fa';
-import { ProminentChatButton, useChat } from '../../features/chat';
 
 // Create a wrapper for ScrollLink to handle props properly
 const ScrollLinkWrapper = ({ className, children, smooth, ...props }) => (
@@ -17,9 +16,6 @@ const ScrollLinkWrapper = ({ className, children, smooth, ...props }) => (
 );
 
 const AboutMe = () => {
-  const { toggleChat } = useChat();
-  const isChatEnabled = process.env.REACT_APP_CHAT_ENABLED !== 'false';
-
   return (
     <AboutMeContainer id="about-me">
       <ContentWrapper>
@@ -74,7 +70,6 @@ const AboutMe = () => {
                   <ExploreButton to="portfolio" smooth={true} duration={500} offset={-70}>
                     Explore my work
                   </ExploreButton>
-                  {isChatEnabled && <ProminentChatButton onClick={toggleChat} />}
                   <CVDownloadButton 
                     href="https://docs.google.com/document/d/1A2brfk20TdLxM2QA9SRxPVp2Qa2_1sAK375zaYkm6eo/export?format=pdf&attachment=true"
                     target="_blank"
