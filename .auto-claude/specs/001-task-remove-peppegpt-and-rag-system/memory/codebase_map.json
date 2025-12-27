@@ -4,7 +4,12 @@
       "description": "Cleaned CI/CD pipeline to frontend-only deployment. Removed backend-test, deploy-backend jobs and all Hugging Face Spaces references. Now has 3 jobs: frontend-test \u2192 deploy-frontend \u2192 validate-deployment",
       "category": "ci-cd",
       "discovered_at": "2025-12-27T06:50:44.544871+00:00"
+    },
+    "src/features/": {
+      "description": "Features directory exists but is empty after chat removal. Content strings in Portfolio.js and Experience.js reference 'RAG' and 'supply chain' but these are portfolio project descriptions, not actual feature code.",
+      "category": "architecture",
+      "discovered_at": "2025-12-27T06:55:15.616556+00:00"
     }
   },
-  "last_updated": "2025-12-27T06:50:44.544888+00:00"
+  "last_updated": "2025-12-27T06:55:15.616568+00:00"
 }
