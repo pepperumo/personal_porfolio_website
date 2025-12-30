@@ -14,6 +14,16 @@ const Portfolio = () => {
     // Simulated data - this would typically come from an API or CMS
     const projectData = [
       {
+        title: <a href="https://peppegpt.giusepperumore.com/" target="_blank" rel="noopener noreferrer">PeppeGPT.com</a>,
+        description: 'Full-stack AI chatbot with React, TypeScript, FastAPI, and Shadcn UI. Features autonomous AI agents using LangGraph for multi-step reasoning, RAG pipeline with Neo4j knowledge graph, n8n workflows for document ingestion, and containerized microservices with multi-LLM provider support.',
+        image: `${process.env.PUBLIC_URL}/peppegpt.png`,
+        technologies: ['React', 'TypeScript', 'FastAPI', 'LangGraph', 'Neo4j', 'n8n', 'Docker', 'RAG'],
+        github: 'https://github.com/pepperumo/peppegpt',
+        external: 'https://peppegpt.giusepperumore.com/',
+        category: 'ai',
+        featured: true
+      },
+      {
         title: <a href="https://www.linkedin.com/pulse/agentic-rag-actually-answers-your-question-why-i-built-rumore-nycre/" target="_blank" rel="noopener noreferrer">Agentic RAG on n8n</a>,
         description: 'Agentic RAG that routes each question to the right capability (semantic search, full-document retrieval, or SQL over structured data)coordinated by n8n for higher answer quality and transparency.',
         image: `${process.env.PUBLIC_URL}/n8n.png`,

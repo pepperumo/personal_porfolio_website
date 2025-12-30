@@ -73,8 +73,8 @@ const Navbar = () => {
               </NavItem>
             ))}
           </NavList>
-          <CVDownloadButton 
-            href="https://docs.google.com/document/d/1A2brfk20TdLxM2QA9SRxPVp2Qa2_1sAK375zaYkm6eo/export?format=pdf&attachment=true"
+          <CVDownloadButton
+            href="https://docs.google.com/document/d/1_WphOUlDffLJ2L_Qc34qJzUI1jLSXCvy-PKR8K7XGnY/export?format=pdf&attachment=true"
             target="_blank"
             rel="noopener noreferrer"
             download="Giuseppe_Rumore_CV.pdf"

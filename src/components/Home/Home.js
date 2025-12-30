@@ -70,14 +70,13 @@ const AboutMe = () => {
                   <ExploreButton to="portfolio" smooth={true} duration={500} offset={-70}>
                     Explore my work
                   </ExploreButton>
-                  <CVDownloadButton 
-                    href="https://docs.google.com/document/d/1A2brfk20TdLxM2QA9SRxPVp2Qa2_1sAK375zaYkm6eo/export?format=pdf&attachment=true"
+                  <PeppeGPTButton
+                    href="https://peppegpt.giusepperumore.com/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    download="Giuseppe_Rumore_CV.pdf"
                   >
-                    Download my CV
-                  </CVDownloadButton>
+                    Try PeppeGPT
+                  </PeppeGPTButton>
                 </ButtonContainer>
               </NameAndDescriptionContainer>
               
@@ -339,12 +338,37 @@ const CVDownloadButton = styled.a`
   background-color: transparent;
   color: var(--secondary-color);
   border: 1px solid var(--secondary-color);
-  
+
   &:hover {
     background-color: rgba(100, 255, 218, 0.1);
     transform: translateY(-3px);
   }
-  
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
+const PeppeGPTButton = styled.a`
+  display: inline-block;
+  padding: 12px 24px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: var(--transition);
+  background-color: var(--secondary-color);
+  color: var(--background-dark);
+  border: 1px solid var(--secondary-color);
+  font-weight: 600;
+
+  &:hover {
+    background-color: var(--secondary-light);
+    transform: translateY(-3px);
+  }
+
   @media (max-width: 768px) {
     width: 100%;
   }

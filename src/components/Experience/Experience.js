@@ -5,6 +5,18 @@ import { motion } from 'framer-motion';
 const Experience = () => {
   const jobs = [
     {
+      company: 'CountX',
+      role: 'AI Agent and Automation Engineer',
+      period: 'Nov 2025 – Present',
+      field: 'AI Agents, Workflow Automation, RAG Systems, LangChain, LangGraph, n8n',
+      responsibilities: [
+        'Developed and deployed advanced workflow automations using tools like n8n, LangChain, and LangGraph, building specialized agents and RAG systems to enhance productivity and reduce repetitive work across all company departments',
+        'Designed and implemented a robust Retrieval-Augmented Generation (RAG) system, significantly improving the accuracy and relevance of AI-generated content for internal knowledge retrieval',
+        'Utilized n8n for low-code integration, orchestrating complex data flows between various cloud services and proprietary APIs to streamline cross-departmental operations',
+        'Engineered and fine-tuned custom AI agents using LangChain and LangGraph to manage specific business processes, such as intelligent document processing and automated customer support triage'
+      ]
+    },
+    {
       company: 'Steltix',
       role: 'ERP Consultant',
       period: '12/2022 – 08/2024',
