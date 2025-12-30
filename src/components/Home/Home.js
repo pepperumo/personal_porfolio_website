@@ -325,30 +325,6 @@ const ExploreButton = styled(ButtonBase)`
   }
 `;
 
-const CVDownloadButton = styled.a`
-  display: inline-block;
-  padding: 12px 24px;
-  font-family: var(--font-mono);
-  font-size: 14px;
-  text-align: center;
-  cursor: pointer;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: var(--transition);
-  background-color: transparent;
-  color: var(--secondary-color);
-  border: 1px solid var(--secondary-color);
-
-  &:hover {
-    background-color: rgba(100, 255, 218, 0.1);
-    transform: translateY(-3px);
-  }
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`;
-
 const PeppeGPTButton = styled.a`
   display: inline-block;
   padding: 12px 24px;
