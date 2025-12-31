@@ -2,17 +2,7 @@
   "short_name": "GR Portfolio",
   "name": "Giuseppe Rumore Portfolio",  "icons": [
     {
-      "src": "favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
-    },
-    {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "logo512.png",
+      "src": "profile.png",
       "type": "image/png",
       "sizes": "512x512"
     }
