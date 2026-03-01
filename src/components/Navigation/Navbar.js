@@ -51,7 +51,7 @@ const Navbar = () => {
           offset={0} 
           onClick={closeMenu}
         >
-          <img src={process.env.PUBLIC_URL + '/nano banana/2026-02-23-gr-cyberpunk-logo.png'} alt="GR Logo" />
+          <img src={process.env.PUBLIC_URL + '/images/gr-cyberpunk-logo.png'} alt="GR Logo" />
         </LogoLink>
         <MenuButton onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <FiX /> : <FiMenu />}
