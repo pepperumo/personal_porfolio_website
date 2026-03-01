@@ -28,6 +28,12 @@ const PeppeGPTSidebar = ({ isOpen, onClose, onOpen }) => {
     return () => document.removeEventListener('keydown', handleEsc);
   }, [isOpen, onClose]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
+
   return (
     <>
       {/* Avatar mascot with button — visible when chat is closed */}
