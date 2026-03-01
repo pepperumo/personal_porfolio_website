@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import TerminalSection from '../TerminalSection/TerminalSection';
 
 const Languages = () => {
   const languages = [
@@ -16,24 +17,16 @@ const Languages = () => {
   return (
     <LanguagesSection id="languages">
       <div className="section-container">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-        >
-          <SectionTitle className="section-heading">Languages</SectionTitle>
-          <SectionSubtitle className="section-subtitle">
-            Communicating effectively across borders and cultures.
-          </SectionSubtitle>
-          
+        <TerminalSection title="Languages" subtitle="Communicating effectively across borders and cultures.">
           <LanguageCardsContainer>
             {languages.map((lang, index) => (
-              <LanguageCard 
+              <LanguageCard
                 key={index}
                 as={motion.div}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: [0, 0.6, 0.15, 0.85, 1], y: 0 }}
+                viewport={{ once: true, amount: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.12 }}
               >
                 <LanguageCode>{lang.code}</LanguageCode>
                 <LanguageName>
@@ -43,7 +36,7 @@ const Languages = () => {
               </LanguageCard>
             ))}
           </LanguageCardsContainer>
-        </motion.div>
+        </TerminalSection>
       </div>
     </LanguagesSection>
   );
@@ -51,17 +44,6 @@ const Languages = () => {
 
 const LanguagesSection = styled.section`
   /* Using global section styling from GlobalStyles.js */
-`;
-
-const SectionTitle = styled.h2`
-  font-size: clamp(42px, 6vw, 50px);
-  font-weight: 600;
-  color: var(--text-primary);
-  margin: 0 0 15px 0;
-`;
-
-const SectionSubtitle = styled.p`
-  /* Now using global style from GlobalStyles.js */
 `;
 
 const LanguageCardsContainer = styled.div`
@@ -76,16 +58,23 @@ const LanguageCardsContainer = styled.div`
 `;
 
 const LanguageCard = styled.div`
-  background-color: rgba(17, 34, 64, 0.8);
-  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  border-radius: var(--glass-radius);
+  box-shadow: var(--glass-shadow);
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: transform 0.3s ease;
-  
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
   &:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
+    box-shadow: var(--glass-card-hover-shadow);
   }
 `;
 
@@ -107,10 +96,10 @@ const LanguageName = styled.div`
 const LanguageProgressBar = styled.div`
   width: 100%;
   height: 4px;
-  background-color: rgba(100, 255, 218, 0.1);
-  border-radius: 2px;
+  background-color: rgba(0, 232, 162, 0.1);
+  border-radius: 0;
   position: relative;
-  
+
   &::after {
     content: '';
     position: absolute;
@@ -119,7 +108,7 @@ const LanguageProgressBar = styled.div`
     height: 100%;
     width: ${props => props.$progress}%;
     background-color: var(--secondary-color);
-    border-radius: 2px;
+    border-radius: 0;
   }
 `;
 

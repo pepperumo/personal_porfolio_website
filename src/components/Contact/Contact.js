@@ -3,6 +3,30 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { FaEnvelope, FaLinkedin, FaGithub } from 'react-icons/fa';
 
+const CONTACTS = [
+  {
+    icon: <FaEnvelope />,
+    label: 'Email',
+    value: 'pepperumo@gmail.com',
+    href: 'mailto:pepperumo@gmail.com',
+    external: false,
+  },
+  {
+    icon: <FaLinkedin />,
+    label: 'LinkedIn',
+    value: 'Giuseppe Rumore',
+    href: 'https://www.linkedin.com/in/giuseppe-rumore-b2599961',
+    external: true,
+  },
+  {
+    icon: <FaGithub />,
+    label: 'GitHub',
+    value: 'pepperumo',
+    href: 'https://github.com/pepperumo',
+    external: true,
+  },
+];
+
 const Contact = () => {
   return (
     <ContactSection id="contact">
@@ -13,48 +37,44 @@ const Contact = () => {
         transition={{ duration: 0.6 }}
       >
         <SectionTitle>Contact Me</SectionTitle>
-        
-        <ContactContent>
-          <ContactText>
-            I'm currently open to new opportunities and collaborations. Feel free to reach out through any of the following channels:
-          </ContactText>
-          
-          <ContactLinksContainer>
-            <ContactItem 
-              href="mailto:pepperumo@gmail.com"
-              aria-label="Email Giuseppe Rumore"
-            >
-              <ContactItemIcon>
-                <FaEnvelope />
-              </ContactItemIcon>
-              <ContactItemText>pepperumo@gmail.com</ContactItemText>
-            </ContactItem>
-            
-            <ContactItem 
-              href="https://www.linkedin.com/in/giuseppe-rumore-b2599961"
-              target="_blank" 
-              rel="noopener noreferrer"
-              aria-label="LinkedIn Profile"
-            >
-              <ContactItemIcon>
-                <FaLinkedin />
-              </ContactItemIcon>
-              <ContactItemText>LinkedIn</ContactItemText>
-            </ContactItem>
-            
-            <ContactItem 
-              href="https://github.com/pepperumo"
-              target="_blank" 
-              rel="noopener noreferrer"
-              aria-label="GitHub Profile"
-            >
-              <ContactItemIcon>
-                <FaGithub />
-              </ContactItemIcon>
-              <ContactItemText>GitHub</ContactItemText>
-            </ContactItem>
-          </ContactLinksContainer>
-        </ContactContent>
+
+        <TerminalCard>
+          <TerminalHeader>
+            <TerminalDot $color="#ff5f57" />
+            <TerminalDot $color="#febc2e" />
+            <TerminalDot $color="#28c840" />
+            <TerminalTitle>let's connect</TerminalTitle>
+          </TerminalHeader>
+          <TerminalBody>
+            <Greeting>
+              I'm currently open to new opportunities and collaborations.
+              Feel free to reach out!
+            </Greeting>
+
+            <ContactCards>
+              {CONTACTS.map((contact, index) => (
+                <ContactCard
+                  key={index}
+                  as={motion.a}
+                  href={contact.href}
+                  target={contact.external ? '_blank' : undefined}
+                  rel={contact.external ? 'noopener noreferrer' : undefined}
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                >
+                  <ContactIcon>{contact.icon}</ContactIcon>
+                  <ContactInfo>
+                    <ContactLabel>{contact.label}</ContactLabel>
+                    <ContactValue>{contact.value}</ContactValue>
+                  </ContactInfo>
+                  <ArrowIcon>&rarr;</ArrowIcon>
+                </ContactCard>
+              ))}
+            </ContactCards>
+          </TerminalBody>
+        </TerminalCard>
       </motion.div>
     </ContactSection>
   );
@@ -64,7 +84,7 @@ const ContactSection = styled.section`
   max-width: 900px;
   margin: 0 auto;
   padding: 100px 0;
-  
+
   @media (max-width: 768px) {
     padding: 80px 0;
   }
@@ -78,63 +98,118 @@ const SectionTitle = styled.h2`
   text-align: center;
 `;
 
-const ContactContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+const TerminalCard = styled.div`
+  background: rgba(10, 10, 10, 0.85);
+  border: 1px solid rgba(0, 232, 162, 0.2);
+  border-radius: 6px;
+  overflow: hidden;
+  max-width: 550px;
+  margin: 0 auto;
+  box-shadow: none;
 `;
 
-const ContactText = styled.p`
-  margin-bottom: 40px;
-  font-size: 18px;
+const TerminalHeader = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 8px;
+`;
+
+const TerminalDot = styled.div`
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: ${({ $color }) => $color};
+`;
+
+const TerminalTitle = styled.span`
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  margin-left: 8px;
+`;
+
+const TerminalBody = styled.div`
+  padding: 28px 24px;
+`;
+
+const Greeting = styled.p`
+  color: var(--text-secondary);
+  font-size: 15px;
   line-height: 1.6;
-  color: var(--text-secondary);
   text-align: center;
-  max-width: 600px;
+  margin: 0 0 28px;
 `;
 
-const ContactLinksContainer = styled.div`
+const ContactCards = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  width: 100%;
-  max-width: 500px;
+  gap: 12px;
 `;
 
-const ContactItem = styled.a`
+const ContactCard = styled.a`
   display: flex;
   align-items: center;
-  padding: 15px 20px;
-  border-radius: 5px;
-  background-color: var(--background-light);
-  color: var(--text-secondary);
+  gap: 16px;
+  padding: 16px 20px;
+  border-radius: 4px;
+  background: rgba(0, 232, 162, 0.03);
+  border: 1px solid rgba(0, 232, 162, 0.15);
   text-decoration: none;
-  transition: all 0.3s ease;
-  
+  transition: all 0.25s ease;
+  cursor: pointer;
+
   &:hover {
-    transform: translateY(-5px);
-    background-color: rgba(100, 255, 218, 0.1);
-    color: var(--secondary-color);
-    box-shadow: 0 10px 30px -15px var(--shadow-color);
+    background: rgba(0, 232, 162, 0.08);
+    border-color: rgba(0, 232, 162, 0.25);
+    transform: translateX(4px);
   }
 `;
 
-const ContactItemIcon = styled.div`
+const ContactIcon = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  background-color: rgba(100, 255, 218, 0.1);
-  margin-right: 15px;
-  font-size: 20px;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 4px;
+  background: rgba(0, 232, 162, 0.1);
   color: var(--secondary-color);
+  font-size: 18px;
+  flex-shrink: 0;
 `;
 
-const ContactItemText = styled.span`
-  font-size: 16px;
+const ContactInfo = styled.div`
+  flex: 1;
+  min-width: 0;
+`;
+
+const ContactLabel = styled.div`
+  color: var(--text-secondary);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+`;
+
+const ContactValue = styled.div`
+  color: var(--text-primary);
+  font-size: 15px;
   font-weight: 500;
+`;
+
+const ArrowIcon = styled.span`
+  color: var(--secondary-color);
+  font-size: 18px;
+  opacity: 0.5;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+
+  ${ContactCard}:hover & {
+    opacity: 1;
+    transform: translateX(4px);
+  }
 `;
 
 export default Contact;

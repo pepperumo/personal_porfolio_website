@@ -73,7 +73,11 @@ const SocialIconsList = styled.ul`
 `;
 
 const SocialIconItem = styled.li`
-  margin-bottom: 25px;  /* Consistent spacing between icons */
+  margin-bottom: 25px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 const SocialLink = styled.a`

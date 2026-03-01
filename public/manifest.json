@@ -2,7 +2,7 @@
   "short_name": "GR Portfolio",
   "name": "Giuseppe Rumore Portfolio",  "icons": [
     {
-      "src": "profile.png",
+      "src": "favicon.png",
       "type": "image/png",
       "sizes": "512x512"
     }

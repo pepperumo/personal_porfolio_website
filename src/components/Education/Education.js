@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import TerminalSection from '../TerminalSection/TerminalSection';
 
 const Education = () => {
   const educationData = [
@@ -20,21 +21,16 @@ const Education = () => {
 
   return (    <EducationSection id="education">
       <div className="section-container">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-        ><SectionTitle className="section-heading">Education</SectionTitle>
-        <SectionSubtitle className="section-subtitle">Academic foundation supporting practical expertise.</SectionSubtitle>
-        
+        <TerminalSection title="Education" subtitle="Academic foundation supporting practical expertise.">
         <EducationCardsContainer>
           {educationData.map((edu, index) => (
             <EducationCard 
               key={index}
               as={motion.div}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: [0, 0.6, 0.15, 0.85, 1], y: 0 }}
+              viewport={{ once: true, amount: 0 }}
+              transition={{ duration: 0.4, delay: index * 0.12 }}
             >
               <EducationTitle>{edu.title}</EducationTitle>
               <EducationInstitution>{edu.institution}</EducationInstitution>
@@ -42,7 +38,7 @@ const Education = () => {
               <EducationLocation>{edu.location}</EducationLocation>            </EducationCard>
           ))}
         </EducationCardsContainer>
-        </motion.div>
+        </TerminalSection>
       </div>
     </EducationSection>
   );
@@ -50,17 +46,6 @@ const Education = () => {
 
 const EducationSection = styled.section`
   /* Using global section styling from GlobalStyles.js */
-`;
-
-const SectionTitle = styled.h2`
-  font-size: clamp(42px, 6vw, 50px);
-  font-weight: 600;
-  color: var(--text-primary);
-  margin: 0 0 15px 0;
-`;
-
-const SectionSubtitle = styled.p`
-  /* Now using global style from GlobalStyles.js */
 `;
 
 const EducationCardsContainer = styled.div`
@@ -74,13 +59,20 @@ const EducationCardsContainer = styled.div`
 `;
 
 const EducationCard = styled.div`
-  background-color: rgba(17, 34, 64, 0.8);
-  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  border-radius: var(--glass-radius);
+  box-shadow: var(--glass-shadow);
   padding: 30px;
-  transition: transform 0.3s ease;
-  
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
   &:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
+    box-shadow: var(--glass-card-hover-shadow);
   }
 `;
 

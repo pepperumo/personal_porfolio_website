@@ -3,10 +3,10 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import App from './App';
 
-// Mock the ThreeBackground component to avoid WebGL issues in tests
-jest.mock('./components/ThreeBackground/ThreeBackground', () => {
-  return function MockThreeBackground() {
-    return <div data-testid="three-background">Three Background</div>;
+// Mock canvas-based background component to avoid Canvas issues in tests
+jest.mock('./components/MatrixRain/MatrixRain', () => {
+  return function MockMatrixRain() {
+    return <div data-testid="matrix-rain">Matrix Rain</div>;
   };
 });
 
@@ -15,7 +15,7 @@ describe('App Integration', () => {
     render(<App />);
 
     // Portfolio components should render
-    expect(screen.getByTestId('three-background')).toBeInTheDocument();
+    expect(screen.getByTestId('matrix-rain')).toBeInTheDocument();
   });
 
   test('lazy loading prevents initial bundle bloat', () => {
@@ -23,7 +23,7 @@ describe('App Integration', () => {
     render(<App />);
 
     // Portfolio should load quickly
-    expect(screen.getByTestId('three-background')).toBeInTheDocument();
+    expect(screen.getByTestId('matrix-rain')).toBeInTheDocument();
 
     const loadTime = performance.now() - performanceStart;
     expect(loadTime).toBeLessThan(1000); // 1 second budget for initial load

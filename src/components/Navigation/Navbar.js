@@ -51,7 +51,7 @@ const Navbar = () => {
           offset={0} 
           onClick={closeMenu}
         >
-          <span>GR</span>
+          <img src={process.env.PUBLIC_URL + '/nano banana/2026-02-23-gr-cyberpunk-logo.png'} alt="GR Logo" />
         </LogoLink>
         <MenuButton onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <FiX /> : <FiMenu />}
@@ -73,14 +73,6 @@ const Navbar = () => {
               </NavItem>
             ))}
           </NavList>
-          <CVDownloadButton
-            href="https://docs.google.com/document/d/1_WphOUlDffLJ2L_Qc34qJzUI1jLSXCvy-PKR8K7XGnY/export?format=pdf&attachment=true"
-            target="_blank"
-            rel="noopener noreferrer"
-            download="Giuseppe_Rumore_CV.pdf"
-          >
-            Download my CV
-          </CVDownloadButton>
         </NavItems>
       </NavContent>
     </NavContainer>
@@ -93,9 +85,11 @@ const NavContainer = styled.header`
   width: 100%;
   height: 70px;
   z-index: 1000;
-  background: ${({ $scrolled }) => ($scrolled ? 'rgba(10, 25, 47, 0.9)' : 'transparent')};
-  backdrop-filter: ${({ $scrolled }) => ($scrolled ? 'blur(10px)' : 'none')};
-  box-shadow: ${({ $scrolled }) => ($scrolled ? '0 10px 30px -10px rgba(2, 12, 27, 0.7)' : 'none')};
+  background: ${({ $scrolled }) => ($scrolled ? 'rgba(10, 10, 10, 0.92)' : 'rgba(10, 10, 10, 0.85)')};
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: ${({ $scrolled }) => ($scrolled ? '0 8px 32px rgba(0, 0, 0, 0.4)' : '0 4px 16px rgba(0, 0, 0, 0.2)')};
+  border-bottom: 1px solid rgba(0, 232, 162, 0.15);
   transition: var(--transition);
 `;
 
@@ -113,17 +107,14 @@ const NavContent = styled.div`
 `;
 
 const LogoLink = styled(ScrollLinkWrapper)`
-  font-family: var(--font-mono);
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--secondary-color);
   cursor: pointer;
   display: flex;
   align-items: center;
-  
-  span {
-    display: block;
-    padding: 10px;
+
+  img {
+    height: 45px;
+    width: auto;
+    object-fit: contain;
   }
 `;
 
@@ -131,11 +122,26 @@ const MenuButton = styled.button`
   display: none;
   background: transparent;
   border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   color: var(--secondary-color);
   font-size: 28px;
   cursor: pointer;
   z-index: 11;
-  
+  border-radius: 0;
+
+  &::before, &::after {
+    display: none;
+  }
+
+  &:hover, &:focus {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    transform: none;
+  }
+
   @media (max-width: 768px) {
     display: flex;
   }
@@ -153,12 +159,13 @@ const NavItems = styled.div`
     max-width: 300px;
     height: 100vh;
     padding: 80px 0 20px 0;
-    background-color: var(--background-light);
+    background: rgba(10, 10, 10, 0.95);
+    border-left: 1px solid rgba(0, 232, 162, 0.25);
     flex-direction: column;
     justify-content: flex-start;
     transform: ${({ $menuOpen }) => ($menuOpen ? 'translateX(0)' : 'translateX(100%)')};
     transition: transform 0.3s ease-in-out;
-    box-shadow: -10px 0px 30px -15px rgba(2, 12, 27, 0.7);
+    box-shadow: -10px 0px 30px -15px rgba(0, 0, 0, 0.7);
     z-index: 10;
   }
 `;
@@ -205,32 +212,6 @@ const NavMenuLink = styled(ScrollLinkWrapper)`
     display: block;
     padding: 10px 0;
     font-size: 16px;
-  }
-`;
-
-const CVDownloadButton = styled.a`
-  display: inline-block;
-  padding: 12px 24px;
-  font-family: var(--font-mono);
-  font-size: 14px;
-  text-align: center;
-  cursor: pointer;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: var(--transition);
-  background-color: var(--secondary-color);
-  color: var(--background-dark);
-  border: 1px solid var(--secondary-color);
-  margin-left: 20px;
-  
-  &:hover {
-    background-color: var(--secondary-light);
-    transform: translateY(-3px);
-  }
-  
-  @media (max-width: 768px) {
-    margin: 15px 0 0 0;
-    width: 80%;
   }
 `;
 

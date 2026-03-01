@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import TerminalSection from '../TerminalSection/TerminalSection';
 
 const Experience = () => {
   const jobs = [
     {
-      company: 'CountX',
+      company: 'countX',
       role: 'AI Agent and Automation Engineer',
       period: 'Nov 2025 – Present',
       field: 'AI Agents, Workflow Automation, RAG Systems, LangChain, LangGraph, n8n',
@@ -30,7 +31,7 @@ const Experience = () => {
     {
       company: 'IMI Climate Control',
       role: 'Mechanical Engineer | Data Scientist',
-      period: '04/2017 – 07/2022',
+      period: '08/2017 – 07/2022',
       field: 'Heating Systems, Hydraulic Systems, Expansion Vessels, Vulcanization Processes',
       responsibilities: [
         'Data-Driven Testing and Analysis: Developed and optimized testing platforms, utilizing advanced data analysis techniques, increasing defect detection rates by 30% and reducing testing time by 20% for testing and hydraulic system products',
@@ -44,7 +45,7 @@ const Experience = () => {
     {
       company: 'ALTEN GmbH',
       role: 'Engineering Consultant (Overhead Systems)',
-      period: '01/2017 – 04/2017',
+      period: '01/2017 – 07/2017',
       field: 'Automotive Overhead Systems',
       responsibilities: [
         'Logistics and Production Support: Helped streamline material flow and day-to-day build schedules, contributing to roughly a 7% reduction in line-stop incidents',
@@ -66,23 +67,16 @@ const Experience = () => {
 
   return (    <ExperienceSection id="experience">
       <div className="section-container">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-        ><SectionTitle className="section-heading">Professional Journey</SectionTitle>
-        <SectionSubtitle className="section-subtitle">
-          A track record of leadership, innovation and driving successful outcomes.
-        </SectionSubtitle>
-        
+        <TerminalSection title="Professional Journey" subtitle="A track record of leadership, innovation and driving successful outcomes.">
         <JobsContainer>
           {jobs.map((job, index) => (
             <JobCard 
               key={index}
               as={motion.div}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: [0, 0.6, 0.15, 0.85, 1], y: 0 }}
+              viewport={{ once: true, amount: 0 }}
+              transition={{ duration: 0.4, delay: index * 0.12 }}
             >
               <CompanyName>{job.company}</CompanyName>
               <JobRole>{job.role}</JobRole>
@@ -97,7 +91,7 @@ const Experience = () => {
             </JobCard>
           ))}
         </JobsContainer>
-        </motion.div>
+        </TerminalSection>
       </div>
     </ExperienceSection>
   );
@@ -107,17 +101,6 @@ const ExperienceSection = styled.section`
   /* Using global section styling from GlobalStyles.js */
 `;
 
-const SectionTitle = styled.h2`
-  font-size: clamp(42px, 6vw, 50px);
-  font-weight: 600;
-  color: var(--text-primary);
-  margin: 0 0 15px 0;
-`;
-
-const SectionSubtitle = styled.p`
-  /* Now using global style from GlobalStyles.js */
-`;
-
 const JobsContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -125,10 +108,17 @@ const JobsContainer = styled.div`
 `;
 
 const JobCard = styled(motion.div)`
-  background-color: rgba(17, 34, 64, 0.8);
-  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  border-radius: var(--glass-radius);
   padding: 30px;
   border-left: 3px solid var(--secondary-color);
+  box-shadow: var(--glass-shadow);
+
 `;
 
 const CompanyName = styled.h3`
@@ -173,7 +163,7 @@ const ResponsibilityItem = styled.li`
   line-height: 1.5;
   
   &:before {
-    content: '•';
+    content: '>';
     position: absolute;
     left: 0;
     color: var(--secondary-color);

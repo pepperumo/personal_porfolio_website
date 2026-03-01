@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { FiGithub, FiExternalLink } from 'react-icons/fi';
+import TerminalSection from '../TerminalSection/TerminalSection';
 
 const Portfolio = () => {
   const [filter, setFilter] = useState('all');
@@ -14,7 +15,8 @@ const Portfolio = () => {
     // Simulated data - this would typically come from an API or CMS
     const projectData = [
       {
-        title: <a href="https://peppegpt.giusepperumore.com/" target="_blank" rel="noopener noreferrer">PeppeGPT.com</a>,
+        title: <a href="https://peppegpt.giusepperumore.com/" target="_blank" rel="noopener noreferrer">PeppeGPT</a>,
+        titleText: 'PeppeGPT',
         description: 'Full-stack AI chatbot with React, TypeScript, FastAPI, and Shadcn UI. Features autonomous AI agents using LangGraph for multi-step reasoning, RAG pipeline with Neo4j knowledge graph, n8n workflows for document ingestion, and containerized microservices with multi-LLM provider support.',
         image: `${process.env.PUBLIC_URL}/peppegpt.png`,
         technologies: ['React', 'TypeScript', 'FastAPI', 'LangGraph', 'Neo4j', 'n8n', 'Docker', 'RAG'],
@@ -25,6 +27,7 @@ const Portfolio = () => {
       },
       {
         title: <a href="https://www.linkedin.com/pulse/agentic-rag-actually-answers-your-question-why-i-built-rumore-nycre/" target="_blank" rel="noopener noreferrer">Agentic RAG on n8n</a>,
+        titleText: 'Agentic RAG on n8n',
         description: 'Agentic RAG that routes each question to the right capability (semantic search, full-document retrieval, or SQL over structured data)coordinated by n8n for higher answer quality and transparency.',
         image: `${process.env.PUBLIC_URL}/n8n.png`,
         technologies: ['n8n', 'RAG', 'Agents', 'Semantic Search', 'SQL', 'Retrieval'],
@@ -35,6 +38,7 @@ const Portfolio = () => {
       },
       {
         title: <a href="https://huggingface.co/spaces/pepperumo/MVTec_Website" target="_blank" rel="noopener noreferrer">MVTEC Anomaly Detection</a>,
+        titleText: 'MVTEC Anomaly Detection',
         description: 'An anomaly detection system APP, detecting defects on products.',
         image: `${process.env.PUBLIC_URL}/anomaly_visual_example.png`,
         technologies: ['Python', 'PyTorch', 'Computer Vision', 'Convolutional Neural Networks'],
@@ -45,6 +49,7 @@ const Portfolio = () => {
       },
       {
         title: <a href="https://www.linkedin.com/pulse/car-damage-detection-using-ai-giuseppe-rumore-9ld7f/?trackingId=8UVElv3GQwez%2Bi4IDUYQQQ%3D%3D" target="_blank" rel="noopener noreferrer">Automated Vehicle Damage Detection</a>,
+        titleText: 'Automated Vehicle Damage Detection',
         description: 'An AI-powered system for automated detection and assessment of vehicle damage using computer vision and machine learning techniques.',
         image: `${process.env.PUBLIC_URL}/car_damage.png`,
         technologies: ['Python', 'Computer Vision', 'Machine Learning', 'Deep Learning', 'Image Processing'],
@@ -55,6 +60,7 @@ const Portfolio = () => {
       },
       {
         title: <a href="https://huggingface.co/spaces/pepperumo/book_recommender_streamlit" target="_blank" rel="noopener noreferrer">AI-Powered Recommendation APP</a>,
+        titleText: 'AI-Powered Recommendation APP',
         description: 'A recommendation system using collaborative filtering and deep learning techniques.',
         image: `${process.env.PUBLIC_URL}/books.jpg`,
         technologies: ['Python', 'TensorFlow', 'FastAPI', 'TypeScript', 'Streamlit'],
@@ -64,6 +70,7 @@ const Portfolio = () => {
         featured: false
       },
       {        title: <a href="https://www.linkedin.com/pulse/crypto-foresight-ai-powered-platform-real-time-giuseppe-rumore-e38lf/?trackingId=labKh5L7TbyvzyeYqmp7%2BQ%3D%3D" target="_blank" rel="noopener noreferrer">Crypto Foresight</a>,
+        titleText: 'Crypto Foresight',
         description: 'AI-powered price forecasting platform for cryptocurrency using advanced machine learning models.',
         image: `${process.env.PUBLIC_URL}/Forecast.png`,
         technologies: ['Python', 'Machine Learning', 'React.js', 'Time Series Forecasting', 'Data Visualization'],
@@ -74,6 +81,7 @@ const Portfolio = () => {
       },
       {
         title: <a href="https://www.linkedin.com/pulse/optimizing-cad-designs-using-genetic-algorithms-giuseppe-rumore-gpoif/" target="_blank" rel="noopener noreferrer">CAD Design Optimization with Genetic Algorithms</a>,
+        titleText: 'CAD Design Optimization with Genetic Algorithms',
         description: 'A genetic algorithm-based optimization framework for CAD designs.',
         image: `${process.env.PUBLIC_URL}/Clamp_sizes.png`,
         technologies: ['Python', 'CAD', 'Genetic Algorithms', 'Finite Element Analysis'],
@@ -84,6 +92,7 @@ const Portfolio = () => {
       },
       {
         title: <a href="https://www.linkedin.com/pulse/self-driving-ros-2-giuseppe-rumore-l6wzf/" target="_blank" rel="noopener noreferrer">ROS2 Bumperbot</a>,
+        titleText: 'ROS2 Bumperbot',
         description: 'A self-driving robot using ROS2, C++, Python and Gazebo. ',
         image: `${process.env.PUBLIC_URL}/bumperbot.png`,
         technologies: ['ROS2', 'C++', 'Python', 'Gazebo'],
@@ -109,13 +118,7 @@ const Portfolio = () => {
 
   return (    <PortfolioSection id="portfolio">
       <div className="section-container">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-        ><SectionTitle className="section-heading">My Projects</SectionTitle>
-        <SectionSubtitle className="section-subtitle">A showcase of my technical projects and professional work.</SectionSubtitle>
-        
+        <TerminalSection title="My Projects" subtitle="A showcase of my technical projects and professional work.">
         <FilterContainer>
           {categories.map((category, index) => (
             <FilterButton 
@@ -133,9 +136,9 @@ const Portfolio = () => {
             <ProjectCard
               key={index}
               as={motion.div}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: [0, 0.6, 0.15, 0.85, 1], y: 0 }}
+              transition={{ duration: 0.4, delay: index * 0.12 }}
               $featured={project.featured}
             >              <ProjectImageContainer>
                 {project.external ? (
@@ -171,14 +174,14 @@ const Portfolio = () => {
             </ProjectCard>
           ))}
         </ProjectsGrid>
-        
+
         <ViewMoreButton 
           href="https://github.com/pepperumo" 
           target="_blank" 
           rel="noopener noreferrer"        >
           View More Projects
         </ViewMoreButton>
-        </motion.div>
+        </TerminalSection>
       </div>
     </PortfolioSection>
   );
@@ -201,17 +204,6 @@ const PortfolioSection = styled.section`
   }
 `;
 
-const SectionTitle = styled.h2`
-  font-size: clamp(42px, 6vw, 50px);
-  font-weight: 600;
-  color: var(--text-primary);
-  margin: 0 0 15px 0;
-`;
-
-const SectionSubtitle = styled.p`
-  /* Now using global style from GlobalStyles.js */
-`;
-
 const FilterContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -220,19 +212,24 @@ const FilterContainer = styled.div`
 `;
 
 const FilterButton = styled.button`
-  background: ${props => (props.$active ? 'var(--tertiary-color)' : 'transparent')};
+  background: ${props => (props.$active ? 'rgba(0, 232, 162, 0.1)' : 'var(--droplet-bg)')};
   color: ${props => (props.$active ? 'var(--text-primary)' : 'var(--text-secondary)')};
-  border: 1px solid var(--tertiary-color);
-  border-radius: 5px;
-  padding: 8px 16px;
+  border-color: ${props => (props.$active ? 'rgba(0, 232, 162, 0.6)' : undefined)};
+  padding: 8px 20px;
   margin: 0 10px 10px 0;
   font-size: 14px;
-  font-family: var(--font-mono);
-  cursor: pointer;
-  transition: var(--transition);
-  
+  letter-spacing: 0.05em;
+
+  &::after {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+
   &:hover {
-    background: rgba(100, 255, 218, 0.1);
     color: var(--secondary-color);
   }
 `;
@@ -249,18 +246,22 @@ const ProjectsGrid = styled.div`
 `;
 
 const ProjectCard = styled.div`
-  background-color: var(--background-light);
-  border-radius: 5px;
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: var(--glass-radius);
   overflow: hidden;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   height: 100%;
   display: flex;
   flex-direction: column;
-  border: ${props => props.$featured ? '1px solid var(--tertiary-color)' : 'none'};
-  box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
-  
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+
   &:hover {
-    transform: translateY(-7px);
+    transform: translateY(-3px);
+    box-shadow: var(--glass-card-hover-shadow);
   }
 `;
 
@@ -288,8 +289,7 @@ const ProjectImage = styled.img`
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
-  cursor: pointer;
-  
+
   ${ProjectImageContainer}:hover & {
     transform: scale(1.05);
   }
@@ -373,29 +373,37 @@ const ProjectTechItem = styled.li`
   white-space: nowrap;
   
   &:before {
-    content: '▹';
+    content: '>';
     color: var(--secondary-color);
     margin-right: 5px;
   }
 `;
 
 const ViewMoreButton = styled.a`
+  position: relative;
+  overflow: hidden;
   color: var(--secondary-color);
-  background-color: transparent;
-  border: 1px solid var(--secondary-color);
-  border-radius: 5px;
-  padding: 15px 20px;
+  background: var(--droplet-bg);
+  border: var(--droplet-border);
+  border-radius: 4px;
+  box-shadow: var(--droplet-shadow);
+  padding: 15px 34px;
   font-size: 14px;
   font-family: var(--font-mono);
   text-decoration: none;
   text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
   margin: 50px auto 0;
   display: block;
   width: fit-content;
-  transition: var(--transition);
-  
+  transition: all 0.3s ease;
+
   &:hover {
-    background-color: rgba(100, 255, 218, 0.1);
+    background: rgba(0, 232, 162, 0.1);
+    border-color: rgba(0, 232, 162, 0.6);
+    box-shadow: 0 0 8px rgba(0, 232, 162, 0.2);
+    transform: translateY(-2px);
   }
 `;
 
