@@ -4,6 +4,26 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
 
+// Mock window.matchMedia
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});
+
+// Mock HTMLVideoElement methods
+HTMLVideoElement.prototype.play = jest.fn().mockResolvedValue(undefined);
+HTMLVideoElement.prototype.pause = jest.fn();
+HTMLVideoElement.prototype.load = jest.fn();
+
 // Mock IntersectionObserver for framer-motion and other components
 global.IntersectionObserver = class IntersectionObserver {
   constructor() {}
@@ -20,8 +40,9 @@ global.ResizeObserver = class ResizeObserver {
   disconnect() {}
 };
 
-// Mock HTMLCanvasElement.getContext for Three.js
-HTMLCanvasElement.prototype.getContext = jest.fn((contextType) => {
+// Mock HTMLCanvasElement.getContext for Three.js and Canvas 2D
+const _origGetContext = HTMLCanvasElement.prototype.getContext;
+HTMLCanvasElement.prototype.getContext = function(contextType) {
   if (contextType === 'webgl' || contextType === 'webgl2') {
     // Return a comprehensive mock WebGL context
     return {
@@ -80,8 +101,37 @@ HTMLCanvasElement.prototype.getContext = jest.fn((contextType) => {
       deleteTexture: jest.fn(),
     };
   }
+  if (contextType === '2d') {
+    return {
+      fillRect: jest.fn(),
+      clearRect: jest.fn(),
+      getImageData: jest.fn(() => ({ data: new Uint8ClampedArray(4) })),
+      putImageData: jest.fn(),
+      createImageData: jest.fn((w, h) => ({ data: new Uint8ClampedArray(w * h * 4) })),
+      setTransform: jest.fn(),
+      drawImage: jest.fn(),
+      save: jest.fn(),
+      fillText: jest.fn(),
+      restore: jest.fn(),
+      beginPath: jest.fn(),
+      moveTo: jest.fn(),
+      lineTo: jest.fn(),
+      closePath: jest.fn(),
+      stroke: jest.fn(),
+      translate: jest.fn(),
+      scale: jest.fn(),
+      rotate: jest.fn(),
+      arc: jest.fn(),
+      fill: jest.fn(),
+      measureText: jest.fn(() => ({ width: 0 })),
+      transform: jest.fn(),
+      rect: jest.fn(),
+      clip: jest.fn(),
+      canvas: document.createElement('canvas'),
+    };
+  }
   return null;
-});
+};
 
 // Mock performance.now if not available
 if (!global.performance) {
