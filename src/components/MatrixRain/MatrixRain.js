@@ -292,6 +292,14 @@ const MatrixRain = () => {
     resize();
     window.addEventListener('resize', resize);
 
+    // ── Re-init canvas when returning from background (mobile GPU context loss) ──
+    const onVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        resize();
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+
     // ── Animation ──
     const animate = () => {
       frameRef.current = requestAnimationFrame(animate);
@@ -520,6 +528,7 @@ const MatrixRain = () => {
     return () => {
       if (frameRef.current) cancelAnimationFrame(frameRef.current);
       window.removeEventListener('resize', resize);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mouseleave', onMouseLeave);
       window.removeEventListener('scroll', onScroll);
